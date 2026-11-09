@@ -20,6 +20,8 @@ This repository is public on purpose, so the job can download the files without 
 Keep everything in it fit for the public: no drafts with private notes, no personal data.
 
 ## Adding a post
-1. Add `<code>.html` here (lowercase letters, digits and dashes only).
-2. Add its entry to `posts.json` with the title, summary, date and flags.
+Every post needs both of these, in the same commit:
+1. The file `<code>.html` here (lowercase letters, digits and dashes only).
+2. Its entry in `posts.json` with the title, summary, **`publishedOn` date (YYYY-MM-DD)** and the three
+   flags. A post without a date is rejected by the job, so it is never published.
 3. Push to `main`. The next nightly run publishes it, or run the job by hand.
