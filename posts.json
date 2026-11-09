@@ -1,0 +1,76 @@
+{
+  "posts": [
+    {
+      "code": "ai-feature-trap",
+      "title": "The AI Feature Trap: When Seat Licenses Meet Token Bills",
+      "summary": "Adding AI is supposed to cut costs, but companies that ship it inside flat-priced products watch their bills grow with every click. Who has adjusted, who can't, and how to spot the next squeeze.",
+      "publishedOn": "2026-10-28",
+      "isCrypto": false,
+      "isAi": true,
+      "isTrading": false
+    },
+    {
+      "code": "digital-nomad-visas-us-citizens-2026",
+      "title": "Digital Nomad Visas for US Citizens (2026)",
+      "summary": "How digital nomad visas work for Americans who keep a US job or US clients, and how Spain, Portugal, Thailand, Panama, Estonia, Vietnam and Singapore compare.",
+      "publishedOn": "2026-10-26",
+      "isCrypto": false,
+      "isAi": false,
+      "isTrading": false
+    },
+    {
+      "code": "free-cloud-tiers",
+      "title": "Hunting Freebies in the Clouds",
+      "summary": "The permanent free tiers worth building on: Azure for a free SQL database, Google Cloud Run for web apps, AWS for serverless glue, plus Oracle and Cloudflare compared.",
+      "publishedOn": "2026-10-25",
+      "isCrypto": false,
+      "isAi": false,
+      "isTrading": false
+    },
+    {
+      "code": "invisible-wallet-business",
+      "title": "The Invisible Wallet Business: Privy, Stripe and Who Owns the Rest",
+      "summary": "The crypto wallets most people will use are ones they never see. Who builds them, who now owns them, and how fast Privy, the leader inside Stripe, is growing.",
+      "publishedOn": "2026-10-24",
+      "isCrypto": true,
+      "isAi": false,
+      "isTrading": false
+    },
+    {
+      "code": "phone-couldnt-buy-coffee",
+      "title": "The Day My Phone Couldn't Buy a Coffee",
+      "summary": "Field notes on paying abroad from Poland, Turkey and Moldova: where a good card stops working, why taxis need offline payments, and the travel app someone should build.",
+      "publishedOn": "2026-10-23",
+      "isCrypto": false,
+      "isAi": false,
+      "isTrading": false
+    },
+    {
+      "code": "write-code-on-solana",
+      "title": "Everything You Need to Write Code on Solana",
+      "summary": "What Solana is, what its programs can and can't do, and the toolkit to build them: Rust, Agave, Anchor, LiteSVM, Surfpool, Trident and verified builds.",
+      "publishedOn": "2026-10-22",
+      "isCrypto": true,
+      "isAi": false,
+      "isTrading": false
+    },
+    {
+      "code": "smartest-developer",
+      "title": "Stop Telling Your Smartest Developer What to Do",
+      "summary": "We hire smart people and AI for their judgment, then dictate every decision. Give them the outcome, the constraints and the definition of done instead.",
+      "publishedOn": "2026-10-10",
+      "isCrypto": false,
+      "isAi": true,
+      "isTrading": false
+    },
+    {
+      "code": "ai-price-collapse",
+      "title": "Will AI Make Everything Cheaper? Who Wins, Who Loses",
+      "summary": "AI is collapsing the price of thinking work, but not of land, licenses or physical labor. The investing question is who keeps the savings.",
+      "publishedOn": "2026-10-04",
+      "isCrypto": false,
+      "isAi": true,
+      "isTrading": false
+    }
+  ]
+}
