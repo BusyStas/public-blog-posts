@@ -7,7 +7,7 @@
       "publishedOn": "2026-10-28",
       "isCrypto": false,
       "isAi": true,
-      "isTrading": false
+      "isTrading": true
     },
     {
       "code": "digital-nomad-visas-us-citizens-2026",
@@ -34,7 +34,7 @@
       "publishedOn": "2026-10-24",
       "isCrypto": true,
       "isAi": false,
-      "isTrading": false
+      "isTrading": true
     },
     {
       "code": "phone-couldnt-buy-coffee",
@@ -70,7 +70,7 @@
       "publishedOn": "2026-10-04",
       "isCrypto": false,
       "isAi": true,
-      "isTrading": false
+      "isTrading": true
     }
   ]
 }
