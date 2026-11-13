@@ -1,0 +1,36 @@
+{
+  "posts": {
+    "ai-feature-trap": {
+      "title": "Yapay Zekâ Özelliği Tuzağı: Kullanıcı Lisansları Token Faturalarıyla Buluşunca",
+      "summary": "Yapay zekâ eklemenin maliyeti düşürmesi beklenir, ancak onu sabit fiyatlı ürünlerin içinde sunan şirketler her tıklamayla faturalarının büyüdüğünü görüyor. Kim uyum sağladı, kim sağlayamıyor ve bir sonraki sıkışma nasıl fark edilir."
+    },
+    "digital-nomad-visas-us-citizens-2026": {
+      "title": "ABD Vatandaşları İçin Dijital Göçebe Vizeleri (2026)",
+      "summary": "ABD'deki işini veya müşterilerini koruyan Amerikalılar için dijital göçebe vizelerinin nasıl işlediği; İspanya, Portekiz, Tayland, Panama, Estonya, Vietnam ve Singapur'un karşılaştırması."
+    },
+    "free-cloud-tiers": {
+      "title": "Bulutlarda Bedava Avı",
+      "summary": "Üzerine inşa etmeye değer kalıcı ücretsiz katmanlar: ücretsiz SQL veritabanı için Azure, web uygulamaları için Google Cloud Run, sunucusuz yapıştırıcı olarak AWS; ayrıca Oracle ve Cloudflare karşılaştırması."
+    },
+    "invisible-wallet-business": {
+      "title": "Görünmez Cüzdan İşi: Privy, Stripe ve Gerisinin Sahibi Kim",
+      "summary": "Çoğu insanın kullanacağı kripto cüzdanlar hiç görmediği cüzdanlar olacak. Onları kim yapıyor, şimdi kimin elinde ve Stripe içindeki lider Privy ne kadar hızlı büyüyor."
+    },
+    "phone-couldnt-buy-coffee": {
+      "title": "Telefonumun Bir Kahve Alamadığı Gün",
+      "summary": "Polonya, Türkiye ve Moldova'dan yurt dışında ödeme üzerine saha notları: iyi bir kartın nerede çalışmayı bıraktığı, taksilerin neden çevrimdışı ödemeye ihtiyaç duyduğu ve birinin yapması gereken seyahat uygulaması."
+    },
+    "write-code-on-solana": {
+      "title": "Solana'da Kod Yazmak İçin Bilmeniz Gereken Her Şey",
+      "summary": "Solana nedir, programları neler yapabilir ve neler yapamaz, bunları geliştirmek için araç seti: Rust, Agave, Anchor, LiteSVM, Surfpool, Trident ve doğrulanmış derlemeler."
+    },
+    "smartest-developer": {
+      "title": "En Akıllı Geliştiricinize Ne Yapacağını Söylemeyi Bırakın",
+      "summary": "Akıllı insanları ve yapay zekâyı muhakemeleri için işe alıyor, sonra her kararı onlara dikte ediyoruz. Onun yerine sonucu, kısıtları ve bitti tanımını verin."
+    },
+    "ai-price-collapse": {
+      "title": "Yapay Zekâ Her Şeyi Ucuzlatacak mı? Kim Kazanır, Kim Kaybeder",
+      "summary": "Yapay zekâ bilgi işinin fiyatını çökertiyor, ancak arazinin, lisansların ya da fiziksel emeğin fiyatını değil. Yatırımcı için soru, tasarrufu kimin cebinde tutacağı."
+    }
+  }
+}

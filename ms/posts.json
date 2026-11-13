@@ -1,0 +1,36 @@
+{
+  "posts": {
+    "ai-feature-trap": {
+      "title": "Perangkap Ciri AI: Apabila Lesen Setiap Pengguna Bertemu Bil Token",
+      "summary": "Menambah AI sepatutnya mengurangkan kos, tetapi syarikat yang memasukkannya ke dalam produk berharga tetap melihat bil mereka meningkat dengan setiap klik. Siapa yang sudah menyesuaikan diri, siapa yang tidak mampu, dan cara mengesan tekanan seterusnya."
+    },
+    "digital-nomad-visas-us-citizens-2026": {
+      "title": "Visa Nomad Digital untuk Warganegara AS (2026)",
+      "summary": "Bagaimana visa nomad digital berfungsi untuk rakyat Amerika yang mengekalkan pekerjaan atau pelanggan di AS, dan perbandingan Sepanyol, Portugal, Thailand, Panama, Estonia, Vietnam dan Singapura."
+    },
+    "free-cloud-tiers": {
+      "title": "Memburu Percuma di Awan",
+      "summary": "Peringkat percuma kekal yang berbaloi dijadikan asas: Azure untuk pangkalan data SQL percuma, Google Cloud Run untuk aplikasi web, AWS sebagai perekat tanpa pelayan, serta perbandingan dengan Oracle dan Cloudflare."
+    },
+    "invisible-wallet-business": {
+      "title": "Perniagaan Dompet Tidak Kelihatan: Privy, Stripe dan Siapa Memiliki Selebihnya",
+      "summary": "Dompet kripto yang akan digunakan kebanyakan orang ialah dompet yang tidak pernah mereka lihat. Siapa yang membinanya, siapa yang memilikinya kini, dan betapa pantas Privy, peneraju dalam Stripe, berkembang."
+    },
+    "phone-couldnt-buy-coffee": {
+      "title": "Hari Telefon Saya Tidak Dapat Membeli Kopi",
+      "summary": "Nota lapangan tentang membayar di luar negara dari Poland, Turkiye dan Moldova: di mana kad yang baik berhenti berfungsi, mengapa teksi memerlukan pembayaran luar talian, dan aplikasi perjalanan yang patut dibina seseorang."
+    },
+    "write-code-on-solana": {
+      "title": "Semua yang Anda Perlukan untuk Menulis Kod di Solana",
+      "summary": "Apa itu Solana, apa yang boleh dan tidak boleh dilakukan oleh programnya, dan perkakas untuk membinanya: Rust, Agave, Anchor, LiteSVM, Surfpool, Trident dan binaan yang disahkan."
+    },
+    "smartest-developer": {
+      "title": "Berhenti Memberitahu Pembangun Paling Bijak Anda Apa yang Perlu Dilakukan",
+      "summary": "Kita mengambil orang bijak dan AI kerana pertimbangan mereka, kemudian menentukan setiap keputusan. Berikan mereka hasil, kekangan dan takrifan siap sebaliknya."
+    },
+    "ai-price-collapse": {
+      "title": "Adakah AI Akan Menjadikan Segalanya Lebih Murah? Siapa Menang, Siapa Kalah",
+      "summary": "AI menjatuhkan harga kerja berfikir, tetapi bukan harga tanah, lesen atau buruh fizikal. Soalan untuk pelabur ialah siapa yang menyimpan penjimatan itu."
+    }
+  }
+}

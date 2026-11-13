@@ -1,0 +1,36 @@
+{
+  "posts": {
+    "ai-feature-trap": {
+      "title": "Zamka AI značajki: kad licence po korisniku susretnu račune za tokene",
+      "summary": "Dodavanje umjetne inteligencije trebalo bi smanjiti troškove, ali tvrtke koje je ugrađuju u proizvode s fiksnom cijenom vide kako im račun raste uz svaki klik. Tko se prilagodio, tko ne može i kako prepoznati sljedeće stezanje."
+    },
+    "digital-nomad-visas-us-citizens-2026": {
+      "title": "Vize za digitalne nomade za američke državljane (2026.)",
+      "summary": "Kako funkcioniraju vize za digitalne nomade za Amerikance koji zadržavaju posao ili klijente u SAD-u te kako se uspoređuju Španjolska, Portugal, Tajland, Panama, Estonija, Vijetnam i Singapur."
+    },
+    "free-cloud-tiers": {
+      "title": "Lov na besplatno u oblacima",
+      "summary": "Trajni besplatni paketi na kojima se isplati graditi: Azure za besplatnu SQL bazu, Google Cloud Run za web aplikacije, AWS kao serverless ljepilo, uz usporedbu s Oracleom i Cloudflareom."
+    },
+    "invisible-wallet-business": {
+      "title": "Posao s nevidljivim novčanicima: Privy, Stripe i tko posjeduje ostatak",
+      "summary": "Kripto novčanici koje će većina ljudi koristiti su oni koje nikad ne vide. Tko ih gradi, tko ih sada posjeduje i koliko brzo raste Privy, predvodnik unutar Stripea."
+    },
+    "phone-couldnt-buy-coffee": {
+      "title": "Dan kad mi telefon nije mogao kupiti kavu",
+      "summary": "Terenske bilješke o plaćanju u inozemstvu iz Poljske, Turske i Moldavije: gdje dobra kartica prestaje raditi, zašto taksijima trebaju offline plaćanja i putna aplikacija koju bi netko trebao napraviti."
+    },
+    "write-code-on-solana": {
+      "title": "Sve što trebate za pisanje koda na Solani",
+      "summary": "Što je Solana, što njezini programi mogu, a što ne mogu, te alati za njihovu izradu: Rust, Agave, Anchor, LiteSVM, Surfpool, Trident i provjerene izgradnje."
+    },
+    "smartest-developer": {
+      "title": "Prestanite govoriti svom najpametnijem programeru što da radi",
+      "summary": "Zapošljavamo pametne ljude i umjetnu inteligenciju zbog njihove prosudbe, a zatim diktiramo svaku odluku. Dajte im umjesto toga ishod, ograničenja i definiciju gotovog."
+    },
+    "ai-price-collapse": {
+      "title": "Hoće li umjetna inteligencija sve učiniti jeftinijim? Tko dobiva, tko gubi",
+      "summary": "Umjetna inteligencija obara cijenu intelektualnog rada, ali ne i zemlje, licenci ili fizičkog rada. Pitanje za investitora je tko zadržava uštedu."
+    }
+  }
+}

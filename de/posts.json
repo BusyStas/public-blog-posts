@@ -1,0 +1,36 @@
+{
+  "posts": {
+    "ai-feature-trap": {
+      "title": "Die KI-Feature-Falle: Wenn Nutzerlizenzen auf Token-Rechnungen treffen",
+      "summary": "KI soll Kosten senken, doch Unternehmen, die sie in Festpreis-Produkte einbauen, sehen ihre Rechnung mit jedem Klick wachsen. Wer sich angepasst hat, wer nicht kann und wie man den nächsten Preisdruck erkennt."
+    },
+    "digital-nomad-visas-us-citizens-2026": {
+      "title": "Digitale-Nomaden-Visa für US-Bürger (2026)",
+      "summary": "Wie Visa für digitale Nomaden für Amerikaner funktionieren, die ihren US-Job oder ihre US-Kunden behalten, und wie Spanien, Portugal, Thailand, Panama, Estland, Vietnam und Singapur im Vergleich abschneiden."
+    },
+    "free-cloud-tiers": {
+      "title": "Auf Schnäppchenjagd in den Wolken",
+      "summary": "Die dauerhaft kostenlosen Angebote, auf denen sich aufbauen lässt: Azure für eine kostenlose SQL-Datenbank, Google Cloud Run für Web-Apps, AWS als Serverless-Kleber, dazu ein Vergleich mit Oracle und Cloudflare."
+    },
+    "invisible-wallet-business": {
+      "title": "Das Geschäft mit der unsichtbaren Wallet: Privy, Stripe und wem der Rest gehört",
+      "summary": "Die Krypto-Wallets, die die meisten Menschen nutzen werden, sind die, die sie nie zu Gesicht bekommen. Wer sie baut, wem sie jetzt gehören und wie schnell Privy, der Marktführer innerhalb von Stripe, wächst."
+    },
+    "phone-couldnt-buy-coffee": {
+      "title": "Der Tag, an dem mein Handy keinen Kaffee kaufen konnte",
+      "summary": "Feldnotizen zum Bezahlen im Ausland aus Polen, der Türkei und Moldau: wo eine gute Karte nicht mehr funktioniert, warum Taxis Offline-Zahlungen brauchen und welche Reise-App jemand bauen sollte."
+    },
+    "write-code-on-solana": {
+      "title": "Alles, was du brauchst, um Code auf Solana zu schreiben",
+      "summary": "Was Solana ist, was seine Programme können und was nicht, und das Werkzeug, um sie zu bauen: Rust, Agave, Anchor, LiteSVM, Surfpool, Trident und verifizierte Builds."
+    },
+    "smartest-developer": {
+      "title": "Hör auf, deinem klügsten Entwickler zu sagen, was er tun soll",
+      "summary": "Wir stellen kluge Menschen und KI wegen ihres Urteilsvermögens ein und diktieren dann jede Entscheidung. Gib ihnen stattdessen das Ziel, die Rahmenbedingungen und die Definition von fertig."
+    },
+    "ai-price-collapse": {
+      "title": "Macht KI alles billiger? Wer gewinnt, wer verliert",
+      "summary": "KI lässt den Preis von Kopfarbeit einbrechen, nicht aber den von Land, Lizenzen oder körperlicher Arbeit. Für Anleger lautet die Frage, wer die Ersparnis behält."
+    }
+  }
+}

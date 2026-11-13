@@ -1,0 +1,36 @@
+{
+  "posts": {
+    "ai-feature-trap": {
+      "title": "AI 功能陷阱：当按席位授权遇上按 Token 计费",
+      "summary": "加入 AI 本应降低成本，但把它塞进固定定价产品的公司，却发现账单随每一次点击而增长。谁已经调整、谁无法调整，以及如何识别下一轮挤压。"
+    },
+    "digital-nomad-visas-us-citizens-2026": {
+      "title": "美国公民数字游民签证指南（2026）",
+      "summary": "保留美国工作或美国客户的美国人如何使用数字游民签证，以及西班牙、葡萄牙、泰国、巴拿马、爱沙尼亚、越南和新加坡的比较。"
+    },
+    "free-cloud-tiers": {
+      "title": "在云上薅免费羊毛",
+      "summary": "值得在其上构建的永久免费套餐：用 Azure 获得免费 SQL 数据库，用 Google Cloud Run 运行网页应用，用 AWS 做无服务器粘合，并对比 Oracle 和 Cloudflare。"
+    },
+    "invisible-wallet-business": {
+      "title": "隐形钱包生意：Privy、Stripe 以及其余部分归谁所有",
+      "summary": "大多数人将使用的加密钱包，是他们从未见过的钱包。谁在构建它们，现在归谁所有，以及 Stripe 旗下的领先者 Privy 增长有多快。"
+    },
+    "phone-couldnt-buy-coffee": {
+      "title": "手机买不了咖啡的那一天",
+      "summary": "在波兰、土耳其和摩尔多瓦海外支付的实地笔记：好卡在哪里失灵，出租车为何需要离线支付，以及有人该做的那款旅行应用。"
+    },
+    "write-code-on-solana": {
+      "title": "在 Solana 上编写代码所需的一切",
+      "summary": "Solana 是什么，其程序能做什么、不能做什么，以及构建它们的工具链：Rust、Agave、Anchor、LiteSVM、Surfpool、Trident 和可验证构建。"
+    },
+    "smartest-developer": {
+      "title": "别再告诉你最聪明的开发者该做什么",
+      "summary": "我们因为聪明人和 AI 的判断力而雇用他们，却又替他们决定每一件事。不如给他们目标、约束和完成的定义。"
+    },
+    "ai-price-collapse": {
+      "title": "AI 会让一切变便宜吗？谁赢，谁输",
+      "summary": "AI 正在压低脑力工作的价格，但压不低土地、许可证或体力劳动的价格。对投资者而言，问题是谁能留住这些节省下来的钱。"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "posts": {
+    "ai-feature-trap": {
+      "title": "La trampa de las funciones de IA: cuando las licencias por usuario se topan con la factura de tokens",
+      "summary": "Se supone que añadir IA reduce costes, pero las empresas que la incluyen en productos de precio fijo ven crecer su factura con cada clic. Quién se ha adaptado, quién no puede y cómo detectar la próxima presión."
+    },
+    "digital-nomad-visas-us-citizens-2026": {
+      "title": "Visados de nómada digital para ciudadanos de EE. UU. (2026)",
+      "summary": "Cómo funcionan los visados de nómada digital para estadounidenses que conservan un empleo o clientes en EE. UU., y cómo se comparan España, Portugal, Tailandia, Panamá, Estonia, Vietnam y Singapur."
+    },
+    "free-cloud-tiers": {
+      "title": "A la caza de lo gratis en las nubes",
+      "summary": "Los niveles gratuitos permanentes sobre los que merece la pena construir: Azure para una base de datos SQL gratis, Google Cloud Run para aplicaciones web, AWS para el pegamento serverless, y una comparación con Oracle y Cloudflare."
+    },
+    "invisible-wallet-business": {
+      "title": "El negocio de la cartera invisible: Privy, Stripe y quién es dueño del resto",
+      "summary": "Las carteras cripto que usará la mayoría son las que nunca ven. Quién las construye, quién las posee ahora y a qué velocidad crece Privy, el líder dentro de Stripe."
+    },
+    "phone-couldnt-buy-coffee": {
+      "title": "El día que mi teléfono no pudo comprar un café",
+      "summary": "Notas de campo sobre pagar en el extranjero desde Polonia, Turquía y Moldavia: dónde deja de funcionar una buena tarjeta, por qué los taxis necesitan pagos sin conexión y la app de viajes que alguien debería crear."
+    },
+    "write-code-on-solana": {
+      "title": "Todo lo que necesitas para programar en Solana",
+      "summary": "Qué es Solana, qué pueden y qué no pueden hacer sus programas, y las herramientas para construirlos: Rust, Agave, Anchor, LiteSVM, Surfpool, Trident y compilaciones verificadas."
+    },
+    "smartest-developer": {
+      "title": "Deja de decirle a tu desarrollador más brillante qué hacer",
+      "summary": "Contratamos a personas inteligentes y a la IA por su criterio, y luego dictamos cada decisión. Mejor dales el resultado, las restricciones y la definición de terminado."
+    },
+    "ai-price-collapse": {
+      "title": "¿Hará la IA que todo sea más barato? Quién gana y quién pierde",
+      "summary": "La IA está hundiendo el precio del trabajo intelectual, pero no el de la tierra, las licencias ni el trabajo físico. La pregunta para el inversor es quién se queda con el ahorro."
+    }
+  }
+}

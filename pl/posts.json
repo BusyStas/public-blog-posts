@@ -1,0 +1,36 @@
+{
+  "posts": {
+    "ai-feature-trap": {
+      "title": "Pułapka funkcji AI: gdy licencje na użytkownika spotykają rachunki za tokeny",
+      "summary": "Dodanie AI ma obniżać koszty, ale firmy, które wbudowują je w produkty o stałej cenie, widzą rachunki rosnące z każdym kliknięciem. Kto się dostosował, kto nie może i jak rozpoznać kolejne ściśnięcie."
+    },
+    "digital-nomad-visas-us-citizens-2026": {
+      "title": "Wizy dla cyfrowych nomadów dla obywateli USA (2026)",
+      "summary": "Jak działają wizy dla cyfrowych nomadów dla Amerykanów, którzy zachowują pracę lub klientów w USA, oraz jak wypadają Hiszpania, Portugalia, Tajlandia, Panama, Estonia, Wietnam i Singapur."
+    },
+    "free-cloud-tiers": {
+      "title": "Polowanie na darmowe chmury",
+      "summary": "Stałe darmowe plany, na których warto budować: Azure dla darmowej bazy SQL, Google Cloud Run dla aplikacji webowych, AWS jako serverless'owe spoiwo, a do tego porównanie z Oracle i Cloudflare."
+    },
+    "invisible-wallet-business": {
+      "title": "Biznes niewidzialnych portfeli: Privy, Stripe i kto jest właścicielem reszty",
+      "summary": "Portfele kryptowalutowe, z których skorzysta większość ludzi, to takie, których nigdy nie zobaczą. Kto je buduje, kto jest teraz ich właścicielem i jak szybko rośnie Privy, lider w ramach Stripe."
+    },
+    "phone-couldnt-buy-coffee": {
+      "title": "Dzień, w którym telefon nie kupił mi kawy",
+      "summary": "Notatki z terenu o płaceniu za granicą z Polski, Turcji i Mołdawii: gdzie dobra karta przestaje działać, dlaczego taksówki potrzebują płatności offline i jaką aplikację podróżniczą ktoś powinien zbudować."
+    },
+    "write-code-on-solana": {
+      "title": "Wszystko, czego potrzebujesz, by pisać kod na Solanie",
+      "summary": "Czym jest Solana, co programy na niej mogą, a czego nie, oraz zestaw narzędzi do ich budowy: Rust, Agave, Anchor, LiteSVM, Surfpool, Trident i weryfikowane buildy."
+    },
+    "smartest-developer": {
+      "title": "Przestań mówić swojemu najmądrzejszemu programiście, co ma robić",
+      "summary": "Zatrudniamy mądrych ludzi i AI dla ich osądu, a potem dyktujemy każdą decyzję. Daj im zamiast tego cel, ograniczenia i definicję ukończenia."
+    },
+    "ai-price-collapse": {
+      "title": "Czy AI sprawi, że wszystko stanie się tańsze? Kto wygra, kto przegra",
+      "summary": "AI zbija cenę pracy umysłowej, ale nie ziemi, licencji ani pracy fizycznej. Dla inwestora pytanie brzmi: kto zachowa oszczędności."
+    }
+  }
+}
