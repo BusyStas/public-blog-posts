@@ -1,4 +1,12 @@
+Rules how to manage https://github.com/BusyStas/public-blog-posts
+When you add  a new blog post - translate to all currently supported languages.
+In addition to html, also add pdf file with the source in english to \pdfs\
+When I ask you to publish it to LinkedIn - update "releasedOn" in posts.json (it differs from publishedOn)
+
 this repo is used to generate files in Cloudfare R2
+
+
+
 
 # Adding a blog post (instructions for Claude)
 When asked to add a post: create `<code>.html` (body only, no html/head) AND add its entry to `posts.json`
