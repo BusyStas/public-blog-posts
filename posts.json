@@ -1,6 +1,15 @@
 {
   "posts": [
     {
+      "code": "business-logic-in-stored-procedures",
+      "title": "What AI Thinks About Business Logic in SQL Stored Procedures",
+      "summary": "Logic that shapes data belongs in the database: set-based speed, easy debugging, Git deployment, and a real example that keeps database cost low with a daily file in Cloudflare R2.",
+      "publishedOn": "2026-11-01",
+      "isCrypto": false,
+      "isAi": true,
+      "isTrading": false
+    },
+    {
       "code": "ai-feature-trap",
       "title": "The AI Feature Trap: When Seat Licenses Meet Token Bills",
       "summary": "Adding AI is supposed to cut costs, but companies that ship it inside flat-priced products watch their bills grow with every click. Who has adjusted, who can't, and how to spot the next squeeze.",

@@ -1,5 +1,9 @@
 {
   "posts": {
+    "business-logic-in-stored-procedures": {
+      "title": "Yapay Zekâ, SQL Saklı Yordamlarındaki İş Mantığı Hakkında Ne Düşünüyor?",
+      "summary": "Veriyi şekillendiren mantık veritabanına aittir: küme tabanlı hız, kolay hata ayıklama, Git ile dağıtım ve Cloudflare R2'deki günlük bir dosyayla veritabanı maliyetini düşük tutan gerçek bir örnek."
+    },
     "ai-feature-trap": {
       "title": "Yapay Zekâ Özelliği Tuzağı: Kullanıcı Lisansları Token Faturalarıyla Buluşunca",
       "summary": "Yapay zekâ eklemenin maliyeti düşürmesi beklenir, ancak onu sabit fiyatlı ürünlerin içinde sunan şirketler her tıklamayla faturalarının büyüdüğünü görüyor. Kim uyum sağladı, kim sağlayamıyor ve bir sonraki sıkışma nasıl fark edilir."

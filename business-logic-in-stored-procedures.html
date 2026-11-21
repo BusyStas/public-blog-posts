@@ -1,0 +1,80 @@
+<p class="lead">My short answer: put the logic that shapes data in the database, and keep application code for what truly lives outside it.</p>
+
+<p>This has been one of the hottest debates in software for decades. One camp treats stored procedures as the natural home for all data transformation logic, and the other bans them outright. Developer forums are full of complaints from people whose code reviews were rejected, or whose work was criticized, simply for putting logic into sprocs.</p>
+
+<p>AI-assisted development has changed the tone of that argument. Instead of joining a camp, an AI assistant weighs each case on its reasons. It is striking how often AI now suggests a stored procedure itself, and explains why: set-based work, atomic changes, a clean security boundary. The rest of this post is that case-by-case reasoning.</p>
+
+<h2>Where stored procedures earn their place</h2>
+
+<p>I write and review a lot of both SQL and application code, and I don't share the dogma on either side. Stored procedures are the right tool when the logic is really a statement about data, not about its representation or visualization.</p>
+
+<ul>
+  <li><strong>Set-based work.</strong> Moving a million rows with one <code>MERGE</code> beats pulling them over the wire, looping in C# or Python, and pushing them back.</li>
+  <li><strong>No network round trips.</strong> Business logic in application code has to pull every row it needs out of the database, then send every result back to be saved. That doubles the traffic, adds latency to each step and multiplies with every call. A procedure reads, computes and writes in one place, and only the final answer crosses the network. The hidden cost is on the server. Thousands of small calls mean thousands of concurrent connections, and each active request holds a worker thread. Worker limits are tied to the number of cores, so the threads run out while the CPU still looks underused. The only fix is buying more vCores just to hold connections, and the database bill ends up higher than if the logic had lived inside it.</li>
+  <li><strong>Atomic multi-table changes.</strong> A transaction that must succeed or fail as a unit is safest where the data lives.</li>
+  <li><strong>Debugging.</strong> You can run a procedure against real data, step through it, and inspect every intermediate result with a plain <code>SELECT</code>. Reproducing a bug means re-running it with the same parameters. Chasing the same rule through an app's controllers, services, ORM and logs is a far harder job.</li>
+  <li><strong>Version control and deployment.</strong> Microsoft's SQL Server database projects solved this years ago. Procedures live in Git like any other code, and a GitHub Actions pipeline compares the project with the target database and applies only what changed. A procedure deploy is often smaller and less stressful than an app release.</li>
+  <li><strong>Data integrity.</strong> Constraints, triggers and procedures that enforce invariants protect the data from every client, including the ones nobody remembers writing.</li>
+  <li><strong>Permissions.</strong> Granting <code>EXECUTE</code> on a procedure while denying direct table access is a clean, auditable security boundary.</li>
+  <li><strong>Batch and ETL jobs.</strong> Loading, deduplicating and reconciling files close to the data is fast and simple.</li>
+</ul>
+
+<h2>Where they hurt</h2>
+
+<p>Stored procedures are not free of trade-offs. These are the real ones.</p>
+
+<ul>
+  <li><strong>Scaling is lopsided.</strong> You can add application servers cheaply, while database CPU is the most expensive kind to add. CPU-heavy math that does not need to sit next to the data is better off in code.</li>
+  <li><strong>Portability disappears.</strong> Dialect-specific procedural code ties the business to one vendor, and a migration becomes a rewrite.</li>
+  <li><strong>Knowledge gets siloed.</strong> Fewer developers read procedural SQL fluently, so the rules end up understood by one or two people. Years of "keep logic out of the database" advice have made true SQL specialists genuinely rare. Companies that have them should treat them as key people and work hard to keep them.</li>
+</ul>
+
+<h2>What AI-assisted development changes</h2>
+
+<p>AI coding tools have removed most of the old objections to database code.</p>
+
+<p>An AI assistant refactors procedures, traces dependencies across a schema and reviews SQL as readily as application code. Buying a specialized SQL code analyzer makes little sense when your AI coding assistant already does that work.</p>
+
+<p>AI is also very good at writing and tuning set-based SQL, so the data-heavy work that belongs in the database is cheaper to get right than it used to be.</p>
+
+<p>One caution remains. Give the assistant the real schema, triggers, permissions and data volumes, because a procedure read in isolation can look right and still fail in production.</p>
+
+<h2>A real example: logic in the database, cost kept low</h2>
+
+<p>Keeping logic in the database doesn't mean hitting the database on every page view. The <a href="https://stas.club/jobs">Crypto Jobs</a> page on stas.club shows how to have both.</p>
+
+<p>The job postings live in an Azure SQL database, and the procedures there decide which postings are crypto-related and shape the list. That is data logic, so it stays in the database. But a public page that anyone can load at any time would keep the database awake, and a serverless Azure SQL database that has to wake up costs money and can stall the page for minutes.</p>
+
+<p>So the page never touches the database:</p>
+
+<ol>
+  <li>A daily scheduled job on Google Cloud calls the site's web API. The job holds no business logic; the API and the procedures behind it do the work, so the same refresh can also be run by hand.</li>
+  <li>The API runs the procedures and returns the finished list.</li>
+  <li>The job writes that list as a JSON file to a Cloudflare R2 bucket on the free tier.</li>
+  <li>When someone opens the page, the site reads the prepared file from R2. The database isn't involved at all.</li>
+</ol>
+
+<p>The result is one database call a day instead of one per visitor. The rules still live in one place, the page loads instantly, and the database can sleep the rest of the day.</p>
+
+<h2>A rule of thumb for deciding</h2>
+
+<p>Ask what the logic is about. If it describes how data must be shaped, moved or protected, it belongs in the database. If it needs things outside the database, such as live external data, network calls or the user interface, it belongs in code.</p>
+
+<div class="table-wrap"><table>
+  <thead><tr><th>Logic</th><th>Better home</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td>Bulk load, merge, deduplicate</td><td>Stored procedure</td><td>Set-based and next to the data</td></tr>
+    <tr><td>Referential and uniqueness rules</td><td>Constraints</td><td>Enforced for every client</td></tr>
+    <tr><td>Row-level access control</td><td>Database permissions</td><td>One enforcement point</td></tr>
+    <tr><td>Pricing, discounts, scoring</td><td>Stored procedure</td><td>Set-based, one answer for every consumer, easy to inspect</td></tr>
+    <tr><td>Workflow and approval states</td><td>Stored procedure</td><td>Allowed transitions enforced and auditable in one place</td></tr>
+    <tr><td>Rules that need live data (market prices, API feeds)</td><td>Application code</td><td>The data lives outside the database</td></tr>
+    <tr><td>Calls to external services</td><td>Application code</td><td>The database should not make network calls</td></tr>
+  </tbody>
+</table></div>
+
+<h2>The verdict</h2>
+
+<p>Stored procedures are a good home for business logic, not a poor one. Rules that are about the data, such as scoring, pricing, workflow states and integrity, belong next to it. There they run set-based, give every consumer the same answer and are easy to inspect. Keep application code for what truly lives outside the database: live external data, network calls and the user interface.</p>
+
+<p>Some engineers will still disagree, and a few have real reasons: a team with little SQL skill, or a database already at its compute limit. For everyone else, ask what a rule is about and put it where that data lives. Make that choice on purpose, not by habit.</p>

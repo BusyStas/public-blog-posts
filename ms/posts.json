@@ -1,5 +1,9 @@
 {
   "posts": {
+    "business-logic-in-stored-procedures": {
+      "title": "Apa Pendapat AI tentang Logik Perniagaan dalam Prosedur Tersimpan SQL",
+      "summary": "Logik yang membentuk data patut berada dalam pangkalan data: kelajuan berasaskan set, penyahpepijatan yang mudah, penempatan melalui Git dan contoh sebenar yang mengekalkan kos pangkalan data rendah dengan fail harian di Cloudflare R2."
+    },
     "ai-feature-trap": {
       "title": "Perangkap Ciri AI: Apabila Lesen Setiap Pengguna Bertemu Bil Token",
       "summary": "Menambah AI sepatutnya mengurangkan kos, tetapi syarikat yang memasukkannya ke dalam produk berharga tetap melihat bil mereka meningkat dengan setiap klik. Siapa yang sudah menyesuaikan diri, siapa yang tidak mampu, dan cara mengesan tekanan seterusnya."

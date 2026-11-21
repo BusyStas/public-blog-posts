@@ -1,0 +1,80 @@
+<p class="lead">Kısa cevabım: veriyi şekillendiren mantığı veritabanına koyun, uygulama kodunu ise gerçekten veritabanının dışında yaşayan işler için saklayın.</p>
+
+<p>Bu, onlarca yıldır yazılım dünyasının en hararetli tartışmalarından biri oldu. Bir taraf saklı yordamları tüm veri dönüştürme mantığının doğal evi sayıyor, diğer taraf ise onları tümden yasaklıyor. Geliştirici forumları, yalnızca mantığı saklı yordamlara koydukları için kod incelemesi reddedilen ya da çalışması eleştirilen insanların şikâyetleriyle dolu.</p>
+
+<p>Yapay zekâ destekli geliştirme bu tartışmanın tonunu değiştirdi. Bir yapay zekâ asistanı bir tarafa katılmak yerine her durumu gerekçelerine göre tartıyor. Artık saklı yordamı çoğu zaman yapay zekânın kendisinin önermesi ve nedenini açıklaması dikkat çekici: küme tabanlı işler, atomik değişiklikler, temiz bir güvenlik sınırı. Bu yazının geri kalanı, durum durum yürütülen bu muhakemedir.</p>
+
+<h2>Saklı yordamların yerini hak ettiği yerler</h2>
+
+<p>Hem SQL hem de uygulama kodu yazıyor ve inceliyorum; iki tarafın da dogmasını paylaşmıyorum. Saklı yordamlar, mantık gerçekten verinin kendisiyle ilgili bir ifade olduğunda, verinin temsili veya görselleştirilmesiyle ilgili olmadığında doğru araçtır.</p>
+
+<ul>
+  <li><strong>Küme tabanlı işler.</strong> Bir milyon satırı tek bir <code>MERGE</code> ile taşımak, onları ağ üzerinden çekip C# veya Python'da döngüyle işleyip geri göndermekten çok daha iyidir.</li>
+  <li><strong>Ağ gidiş dönüşü yok.</strong> Uygulama kodundaki iş mantığı, ihtiyaç duyduğu her satırı veritabanından çekmek, sonra her sonucu kaydedilmek üzere geri göndermek zorundadır. Bu trafiği ikiye katlar, her adıma gecikme ekler ve her çağrıyla çoğalır. Bir yordam aynı yerde okur, hesaplar ve yazar; ağdan yalnızca nihai cevap geçer. Gizli maliyet sunucu tarafındadır. Binlerce küçük çağrı, binlerce eşzamanlı bağlantı demektir ve her etkin istek bir çalışan iş parçacığını meşgul eder. İş parçacığı sınırları çekirdek sayısına bağlıdır; bu yüzden CPU hâlâ az kullanılıyor görünürken iş parçacıkları tükenir. Tek çözüm, sırf bağlantıları ayakta tutmak için daha fazla vCore satın almaktır ve veritabanı faturası, mantık veritabanının içinde yaşasaydı olacağından daha yüksek çıkar.</li>
+  <li><strong>Birden çok tabloda atomik değişiklikler.</strong> Bir bütün olarak ya başarılı olması ya da başarısız olması gereken bir işlem, verinin bulunduğu yerde en güvendedir.</li>
+  <li><strong>Hata ayıklama.</strong> Bir yordamı gerçek veriyle çalıştırabilir, adım adım izleyebilir ve her ara sonucu basit bir <code>SELECT</code> ile inceleyebilirsiniz. Bir hatayı yeniden üretmek, yordamı aynı parametrelerle yeniden çalıştırmak demektir. Aynı kuralı bir uygulamanın denetleyicileri, servisleri, ORM katmanı ve günlükleri arasında kovalamak ise çok daha zor bir iştir.</li>
+  <li><strong>Sürüm kontrolü ve dağıtım.</strong> Microsoft'un SQL Server veritabanı projeleri bunu yıllar önce çözdü. Yordamlar diğer tüm kodlar gibi Git'te yaşar ve bir GitHub Actions hattı projeyi hedef veritabanıyla karşılaştırıp yalnızca değişeni uygular. Bir yordamı dağıtmak çoğu zaman bir uygulama sürümü çıkarmaktan daha küçük ve daha az stresli bir iştir.</li>
+  <li><strong>Veri bütünlüğü.</strong> Değişmezleri zorunlu kılan kısıtlamalar, tetikleyiciler ve yordamlar, verinin her istemciye karşı korunmasını sağlar; kimsenin yazdığını hatırlamadığı istemciler dahil.</li>
+  <li><strong>İzinler.</strong> Bir yordam üzerinde <code>EXECUTE</code> yetkisi verip tablolara doğrudan erişimi reddetmek, temiz ve denetlenebilir bir güvenlik sınırıdır.</li>
+  <li><strong>Toplu iş ve ETL süreçleri.</strong> Dosyaları verinin yanında yüklemek, tekilleştirmek ve mutabakata bağlamak hızlı ve basittir.</li>
+</ul>
+
+<h2>Canlarını yaktıkları yerler</h2>
+
+<p>Saklı yordamların ödünleşimleri yok değil. Gerçek olanlar şunlar.</p>
+
+<ul>
+  <li><strong>Ölçekleme dengesizdir.</strong> Uygulama sunucusu eklemek ucuzdur, oysa veritabanı CPU'su eklenmesi en pahalı olandır. Verinin yanında durması gerekmeyen, CPU'yu yoğun kullanan hesaplamalar kodda daha iyi durur.</li>
+  <li><strong>Taşınabilirlik kaybolur.</strong> Lehçeye özgü yordamsal kod işi tek bir sağlayıcıya bağlar ve geçiş bir yeniden yazıma dönüşür.</li>
+  <li><strong>Bilgi tek elde toplanır.</strong> Az sayıda geliştirici yordamsal SQL'i akıcı okur; bu yüzden kurallar bir iki kişinin bilgisinde kalır. Yıllarca süren «mantığı veritabanının dışında tutun» tavsiyesi, gerçek SQL uzmanlarını gerçekten nadir hale getirdi. Onlara sahip olan şirketler, onları kilit kişiler olarak görmeli ve elde tutmak için çok çalışmalıdır.</li>
+</ul>
+
+<h2>Yapay zekâ destekli geliştirme neyi değiştiriyor</h2>
+
+<p>Yapay zekâ kodlama araçları, veritabanı koduna yönelik eski itirazların çoğunu ortadan kaldırdı.</p>
+
+<p>Bir yapay zekâ asistanı yordamları yeniden düzenler, bir şema boyunca bağımlılıkları izler ve SQL'i uygulama kodu kadar rahat inceler. Yapay zekâ kodlama asistanınız bu işi zaten yaparken, özel bir SQL kod çözümleyicisi satın almak pek anlamlı değildir.</p>
+
+<p>Yapay zekâ ayrıca küme tabanlı SQL yazmakta ve ayarlamakta çok iyidir; bu yüzden veritabanına ait olan veri yoğun işleri doğru yapmak eskisine göre daha ucuzdur.</p>
+
+<p>Bir uyarı kalıyor. Asistana gerçek şemayı, tetikleyicileri, izinleri ve veri hacimlerini verin; çünkü tek başına okunan bir yordam doğru görünüp yine de üretimde başarısız olabilir.</p>
+
+<h2>Gerçek bir örnek: mantık veritabanında, maliyet düşük</h2>
+
+<p>Mantığı veritabanında tutmak, her sayfa görüntülenişinde veritabanına gitmek demek değildir. stas.club'daki <a href="https://stas.club/jobs">Crypto Jobs</a> sayfası, ikisine birden nasıl sahip olunacağını gösteriyor.</p>
+
+<p>İş ilanları bir Azure SQL veritabanında duruyor ve oradaki yordamlar hangi ilanların kripto ile ilgili olduğuna karar verip listeyi şekillendiriyor. Bu bir veri mantığıdır, dolayısıyla veritabanında kalır. Ancak herkesin her an yükleyebileceği herkese açık bir sayfa veritabanını sürekli uyanık tutardı ve uyanması gereken sunucusuz bir Azure SQL veritabanı para harcar, sayfayı dakikalarca takılı bırakabilir.</p>
+
+<p>Bu yüzden sayfa veritabanına hiç dokunmuyor:</p>
+
+<ol>
+  <li>Google Cloud üzerindeki günlük zamanlanmış bir iş, sitenin web API'sini çağırır. İşin kendisinde iş mantığı yoktur; işi API ve arkasındaki yordamlar yapar, bu yüzden aynı yenileme elle de çalıştırılabilir.</li>
+  <li>API yordamları çalıştırır ve hazır listeyi döndürür.</li>
+  <li>İş, bu listeyi ücretsiz katmandaki bir Cloudflare R2 kovasına JSON dosyası olarak yazar.</li>
+  <li>Biri sayfayı açtığında site, hazırlanmış dosyayı R2'den okur. Veritabanı hiç devreye girmez.</li>
+</ol>
+
+<p>Sonuç, ziyaretçi başına bir yerine günde bir veritabanı çağrısıdır. Kurallar hâlâ tek bir yerde yaşar, sayfa anında yüklenir ve veritabanı günün geri kalanında uyuyabilir.</p>
+
+<h2>Karar vermek için pratik bir kural</h2>
+
+<p>Mantığın ne hakkında olduğunu sorun. Verinin nasıl şekillendirilmesi, taşınması veya korunması gerektiğini tanımlıyorsa veritabanına aittir. Canlı dış veri, ağ çağrıları veya kullanıcı arayüzü gibi veritabanının dışındaki şeylere ihtiyaç duyuyorsa koda aittir.</p>
+
+<div class="table-wrap"><table>
+  <thead><tr><th>Mantık</th><th>Daha uygun yer</th><th>Neden</th></tr></thead>
+  <tbody>
+    <tr><td>Toplu yükleme, birleştirme, tekilleştirme</td><td>Saklı yordam</td><td>Küme tabanlı ve verinin yanında</td></tr>
+    <tr><td>Referans ve benzersizlik kuralları</td><td>Kısıtlamalar</td><td>Her istemci için uygulanır</td></tr>
+    <tr><td>Satır düzeyinde erişim denetimi</td><td>Veritabanı izinleri</td><td>Tek bir uygulama noktası</td></tr>
+    <tr><td>Fiyatlandırma, indirimler, puanlama</td><td>Saklı yordam</td><td>Küme tabanlı, her tüketici için tek cevap, incelemesi kolay</td></tr>
+    <tr><td>İş akışı ve onay durumları</td><td>Saklı yordam</td><td>İzin verilen geçişler tek yerde uygulanır ve denetlenebilir</td></tr>
+    <tr><td>Canlı veri gerektiren kurallar (piyasa fiyatları, API akışları)</td><td>Uygulama kodu</td><td>Veri veritabanının dışında yaşar</td></tr>
+    <tr><td>Dış servislere çağrılar</td><td>Uygulama kodu</td><td>Veritabanı ağ çağrısı yapmamalıdır</td></tr>
+  </tbody>
+</table></div>
+
+<h2>Hüküm</h2>
+
+<p>Saklı yordamlar iş mantığı için kötü değil, iyi bir evdir. Puanlama, fiyatlandırma, iş akışı durumları ve bütünlük gibi veriyle ilgili kurallar verinin yanında durmalıdır. Orada küme tabanlı çalışırlar, her tüketiciye aynı cevabı verirler ve incelemesi kolaydır. Uygulama kodunu ise gerçekten veritabanının dışında yaşayan işler için saklayın: canlı dış veri, ağ çağrıları ve kullanıcı arayüzü.</p>
+
+<p>Bazı mühendisler yine de aynı fikirde olmayacak ve birkaçının gerçek gerekçeleri var: SQL becerisi az bir ekip ya da hesaplama sınırına zaten dayanmış bir veritabanı. Diğer herkes için bir kuralın ne hakkında olduğunu sorun ve onu o verinin yaşadığı yere koyun. Bu seçimi alışkanlıkla değil, bilerek yapın.</p>

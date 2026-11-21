@@ -1,5 +1,9 @@
 {
   "posts": {
+    "business-logic-in-stored-procedures": {
+      "title": "Was KI von Geschäftslogik in gespeicherten SQL-Prozeduren hält",
+      "summary": "Logik, die Daten formt, gehört in die Datenbank: mengenbasierte Geschwindigkeit, einfaches Debugging, Deployment über Git und ein reales Beispiel, das die Datenbankkosten mit einer täglichen Datei in Cloudflare R2 niedrig hält."
+    },
     "ai-feature-trap": {
       "title": "Die KI-Feature-Falle: Wenn Nutzerlizenzen auf Token-Rechnungen treffen",
       "summary": "KI soll Kosten senken, doch Unternehmen, die sie in Festpreis-Produkte einbauen, sehen ihre Rechnung mit jedem Klick wachsen. Wer sich angepasst hat, wer nicht kann und wie man den nächsten Preisdruck erkennt."

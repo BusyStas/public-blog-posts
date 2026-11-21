@@ -1,5 +1,9 @@
 {
   "posts": {
+    "business-logic-in-stored-procedures": {
+      "title": "Co AI sądzi o logice biznesowej w procedurach składowanych SQL",
+      "summary": "Logika kształtująca dane należy do bazy danych: szybkość operacji zbiorczych, proste debugowanie, wdrażanie przez Git i prawdziwy przykład, w którym codzienny plik w Cloudflare R2 utrzymuje niskie koszty bazy danych."
+    },
     "ai-feature-trap": {
       "title": "Pułapka funkcji AI: gdy licencje na użytkownika spotykają rachunki za tokeny",
       "summary": "Dodanie AI ma obniżać koszty, ale firmy, które wbudowują je w produkty o stałej cenie, widzą rachunki rosnące z każdym kliknięciem. Kto się dostosował, kto nie może i jak rozpoznać kolejne ściśnięcie."

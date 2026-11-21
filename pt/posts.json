@@ -1,5 +1,9 @@
 {
   "posts": {
+    "business-logic-in-stored-procedures": {
+      "title": "O que a IA pensa sobre lógica de negócio em procedimentos armazenados SQL",
+      "summary": "A lógica que molda os dados pertence ao banco de dados: velocidade baseada em conjuntos, depuração simples, implantação com Git e um exemplo real que mantém o custo do banco baixo com um arquivo diário no Cloudflare R2."
+    },
     "ai-feature-trap": {
       "title": "A armadilha dos recursos de IA: quando licenças por utilizador encontram contas de tokens",
       "summary": "Adicionar IA deveria reduzir custos, mas as empresas que a incluem em produtos de preço fixo veem a fatura crescer a cada clique. Quem se ajustou, quem não consegue e como detetar o próximo aperto."

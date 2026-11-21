@@ -1,0 +1,80 @@
+<p class="lead">Minha resposta curta: coloque no banco de dados a lógica que dá forma aos dados e reserve o código da aplicação para o que realmente vive fora dele.</p>
+
+<p>Este tem sido um dos debates mais acalorados do software há décadas. Um lado trata os procedimentos armazenados como o lugar natural de toda a lógica de transformação de dados, e o outro os proíbe por completo. Os fóruns de desenvolvedores estão cheios de queixas de pessoas cuja revisão de código foi rejeitada, ou cujo trabalho foi criticado, simplesmente por colocar lógica em procedimentos armazenados.</p>
+
+<p>O desenvolvimento assistido por IA mudou o tom dessa discussão. Em vez de escolher um lado, um assistente de IA pondera cada caso pelas suas razões. É notável a frequência com que a própria IA agora sugere um procedimento armazenado e explica por quê: trabalho por conjuntos, alterações atômicas, uma fronteira de segurança limpa. O restante desta publicação é esse raciocínio caso a caso.</p>
+
+<h2>Onde os procedimentos armazenados merecem o seu lugar</h2>
+
+<p>Escrevo e reviso muito SQL e muito código de aplicação, e não compartilho o dogma de nenhum dos lados. Os procedimentos armazenados são a ferramenta certa quando a lógica é realmente uma afirmação sobre os dados, e não sobre sua representação ou visualização.</p>
+
+<ul>
+  <li><strong>Trabalho por conjuntos.</strong> Mover um milhão de linhas com um único <code>MERGE</code> é melhor do que puxá-las pela rede, percorrê-las em um laço em C# ou Python e devolvê-las.</li>
+  <li><strong>Sem idas e vindas pela rede.</strong> A lógica de negócio no código da aplicação precisa extrair do banco cada linha de que necessita e depois enviar cada resultado de volta para ser salvo. Isso dobra o tráfego, adiciona latência a cada etapa e se multiplica a cada chamada. Um procedimento lê, calcula e grava em um só lugar, e apenas a resposta final atravessa a rede. O custo oculto está no servidor. Milhares de pequenas chamadas significam milhares de conexões simultâneas, e cada requisição ativa ocupa uma thread de trabalho. Os limites de threads estão ligados ao número de núcleos, então as threads se esgotam enquanto a CPU ainda parece subutilizada. A única saída é comprar mais vCores só para manter conexões, e a conta do banco de dados acaba maior do que se a lógica estivesse dentro dele.</li>
+  <li><strong>Alterações atômicas em várias tabelas.</strong> Uma transação que precisa ter sucesso ou falhar como uma unidade é mais segura onde os dados vivem.</li>
+  <li><strong>Depuração.</strong> Você pode executar um procedimento com dados reais, percorrê-lo passo a passo e inspecionar cada resultado intermediário com um simples <code>SELECT</code>. Reproduzir um erro significa executá-lo de novo com os mesmos parâmetros. Rastrear a mesma regra por controladores, serviços, ORM e logs de uma aplicação é um trabalho muito mais difícil.</li>
+  <li><strong>Controle de versão e implantação.</strong> Os projetos de banco de dados do SQL Server da Microsoft resolveram isso há anos. Os procedimentos ficam no Git como qualquer outro código, e um pipeline do GitHub Actions compara o projeto com o banco de destino e aplica apenas o que mudou. Implantar um procedimento costuma ser menor e menos estressante do que lançar uma versão da aplicação.</li>
+  <li><strong>Integridade dos dados.</strong> Restrições, gatilhos e procedimentos que impõem invariantes protegem os dados de todos os clientes, inclusive daqueles de que ninguém se lembra de ter escrito.</li>
+  <li><strong>Permissões.</strong> Conceder <code>EXECUTE</code> em um procedimento e negar o acesso direto às tabelas é uma fronteira de segurança limpa e auditável.</li>
+  <li><strong>Jobs em lote e ETL.</strong> Carregar, desduplicar e conciliar arquivos perto dos dados é rápido e simples.</li>
+</ul>
+
+<h2>Onde eles doem</h2>
+
+<p>Os procedimentos armazenados não são isentos de contrapartidas. Estas são as reais.</p>
+
+<ul>
+  <li><strong>O escalonamento é desigual.</strong> Adicionar servidores de aplicação é barato, enquanto a CPU do banco de dados é a mais cara de adicionar. Cálculos pesados de CPU que não precisam ficar junto dos dados são melhor colocados no código.</li>
+  <li><strong>A portabilidade desaparece.</strong> Código procedural específico de um dialeto prende o negócio a um único fornecedor, e uma migração vira uma reescrita.</li>
+  <li><strong>O conhecimento fica isolado.</strong> Poucos desenvolvedores leem SQL procedural com fluência, então as regras acabam compreendidas por uma ou duas pessoas. Anos de conselhos do tipo «mantenha a lógica fora do banco de dados» tornaram os verdadeiros especialistas em SQL genuinamente raros. As empresas que os têm devem tratá-los como pessoas-chave e se esforçar para mantê-los.</li>
+</ul>
+
+<h2>O que o desenvolvimento assistido por IA muda</h2>
+
+<p>As ferramentas de programação com IA removeram a maioria das antigas objeções ao código de banco de dados.</p>
+
+<p>Um assistente de IA refatora procedimentos, rastreia dependências em todo um esquema e revisa SQL com a mesma facilidade com que revisa código de aplicação. Comprar um analisador de código SQL especializado faz pouco sentido quando seu assistente de programação com IA já faz esse trabalho.</p>
+
+<p>A IA também é muito boa em escrever e ajustar SQL baseado em conjuntos, de modo que o trabalho intensivo em dados que pertence ao banco é hoje mais barato de acertar do que era.</p>
+
+<p>Resta uma ressalva. Dê ao assistente o esquema real, os gatilhos, as permissões e os volumes de dados, porque um procedimento lido isoladamente pode parecer correto e ainda assim falhar em produção.</p>
+
+<h2>Um exemplo real: a lógica no banco de dados, com o custo baixo</h2>
+
+<p>Manter a lógica no banco de dados não significa consultá-lo a cada visualização de página. A página <a href="https://stas.club/jobs">Crypto Jobs</a> do stas.club mostra como ter as duas coisas.</p>
+
+<p>As vagas de emprego ficam em um banco de dados Azure SQL, e os procedimentos que existem nele decidem quais vagas estão relacionadas a criptomoedas e dão forma à lista. Isso é lógica de dados, então ela fica no banco. Mas uma página pública que qualquer pessoa pode carregar a qualquer momento manteria o banco acordado, e um banco Azure SQL sem servidor que precisa ser despertado custa dinheiro e pode travar a página por minutos.</p>
+
+<p>Por isso a página nunca toca o banco de dados:</p>
+
+<ol>
+  <li>Um job agendado diário no Google Cloud chama a API web do site. O job não contém lógica de negócio; a API e os procedimentos por trás dela fazem o trabalho, de modo que a mesma atualização também pode ser executada manualmente.</li>
+  <li>A API executa os procedimentos e devolve a lista pronta.</li>
+  <li>O job grava essa lista como um arquivo JSON em um bucket do Cloudflare R2 na camada gratuita.</li>
+  <li>Quando alguém abre a página, o site lê o arquivo preparado no R2. O banco de dados não participa de forma alguma.</li>
+</ol>
+
+<p>O resultado é uma chamada ao banco por dia em vez de uma por visitante. As regras continuam vivendo em um só lugar, a página carrega instantaneamente e o banco pode dormir pelo resto do dia.</p>
+
+<h2>Uma regra prática para decidir</h2>
+
+<p>Pergunte do que a lógica trata. Se ela descreve como os dados devem ser moldados, movidos ou protegidos, ela pertence ao banco de dados. Se precisa de coisas fora do banco, como dados externos ao vivo, chamadas de rede ou a interface do usuário, ela pertence ao código.</p>
+
+<div class="table-wrap"><table>
+  <thead><tr><th>Lógica</th><th>Melhor lugar</th><th>Por quê</th></tr></thead>
+  <tbody>
+    <tr><td>Carga em massa, mesclagem, desduplicação</td><td>Procedimento armazenado</td><td>Por conjuntos e junto dos dados</td></tr>
+    <tr><td>Regras de integridade referencial e unicidade</td><td>Restrições</td><td>Impostas a todos os clientes</td></tr>
+    <tr><td>Controle de acesso em nível de linha</td><td>Permissões do banco de dados</td><td>Um único ponto de aplicação</td></tr>
+    <tr><td>Preços, descontos, pontuação</td><td>Procedimento armazenado</td><td>Por conjuntos, uma resposta para todos os consumidores, fácil de inspecionar</td></tr>
+    <tr><td>Fluxos de trabalho e estados de aprovação</td><td>Procedimento armazenado</td><td>Transições permitidas impostas e auditáveis em um só lugar</td></tr>
+    <tr><td>Regras que precisam de dados ao vivo (preços de mercado, feeds de API)</td><td>Código da aplicação</td><td>Os dados vivem fora do banco de dados</td></tr>
+    <tr><td>Chamadas a serviços externos</td><td>Código da aplicação</td><td>O banco de dados não deve fazer chamadas de rede</td></tr>
+  </tbody>
+</table></div>
+
+<h2>O veredito</h2>
+
+<p>Os procedimentos armazenados são um bom lar para a lógica de negócio, não um mau lar. As regras que tratam dos dados, como pontuação, preços, estados de fluxo de trabalho e integridade, pertencem ao lado deles. Ali elas rodam por conjuntos, dão a mesma resposta a todos os consumidores e são fáceis de inspecionar. Reserve o código da aplicação para o que realmente vive fora do banco de dados: dados externos ao vivo, chamadas de rede e a interface do usuário.</p>
+
+<p>Alguns engenheiros ainda vão discordar, e alguns têm razões reais: uma equipe com pouca habilidade em SQL ou um banco de dados que já está no limite de computação. Para todos os outros, pergunte do que uma regra trata e coloque-a onde esses dados vivem. Faça essa escolha de propósito, não por hábito.</p>

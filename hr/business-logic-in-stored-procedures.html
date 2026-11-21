@@ -1,0 +1,80 @@
+<p class="lead">Moj kratki odgovor: logiku koja oblikuje podatke držite u bazi podataka, a aplikacijski kod ostavite za ono što doista živi izvan nje.</p>
+
+<p>Ovo je desetljećima jedna od najžešćih rasprava u softveru. Jedan tabor smatra pohranjene procedure prirodnim domom za svu logiku transformacije podataka, a drugi ih potpuno zabranjuje. Forumi za programere puni su pritužbi ljudi kojima je odbijen pregled koda ili kojima je kritiziran rad samo zato što su logiku stavili u procedure.</p>
+
+<p>Razvoj uz pomoć umjetne inteligencije promijenio je ton te rasprave. Umjesto da se pridruži jednom taboru, AI asistent važe svaki slučaj prema njegovim razlozima. Upada u oči koliko često sada sama umjetna inteligencija predlaže pohranjenu proceduru i objašnjava zašto: rad nad skupovima, atomarne promjene, čista sigurnosna granica. Ostatak ovog teksta upravo je to razmišljanje od slučaja do slučaja.</p>
+
+<h2>Gdje pohranjene procedure zaslužuju svoje mjesto</h2>
+
+<p>Mnogo pišem i pregledavam i SQL i aplikacijski kod i ne dijelim dogmu ni jedne strane. Pohranjene procedure pravi su alat kada je logika doista tvrdnja o podacima, a ne o njihovu prikazu ili vizualizaciji.</p>
+
+<ul>
+  <li><strong>Rad nad skupovima.</strong> Premještanje milijun redaka jednom naredbom <code>MERGE</code> bolje je od povlačenja preko mreže, obrade u petlji u C#-u ili Pythonu i vraćanja natrag.</li>
+  <li><strong>Nema putovanja tamo-amo po mreži.</strong> Poslovna logika u aplikacijskom kodu mora iz baze povući svaki redak koji joj treba, a zatim poslati svaki rezultat natrag na spremanje. To udvostručuje promet, dodaje kašnjenje svakom koraku i množi se sa svakim pozivom. Procedura čita, računa i piše na jednom mjestu, a mrežom prolazi samo konačni odgovor. Skriveni trošak je na poslužitelju. Tisuće malih poziva znače tisuće istodobnih veza, a svaki aktivni zahtjev drži jednu radnu dretvu. Ograničenja dretvi vezana su uz broj jezgri, pa dretve ponestanu dok procesor i dalje izgleda slabo iskorišten. Jedino rješenje je kupovati još vCore-ova samo da bi se održale veze, i račun za bazu na kraju je veći nego da je logika živjela unutar nje.</li>
+  <li><strong>Atomarne promjene kroz više tablica.</strong> Transakcija koja mora uspjeti ili propasti kao cjelina najsigurnija je tamo gdje podaci žive.</li>
+  <li><strong>Ispravljanje pogrešaka.</strong> Proceduru možete pokrenuti nad stvarnim podacima, proći je korak po korak i pregledati svaki međurezultat običnim <code>SELECT</code>-om. Reproduciranje greške znači ponovno pokretanje s istim parametrima. Praćenje istog pravila kroz kontrolere, servise, ORM i zapisnike aplikacije mnogo je teži posao.</li>
+  <li><strong>Kontrola verzija i isporuka.</strong> Microsoftovi projekti baza podataka za SQL Server riješili su to prije mnogo godina. Procedure žive u Gitu kao i svaki drugi kod, a GitHub Actions cjevovod uspoređuje projekt s ciljnom bazom i primjenjuje samo ono što se promijenilo. Isporuka procedure često je manja i manje stresna od izdavanja aplikacije.</li>
+  <li><strong>Cjelovitost podataka.</strong> Ograničenja, okidači i procedure koji nameću invarijante štite podatke od svakog klijenta, uključujući one kojih se nitko ne sjeća da ih je napisao.</li>
+  <li><strong>Dozvole.</strong> Dodjela <code>EXECUTE</code> na proceduri uz zabranu izravnog pristupa tablicama čista je sigurnosna granica koja se može revidirati.</li>
+  <li><strong>Skupni poslovi i ETL.</strong> Učitavanje, uklanjanje duplikata i usklađivanje datoteka blizu podataka brzo je i jednostavno.</li>
+</ul>
+
+<h2>Gdje bole</h2>
+
+<p>Pohranjene procedure nisu bez kompromisa. Evo stvarnih.</p>
+
+<ul>
+  <li><strong>Skaliranje je neujednačeno.</strong> Aplikacijske poslužitelje jeftino je dodavati, dok je procesor baze podataka najskuplje dodati. Računanje koje jako opterećuje procesor, a ne mora biti uz same podatke, bolje je držati u kodu.</li>
+  <li><strong>Prenosivost nestaje.</strong> Proceduralni kod specifičan za dijalekt veže poslovanje uz jednog dobavljača, a migracija postaje prepisivanje.</li>
+  <li><strong>Znanje se zatvara u silose.</strong> Malo programera tečno čita proceduralni SQL, pa pravila na kraju razumije jedna ili dvije osobe. Godine savjeta „držite logiku izvan baze podataka” učinile su prave stručnjake za SQL doista rijetkima. Tvrtke koje ih imaju trebale bi ih tretirati kao ključne ljude i naporno raditi da ih zadrže.</li>
+</ul>
+
+<h2>Što mijenja razvoj uz pomoć umjetne inteligencije</h2>
+
+<p>Alati za programiranje uz AI uklonili su većinu starih prigovora kodu u bazi podataka.</p>
+
+<p>AI asistent refaktorira procedure, prati ovisnosti kroz cijelu shemu i pregledava SQL jednako lako kao aplikacijski kod. Kupnja specijaliziranog analizatora SQL koda ima malo smisla kada vaš AI asistent za programiranje već radi taj posao.</p>
+
+<p>AI je također vrlo dobar u pisanju i ugađanju SQL-a nad skupovima, pa je posao s mnogo podataka koji pripada bazi danas jeftinije napraviti kako treba nego prije.</p>
+
+<p>Ostaje jedno upozorenje. Dajte asistentu stvarnu shemu, okidače, dozvole i količine podataka, jer procedura pročitana izolirano može izgledati ispravno, a ipak zakazati u produkciji.</p>
+
+<h2>Stvaran primjer: logika u bazi podataka, trošak ostaje nizak</h2>
+
+<p>Držati logiku u bazi podataka ne znači obraćati se bazi pri svakom prikazu stranice. Stranica <a href="https://stas.club/jobs">Crypto Jobs</a> na stas.club pokazuje kako imati oboje.</p>
+
+<p>Oglasi za posao žive u bazi Azure SQL, a procedure u njoj odlučuju koji su oglasi povezani s kriptovalutama i oblikuju popis. To je logika podataka, pa ostaje u bazi. No javna stranica koju bilo tko može učitati u bilo koje vrijeme držala bi bazu budnom, a bezposlužiteljska baza Azure SQL koju treba probuditi košta novac i može zamrznuti stranicu na nekoliko minuta.</p>
+
+<p>Zato stranica nikada ne dodiruje bazu podataka:</p>
+
+<ol>
+  <li>Dnevni zakazani posao na Google Cloudu poziva web API stranice. Sam posao ne sadrži poslovnu logiku; posao rade API i procedure iza njega, pa se isto osvježavanje može pokrenuti i ručno.</li>
+  <li>API pokreće procedure i vraća gotov popis.</li>
+  <li>Posao zapisuje taj popis kao JSON datoteku u Cloudflare R2 bucket na besplatnoj razini.</li>
+  <li>Kada netko otvori stranicu, stranica čita pripremljenu datoteku iz R2. Baza podataka uopće nije uključena.</li>
+</ol>
+
+<p>Rezultat je jedan poziv baze na dan umjesto jednog po posjetitelju. Pravila i dalje žive na jednom mjestu, stranica se učitava trenutačno, a baza može spavati ostatak dana.</p>
+
+<h2>Praktično pravilo za odlučivanje</h2>
+
+<p>Pitajte se o čemu je logika. Ako opisuje kako podaci moraju biti oblikovani, premještani ili zaštićeni, pripada bazi podataka. Ako treba stvari izvan baze, poput živih vanjskih podataka, mrežnih poziva ili korisničkog sučelja, pripada kodu.</p>
+
+<div class="table-wrap"><table>
+  <thead><tr><th>Logika</th><th>Bolje mjesto</th><th>Zašto</th></tr></thead>
+  <tbody>
+    <tr><td>Masovno učitavanje, spajanje, uklanjanje duplikata</td><td>Pohranjena procedura</td><td>Nad skupovima i uz same podatke</td></tr>
+    <tr><td>Pravila referencijalne cjelovitosti i jedinstvenosti</td><td>Ograničenja</td><td>Nameću se svakom klijentu</td></tr>
+    <tr><td>Kontrola pristupa na razini retka</td><td>Dozvole baze podataka</td><td>Jedna točka provedbe</td></tr>
+    <tr><td>Cijene, popusti, bodovanje</td><td>Pohranjena procedura</td><td>Nad skupovima, jedan odgovor za svakog potrošača, lako za provjeru</td></tr>
+    <tr><td>Tijekovi rada i statusi odobrenja</td><td>Pohranjena procedura</td><td>Dopušteni prijelazi nameću se i mogu se revidirati na jednom mjestu</td></tr>
+    <tr><td>Pravila koja trebaju žive podatke (tržišne cijene, API izvori)</td><td>Aplikacijski kod</td><td>Podaci žive izvan baze podataka</td></tr>
+    <tr><td>Pozivi vanjskih servisa</td><td>Aplikacijski kod</td><td>Baza podataka ne bi smjela obavljati mrežne pozive</td></tr>
+  </tbody>
+</table></div>
+
+<h2>Presuda</h2>
+
+<p>Pohranjene procedure dobar su dom za poslovnu logiku, a ne loš. Pravila koja se tiču podataka, poput bodovanja, cijena, statusa tijeka rada i cjelovitosti, pripadaju uz njih. Ondje se izvode nad skupovima, daju svakom potrošaču isti odgovor i lako ih je provjeriti. Aplikacijski kod ostavite za ono što doista živi izvan baze podataka: žive vanjske podatke, mrežne pozive i korisničko sučelje.</p>
+
+<p>Neki će se inženjeri i dalje ne složiti, a nekolicina ima stvarne razloge: tim s malo znanja SQL-a ili baza koja je već na granici računalnih resursa. Za sve ostale: pitajte se o čemu je pravilo i smjestite ga tamo gdje ti podaci žive. Taj izbor napravite namjerno, a ne iz navike.</p>

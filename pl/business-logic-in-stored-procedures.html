@@ -1,0 +1,80 @@
+<p class="lead">Moja krótka odpowiedź: logikę, która kształtuje dane, umieszczaj w bazie danych, a kod aplikacji zostaw dla tego, co naprawdę żyje poza nią.</p>
+
+<p>Od dziesięcioleci to jedna z najgorętszych debat w świecie oprogramowania. Jeden obóz uważa procedury składowane za naturalny dom dla całej logiki transformacji danych, a drugi zakazuje ich całkowicie. Fora dla programistów są pełne skarg osób, którym odrzucono przegląd kodu albo skrytykowano pracę wyłącznie za umieszczenie logiki w procedurach.</p>
+
+<p>Programowanie wspomagane przez AI zmieniło ton tego sporu. Zamiast dołączać do któregoś z obozów, asystent AI waży każdy przypadek na podstawie argumentów. Uderzające jest to, jak często AI samo proponuje procedurę składowaną i wyjaśnia dlaczego: praca na zbiorach, atomowe zmiany, czysta granica bezpieczeństwa. Reszta tego wpisu to właśnie takie rozumowanie przypadek po przypadku.</p>
+
+<h2>Gdzie procedury składowane zasługują na swoje miejsce</h2>
+
+<p>Dużo piszę i recenzuję zarówno SQL, jak i kod aplikacji, i nie podzielam dogmatów żadnej ze stron. Procedury składowane są właściwym narzędziem, gdy logika jest naprawdę stwierdzeniem o danych, a nie o ich reprezentacji czy wizualizacji.</p>
+
+<ul>
+  <li><strong>Praca na zbiorach.</strong> Przeniesienie miliona wierszy jednym poleceniem <code>MERGE</code> bije pobieranie ich przez sieć, przetwarzanie w pętli w C# lub Pythonie i odsyłanie z powrotem.</li>
+  <li><strong>Brak podróży tam i z powrotem po sieci.</strong> Logika biznesowa w kodzie aplikacji musi pobrać z bazy każdy potrzebny wiersz, a potem odesłać każdy wynik do zapisania. To podwaja ruch, dodaje opóźnienie na każdym kroku i mnoży się z każdym wywołaniem. Procedura czyta, liczy i zapisuje w jednym miejscu, a przez sieć przechodzi tylko ostateczna odpowiedź. Ukryty koszt leży po stronie serwera. Tysiące małych wywołań to tysiące równoczesnych połączeń, a każde aktywne żądanie zajmuje wątek roboczy. Limity wątków są powiązane z liczbą rdzeni, więc wątki się kończą, podczas gdy procesor nadal wygląda na niewykorzystany. Jedynym wyjściem jest dokupowanie vCore'ów tylko po to, by utrzymać połączenia, i w efekcie rachunek za bazę jest wyższy, niż gdyby logika mieszkała w bazie.</li>
+  <li><strong>Atomowe zmiany w wielu tabelach.</strong> Transakcja, która musi się udać lub nie udać jako całość, jest najbezpieczniejsza tam, gdzie żyją dane.</li>
+  <li><strong>Debugowanie.</strong> Procedurę można uruchomić na prawdziwych danych, przejść po niej krok po kroku i sprawdzić każdy wynik pośredni zwykłym <code>SELECT</code>. Odtworzenie błędu oznacza ponowne uruchomienie jej z tymi samymi parametrami. Śledzenie tej samej reguły przez kontrolery, serwisy, ORM i logi aplikacji to znacznie trudniejsze zadanie.</li>
+  <li><strong>Kontrola wersji i wdrażanie.</strong> Projekty bazodanowe Microsoft SQL Server rozwiązały to wiele lat temu. Procedury leżą w Gitcie jak każdy inny kod, a potok GitHub Actions porównuje projekt z docelową bazą i stosuje tylko to, co się zmieniło. Wdrożenie procedury bywa mniejsze i mniej stresujące niż wydanie aplikacji.</li>
+  <li><strong>Integralność danych.</strong> Ograniczenia, wyzwalacze i procedury egzekwujące niezmienniki chronią dane przed każdym klientem, także przed tymi, o których napisaniu nikt już nie pamięta.</li>
+  <li><strong>Uprawnienia.</strong> Nadanie <code>EXECUTE</code> na procedurze przy odmowie bezpośredniego dostępu do tabel to czysta, możliwa do audytu granica bezpieczeństwa.</li>
+  <li><strong>Zadania wsadowe i ETL.</strong> Ładowanie, deduplikacja i uzgadnianie plików blisko danych jest szybkie i proste.</li>
+</ul>
+
+<h2>Gdzie bolą</h2>
+
+<p>Procedury składowane nie są wolne od kompromisów. Oto prawdziwe.</p>
+
+<ul>
+  <li><strong>Skalowanie jest nierówne.</strong> Serwery aplikacji dodaje się tanio, natomiast procesor bazy danych jest najdroższym zasobem do dodania. Obliczenia obciążające procesor, które nie muszą leżeć obok danych, lepiej trzymać w kodzie.</li>
+  <li><strong>Znika przenośność.</strong> Kod proceduralny zależny od dialektu wiąże firmę z jednym dostawcą, a migracja staje się przepisywaniem.</li>
+  <li><strong>Wiedza zamyka się w silosach.</strong> Niewielu programistów płynnie czyta proceduralny SQL, więc reguły rozumieją jedna czy dwie osoby. Lata rad w stylu „trzymaj logikę poza bazą danych” sprawiły, że prawdziwi specjaliści od SQL są naprawdę rzadcy. Firmy, które ich mają, powinny traktować ich jak kluczowe osoby i dokładać starań, by ich zatrzymać.</li>
+</ul>
+
+<h2>Co zmienia programowanie wspomagane przez AI</h2>
+
+<p>Narzędzia do programowania z AI usunęły większość dawnych zarzutów wobec kodu w bazie danych.</p>
+
+<p>Asystent AI refaktoryzuje procedury, śledzi zależności w całym schemacie i recenzuje SQL równie swobodnie jak kod aplikacji. Kupowanie wyspecjalizowanego analizatora kodu SQL ma niewielki sens, gdy asystent AI do programowania już wykonuje tę pracę.</p>
+
+<p>AI jest też bardzo dobre w pisaniu i optymalizowaniu SQL opartego na zbiorach, więc praca na dużych ilościach danych, która należy do bazy, jest dziś tańsza do poprawnego wykonania niż dawniej.</p>
+
+<p>Zostaje jedno zastrzeżenie. Daj asystentowi prawdziwy schemat, wyzwalacze, uprawnienia i wolumeny danych, ponieważ procedura czytana w oderwaniu od kontekstu może wyglądać poprawnie i mimo to zawieść na produkcji.</p>
+
+<h2>Prawdziwy przykład: logika w bazie danych, niskie koszty</h2>
+
+<p>Trzymanie logiki w bazie danych nie oznacza sięgania do bazy przy każdym wyświetleniu strony. Strona <a href="https://stas.club/jobs">Crypto Jobs</a> w stas.club pokazuje, jak mieć jedno i drugie.</p>
+
+<p>Oferty pracy leżą w bazie Azure SQL, a znajdujące się tam procedury decydują, które oferty dotyczą kryptowalut, i kształtują listę. To logika danych, więc zostaje w bazie. Publiczna strona, którą każdy może załadować w dowolnej chwili, utrzymywałaby jednak bazę w stanie ciągłej gotowości, a bezserwerowa baza Azure SQL, którą trzeba wybudzić, kosztuje pieniądze i może zawiesić stronę na kilka minut.</p>
+
+<p>Dlatego strona nigdy nie dotyka bazy danych:</p>
+
+<ol>
+  <li>Codzienne zaplanowane zadanie w Google Cloud wywołuje API webowe serwisu. Samo zadanie nie zawiera logiki biznesowej; pracę wykonują API i stojące za nim procedury, więc to samo odświeżenie można też uruchomić ręcznie.</li>
+  <li>API uruchamia procedury i zwraca gotową listę.</li>
+  <li>Zadanie zapisuje tę listę jako plik JSON w buckecie Cloudflare R2 w darmowej warstwie.</li>
+  <li>Gdy ktoś otwiera stronę, serwis czyta przygotowany plik z R2. Baza danych w ogóle nie bierze udziału.</li>
+</ol>
+
+<p>W rezultacie jest jedno wywołanie bazy na dobę zamiast jednego na każdego odwiedzającego. Reguły nadal mieszkają w jednym miejscu, strona ładuje się natychmiast, a baza może spać przez resztę dnia.</p>
+
+<h2>Praktyczna reguła decyzyjna</h2>
+
+<p>Zapytaj, czego dotyczy logika. Jeśli opisuje, jak dane muszą być kształtowane, przenoszone lub chronione, należy do bazy danych. Jeśli potrzebuje rzeczy spoza bazy, takich jak bieżące dane zewnętrzne, wywołania sieciowe lub interfejs użytkownika, należy do kodu.</p>
+
+<div class="table-wrap"><table>
+  <thead><tr><th>Logika</th><th>Lepsze miejsce</th><th>Dlaczego</th></tr></thead>
+  <tbody>
+    <tr><td>Ładowanie zbiorcze, scalanie, deduplikacja</td><td>Procedura składowana</td><td>Operacje na zbiorach, blisko danych</td></tr>
+    <tr><td>Reguły integralności referencyjnej i unikalności</td><td>Ograniczenia</td><td>Egzekwowane dla każdego klienta</td></tr>
+    <tr><td>Kontrola dostępu na poziomie wiersza</td><td>Uprawnienia bazy danych</td><td>Jeden punkt egzekwowania</td></tr>
+    <tr><td>Wyceny, rabaty, punktacja</td><td>Procedura składowana</td><td>Operacje na zbiorach, jedna odpowiedź dla każdego odbiorcy, łatwa do sprawdzenia</td></tr>
+    <tr><td>Przepływy pracy i statusy zatwierdzeń</td><td>Procedura składowana</td><td>Dozwolone przejścia egzekwowane i audytowalne w jednym miejscu</td></tr>
+    <tr><td>Reguły wymagające bieżących danych (ceny rynkowe, kanały API)</td><td>Kod aplikacji</td><td>Dane znajdują się poza bazą danych</td></tr>
+    <tr><td>Wywołania usług zewnętrznych</td><td>Kod aplikacji</td><td>Baza danych nie powinna wykonywać wywołań sieciowych</td></tr>
+  </tbody>
+</table></div>
+
+<h2>Werdykt</h2>
+
+<p>Procedury składowane to dobry dom dla logiki biznesowej, a nie zły. Reguły dotyczące danych, takie jak punktacja, wyceny, statusy przepływów pracy i integralność, należą obok nich. Tam działają na zbiorach, dają każdemu odbiorcy tę samą odpowiedź i są łatwe do sprawdzenia. Kod aplikacji zostaw dla tego, co naprawdę żyje poza bazą danych: bieżących danych zewnętrznych, wywołań sieciowych i interfejsu użytkownika.</p>
+
+<p>Część inżynierów nadal się nie zgodzi, a nieliczni mają ku temu realne powody: zespół z niewielką znajomością SQL albo baza, która już dociera do granicy mocy obliczeniowej. Wszyscy pozostali niech zapytają, czego dotyczy reguła, i umieszczą ją tam, gdzie żyją te dane. Niech ten wybór będzie świadomy, a nie wynikający z nawyku.</p>

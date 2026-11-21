@@ -1,0 +1,80 @@
+<p class="lead">Jawapan ringkas saya: letakkan logik yang membentuk data dalam pangkalan data, dan simpan kod aplikasi untuk perkara yang benar-benar berada di luarnya.</p>
+
+<p>Ini telah menjadi salah satu perdebatan paling hangat dalam dunia perisian selama beberapa dekad. Satu pihak menganggap prosedur tersimpan sebagai tempat semula jadi bagi semua logik transformasi data, manakala pihak lain melarangnya sama sekali. Forum pembangun penuh dengan rungutan orang yang semakan kodnya ditolak, atau kerjanya dikritik, hanya kerana meletakkan logik dalam prosedur tersimpan.</p>
+
+<p>Pembangunan dibantu AI telah mengubah nada perdebatan itu. Daripada menyertai mana-mana pihak, pembantu AI menimbang setiap kes berdasarkan sebabnya. Memang menarik betapa kerapnya AI sendiri kini mencadangkan prosedur tersimpan dan menerangkan sebabnya: kerja berasaskan set, perubahan atomik, dan sempadan keselamatan yang bersih. Selebihnya catatan ini ialah penaakulan kes demi kes itu.</p>
+
+<h2>Di mana prosedur tersimpan wajar mendapat tempatnya</h2>
+
+<p>Saya banyak menulis dan menyemak kedua-dua SQL dan kod aplikasi, dan saya tidak berkongsi dogma mana-mana pihak. Prosedur tersimpan ialah alat yang tepat apabila logik itu benar-benar kenyataan tentang data, bukan tentang perwakilan atau visualisasinya.</p>
+
+<ul>
+  <li><strong>Kerja berasaskan set.</strong> Memindahkan sejuta baris dengan satu <code>MERGE</code> mengatasi menarik baris itu melalui rangkaian, mengulanginya dalam gelung C# atau Python, dan menolaknya kembali.</li>
+  <li><strong>Tiada pergi balik rangkaian.</strong> Logik perniagaan dalam kod aplikasi perlu menarik setiap baris yang diperlukan keluar dari pangkalan data, kemudian menghantar setiap hasil kembali untuk disimpan. Ini menggandakan trafik, menambah kependaman pada setiap langkah, dan bertambah dengan setiap panggilan. Prosedur membaca, mengira dan menulis di satu tempat, dan hanya jawapan akhir yang merentasi rangkaian. Kos tersembunyi berada di pelayan. Beribu-ribu panggilan kecil bermakna beribu-ribu sambungan serentak, dan setiap permintaan aktif menahan satu thread pekerja. Had pekerja terikat dengan bilangan teras, jadi thread kehabisan sementara CPU masih nampak kurang digunakan. Satu-satunya penyelesaian ialah membeli lebih banyak vCore semata-mata untuk menampung sambungan, dan akhirnya bil pangkalan data menjadi lebih tinggi daripada jika logik itu berada di dalamnya.</li>
+  <li><strong>Perubahan atomik merentas beberapa jadual.</strong> Transaksi yang mesti berjaya atau gagal sebagai satu unit paling selamat di tempat data berada.</li>
+  <li><strong>Penyahpepijatan.</strong> Anda boleh menjalankan prosedur terhadap data sebenar, menelusurinya langkah demi langkah, dan memeriksa setiap hasil perantaraan dengan <code>SELECT</code> biasa. Mengulang semula pepijat bermakna menjalankannya semula dengan parameter yang sama. Menjejak peraturan yang sama melalui pengawal, perkhidmatan, ORM dan log sesebuah aplikasi ialah kerja yang jauh lebih sukar.</li>
+  <li><strong>Kawalan versi dan penempatan.</strong> Projek pangkalan data Microsoft SQL Server telah menyelesaikan perkara ini bertahun-tahun lalu. Prosedur berada dalam Git seperti kod lain, dan saluran paip GitHub Actions membandingkan projek dengan pangkalan data sasaran dan hanya menggunakan apa yang berubah. Penempatan prosedur selalunya lebih kecil dan kurang menekan berbanding keluaran aplikasi.</li>
+  <li><strong>Integriti data.</strong> Kekangan, pencetus dan prosedur yang menguatkuasakan invarian melindungi data daripada setiap klien, termasuk yang tiada siapa ingat telah menulisnya.</li>
+  <li><strong>Kebenaran.</strong> Memberi <code>EXECUTE</code> pada prosedur sambil menafikan akses terus ke jadual ialah sempadan keselamatan yang bersih dan boleh diaudit.</li>
+  <li><strong>Kerja kelompok dan ETL.</strong> Memuatkan, menyah-pendua dan merekonsiliasi fail berhampiran data adalah pantas dan mudah.</li>
+</ul>
+
+<h2>Di mana ia menyakitkan</h2>
+
+<p>Prosedur tersimpan tidak bebas daripada pertukaran. Inilah yang sebenar.</p>
+
+<ul>
+  <li><strong>Penskalaan tidak seimbang.</strong> Anda boleh menambah pelayan aplikasi dengan murah, sedangkan CPU pangkalan data ialah yang paling mahal untuk ditambah. Pengiraan berat CPU yang tidak perlu berada di sebelah data lebih sesuai diletakkan dalam kod.</li>
+  <li><strong>Kebolehpindahan hilang.</strong> Kod prosedur yang khusus kepada dialek mengikat perniagaan kepada satu vendor, dan penghijrahan menjadi penulisan semula.</li>
+  <li><strong>Pengetahuan menjadi terasing.</strong> Sedikit pembangun yang membaca SQL prosedur dengan lancar, jadi peraturan akhirnya difahami oleh seorang atau dua orang. Bertahun-tahun nasihat «jauhkan logik daripada pangkalan data» telah menjadikan pakar SQL sebenar benar-benar jarang. Syarikat yang memilikinya harus melayan mereka sebagai orang penting dan berusaha keras mengekalkan mereka.</li>
+</ul>
+
+<h2>Apa yang diubah oleh pembangunan dibantu AI</h2>
+
+<p>Alat pengaturcaraan AI telah menghapuskan kebanyakan bantahan lama terhadap kod pangkalan data.</p>
+
+<p>Pembantu AI memfaktorkan semula prosedur, menjejak kebergantungan merentas skema dan menyemak SQL semudah menyemak kod aplikasi. Membeli penganalisis kod SQL khusus hampir tidak masuk akal apabila pembantu pengaturcaraan AI anda sudah melakukan kerja itu.</p>
+
+<p>AI juga sangat baik dalam menulis dan menala SQL berasaskan set, jadi kerja berat data yang sepatutnya berada dalam pangkalan data kini lebih murah untuk dilakukan dengan betul berbanding dahulu.</p>
+
+<p>Satu peringatan masih ada. Berikan pembantu itu skema sebenar, pencetus, kebenaran dan jumlah data, kerana prosedur yang dibaca secara terasing boleh nampak betul tetapi tetap gagal dalam pengeluaran.</p>
+
+<h2>Contoh sebenar: logik dalam pangkalan data, kos dikekalkan rendah</h2>
+
+<p>Mengekalkan logik dalam pangkalan data tidak bermakna mengakses pangkalan data pada setiap paparan halaman. Halaman <a href="https://stas.club/jobs">Crypto Jobs</a> di stas.club menunjukkan cara mendapatkan kedua-duanya.</p>
+
+<p>Iklan pekerjaan berada dalam pangkalan data Azure SQL, dan prosedur di dalamnya menentukan iklan mana yang berkaitan kripto dan membentuk senarai. Itu logik data, jadi ia kekal dalam pangkalan data. Tetapi halaman awam yang boleh dimuatkan oleh sesiapa pada bila-bila masa akan memastikan pangkalan data sentiasa berjaga, dan pangkalan data Azure SQL tanpa pelayan yang perlu dibangunkan memakan kos dan boleh membekukan halaman selama beberapa minit.</p>
+
+<p>Jadi halaman itu tidak pernah menyentuh pangkalan data:</p>
+
+<ol>
+  <li>Satu kerja berjadual harian di Google Cloud memanggil API web tapak itu. Kerja itu sendiri tidak mengandungi logik perniagaan; API dan prosedur di belakangnya yang melakukan kerja, jadi penyegaran yang sama juga boleh dijalankan secara manual.</li>
+  <li>API menjalankan prosedur dan memulangkan senarai yang siap.</li>
+  <li>Kerja itu menulis senarai tersebut sebagai fail JSON ke bucket Cloudflare R2 pada peringkat percuma.</li>
+  <li>Apabila seseorang membuka halaman, tapak membaca fail yang telah disediakan dari R2. Pangkalan data tidak terlibat langsung.</li>
+</ol>
+
+<p>Hasilnya ialah satu panggilan pangkalan data sehari dan bukannya satu bagi setiap pelawat. Peraturan masih berada di satu tempat, halaman dimuatkan serta-merta, dan pangkalan data boleh tidur sepanjang baki hari itu.</p>
+
+<h2>Kaedah praktikal untuk membuat keputusan</h2>
+
+<p>Tanya tentang apa logik itu. Jika ia menerangkan bagaimana data mesti dibentuk, dipindahkan atau dilindungi, ia berada dalam pangkalan data. Jika ia memerlukan perkara di luar pangkalan data, seperti data luaran secara langsung, panggilan rangkaian atau antara muka pengguna, ia berada dalam kod.</p>
+
+<div class="table-wrap"><table>
+  <thead><tr><th>Logik</th><th>Tempat yang lebih baik</th><th>Sebab</th></tr></thead>
+  <tbody>
+    <tr><td>Muatan pukal, gabungan, nyah-pendua</td><td>Prosedur tersimpan</td><td>Berasaskan set dan berhampiran data</td></tr>
+    <tr><td>Peraturan integriti rujukan dan keunikan</td><td>Kekangan</td><td>Dikuatkuasakan untuk setiap klien</td></tr>
+    <tr><td>Kawalan akses peringkat baris</td><td>Kebenaran pangkalan data</td><td>Satu titik penguatkuasaan</td></tr>
+    <tr><td>Penetapan harga, diskaun, pemarkahan</td><td>Prosedur tersimpan</td><td>Berasaskan set, satu jawapan untuk setiap pengguna, mudah diperiksa</td></tr>
+    <tr><td>Aliran kerja dan keadaan kelulusan</td><td>Prosedur tersimpan</td><td>Peralihan yang dibenarkan dikuatkuasakan dan boleh diaudit di satu tempat</td></tr>
+    <tr><td>Peraturan yang memerlukan data langsung (harga pasaran, suapan API)</td><td>Kod aplikasi</td><td>Data berada di luar pangkalan data</td></tr>
+    <tr><td>Panggilan ke perkhidmatan luaran</td><td>Kod aplikasi</td><td>Pangkalan data tidak patut membuat panggilan rangkaian</td></tr>
+  </tbody>
+</table></div>
+
+<h2>Keputusan</h2>
+
+<p>Prosedur tersimpan ialah tempat yang baik untuk logik perniagaan, bukan yang buruk. Peraturan yang berkaitan dengan data, seperti pemarkahan, penetapan harga, keadaan aliran kerja dan integriti, patut berada di sebelahnya. Di sana ia berjalan berasaskan set, memberi setiap pengguna jawapan yang sama dan mudah diperiksa. Simpan kod aplikasi untuk perkara yang benar-benar berada di luar pangkalan data: data luaran secara langsung, panggilan rangkaian dan antara muka pengguna.</p>
+
+<p>Sesetengah jurutera akan tetap tidak bersetuju, dan beberapa orang mempunyai sebab yang nyata: pasukan yang kurang kemahiran SQL, atau pangkalan data yang sudah mencapai had pengiraan. Bagi yang lain, tanyakan tentang apa sesuatu peraturan dan letakkannya di tempat data itu berada. Buat pilihan itu dengan sengaja, bukan kerana kebiasaan.</p>

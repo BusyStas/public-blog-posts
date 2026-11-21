@@ -1,5 +1,9 @@
 {
   "posts": {
+    "business-logic-in-stored-procedures": {
+      "title": "AI 如何看待 SQL 存储过程中的业务逻辑",
+      "summary": "塑造数据的逻辑应当放在数据库中:基于集合的速度、便于调试、通过 Git 部署,以及一个借助 Cloudflare R2 中每日文件来压低数据库成本的真实案例。"
+    },
     "ai-feature-trap": {
       "title": "AI 功能陷阱：当按席位授权遇上按 Token 计费",
       "summary": "加入 AI 本应降低成本，但把它塞进固定定价产品的公司，却发现账单随每一次点击而增长。谁已经调整、谁无法调整，以及如何识别下一轮挤压。"

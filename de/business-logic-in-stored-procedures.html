@@ -1,0 +1,80 @@
+<p class="lead">Meine kurze Antwort: Legen Sie die Logik, die Daten formt, in die Datenbank, und heben Sie sich den Anwendungscode für das auf, was wirklich außerhalb davon liegt.</p>
+
+<p>Das ist seit Jahrzehnten eine der heißesten Debatten der Softwarewelt. Ein Lager hält gespeicherte Prozeduren für den natürlichen Platz jeder Logik zur Datentransformation, das andere verbietet sie ganz. Entwicklerforen sind voll von Klagen über abgelehnte Code-Reviews oder kritisierte Arbeit, nur weil jemand Logik in Prozeduren gelegt hat.</p>
+
+<p>KI-gestützte Entwicklung hat den Ton dieser Debatte verändert. Statt sich einem Lager anzuschließen, wägt ein KI-Assistent jeden Fall anhand seiner Gründe ab. Es ist bemerkenswert, wie oft die KI inzwischen selbst eine gespeicherte Prozedur vorschlägt und erklärt, warum: mengenbasierte Arbeit, atomare Änderungen, eine saubere Sicherheitsgrenze. Der Rest dieses Beitrags ist genau diese Abwägung von Fall zu Fall.</p>
+
+<h2>Wo gespeicherte Prozeduren ihren Platz verdienen</h2>
+
+<p>Ich schreibe und prüfe viel SQL und viel Anwendungscode und teile das Dogma keiner der beiden Seiten. Gespeicherte Prozeduren sind das richtige Werkzeug, wenn die Logik wirklich eine Aussage über Daten ist und nicht über deren Darstellung oder Visualisierung.</p>
+
+<ul>
+  <li><strong>Mengenbasierte Arbeit.</strong> Eine Million Zeilen mit einem einzigen <code>MERGE</code> zu verschieben, schlägt es, sie über das Netz zu holen, in C# oder Python in einer Schleife zu verarbeiten und zurückzuschicken.</li>
+  <li><strong>Keine Netzwerk-Roundtrips.</strong> Geschäftslogik im Anwendungscode muss jede benötigte Zeile aus der Datenbank holen und dann jedes Ergebnis zum Speichern zurücksenden. Das verdoppelt den Datenverkehr, fügt jedem Schritt Latenz hinzu und vervielfacht sich mit jedem Aufruf. Eine Prozedur liest, berechnet und schreibt an einem Ort, und nur die endgültige Antwort geht über das Netz. Die versteckten Kosten entstehen auf dem Server. Tausende kleine Aufrufe bedeuten tausende gleichzeitige Verbindungen, und jede aktive Anfrage belegt einen Worker-Thread. Die Worker-Grenzen hängen an der Zahl der Kerne, sodass die Threads ausgehen, während die CPU noch unterfordert aussieht. Die einzige Lösung ist, mehr vCores nur zum Halten von Verbindungen zu kaufen, und am Ende ist die Datenbankrechnung höher, als wenn die Logik in der Datenbank gelegen hätte.</li>
+  <li><strong>Atomare Änderungen über mehrere Tabellen.</strong> Eine Transaktion, die als Einheit gelingen oder scheitern muss, ist dort am sichersten, wo die Daten liegen.</li>
+  <li><strong>Debugging.</strong> Sie können eine Prozedur mit echten Daten ausführen, sie Schritt für Schritt durchgehen und jedes Zwischenergebnis mit einem einfachen <code>SELECT</code> prüfen. Einen Fehler zu reproduzieren heißt, sie mit denselben Parametern erneut auszuführen. Dieselbe Regel durch Controller, Services, ORM und Logs einer Anwendung zu verfolgen, ist eine weit mühsamere Aufgabe.</li>
+  <li><strong>Versionskontrolle und Deployment.</strong> Die Datenbankprojekte von Microsoft SQL Server haben das vor Jahren gelöst. Prozeduren liegen wie jeder andere Code in Git, und eine GitHub-Actions-Pipeline vergleicht das Projekt mit der Zieldatenbank und spielt nur das Geänderte ein. Ein Prozedur-Deployment ist oft kleiner und weniger stressig als ein Anwendungsrelease.</li>
+  <li><strong>Datenintegrität.</strong> Constraints, Trigger und Prozeduren, die Invarianten durchsetzen, schützen die Daten vor jedem Client, auch vor denen, an deren Entwicklung sich niemand mehr erinnert.</li>
+  <li><strong>Berechtigungen.</strong> <code>EXECUTE</code> auf einer Prozedur zu erteilen und den direkten Tabellenzugriff zu verweigern, ist eine saubere, prüfbare Sicherheitsgrenze.</li>
+  <li><strong>Batch- und ETL-Jobs.</strong> Dateien nah an den Daten zu laden, zu deduplizieren und abzugleichen ist schnell und einfach.</li>
+</ul>
+
+<h2>Wo sie wehtun</h2>
+
+<p>Gespeicherte Prozeduren sind nicht frei von Kompromissen. Das sind die echten.</p>
+
+<ul>
+  <li><strong>Skalierung ist ungleichmäßig.</strong> Anwendungsserver lassen sich günstig hinzufügen, Datenbank-CPU ist dagegen die teuerste Art, Kapazität zu ergänzen. CPU-intensive Berechnungen, die nicht neben den Daten liegen müssen, sind im Code besser aufgehoben.</li>
+  <li><strong>Portabilität geht verloren.</strong> Dialektspezifischer prozeduraler Code bindet das Unternehmen an einen Anbieter, und eine Migration wird zur Neuentwicklung.</li>
+  <li><strong>Wissen wird isoliert.</strong> Nur wenige Entwickler lesen prozedurales SQL flüssig, sodass die Regeln am Ende von ein oder zwei Personen verstanden werden. Jahre des Ratschlags „Halten Sie Logik aus der Datenbank heraus“ haben echte SQL-Spezialisten wirklich selten gemacht. Unternehmen, die sie haben, sollten sie als Schlüsselpersonen behandeln und hart daran arbeiten, sie zu halten.</li>
+</ul>
+
+<h2>Was KI-gestützte Entwicklung verändert</h2>
+
+<p>KI-Coding-Tools haben die meisten der alten Einwände gegen Datenbankcode ausgeräumt.</p>
+
+<p>Ein KI-Assistent refaktoriert Prozeduren, verfolgt Abhängigkeiten über ein ganzes Schema und prüft SQL so mühelos wie Anwendungscode. Einen spezialisierten SQL-Codeanalysator zu kaufen, ergibt wenig Sinn, wenn Ihr KI-Coding-Assistent diese Arbeit bereits erledigt.</p>
+
+<p>KI ist außerdem sehr gut darin, mengenbasiertes SQL zu schreiben und zu optimieren, sodass die datenintensive Arbeit, die in die Datenbank gehört, heute günstiger richtig zu machen ist als früher.</p>
+
+<p>Eine Warnung bleibt. Geben Sie dem Assistenten das echte Schema, die Trigger, Berechtigungen und Datenmengen, denn eine isoliert gelesene Prozedur kann richtig aussehen und in der Produktion trotzdem scheitern.</p>
+
+<h2>Ein reales Beispiel: Logik in der Datenbank, Kosten niedrig gehalten</h2>
+
+<p>Logik in der Datenbank zu halten bedeutet nicht, bei jedem Seitenaufruf auf die Datenbank zuzugreifen. Die Seite <a href="https://stas.club/jobs">Crypto Jobs</a> auf stas.club zeigt, wie man beides erreicht.</p>
+
+<p>Die Stellenanzeigen liegen in einer Azure-SQL-Datenbank, und die dortigen Prozeduren entscheiden, welche Anzeigen mit Kryptowährungen zu tun haben, und formen die Liste. Das ist Datenlogik, also bleibt sie in der Datenbank. Eine öffentliche Seite, die jeder jederzeit laden kann, würde die Datenbank aber ständig wach halten, und eine serverlose Azure-SQL-Datenbank, die erst aufwachen muss, kostet Geld und kann die Seite minutenlang blockieren.</p>
+
+<p>Deshalb berührt die Seite die Datenbank nie:</p>
+
+<ol>
+  <li>Ein täglicher geplanter Job in Google Cloud ruft die Web-API der Website auf. Der Job enthält keine Geschäftslogik; die API und die Prozeduren dahinter erledigen die Arbeit, sodass sich dieselbe Aktualisierung auch von Hand ausführen lässt.</li>
+  <li>Die API führt die Prozeduren aus und liefert die fertige Liste zurück.</li>
+  <li>Der Job schreibt diese Liste als JSON-Datei in einen Cloudflare-R2-Bucket im kostenlosen Kontingent.</li>
+  <li>Wenn jemand die Seite öffnet, liest die Website die vorbereitete Datei aus R2. Die Datenbank ist überhaupt nicht beteiligt.</li>
+</ol>
+
+<p>Das Ergebnis ist ein Datenbankaufruf pro Tag statt einem pro Besucher. Die Regeln liegen weiterhin an einem Ort, die Seite lädt sofort, und die Datenbank kann den Rest des Tages schlafen.</p>
+
+<h2>Eine Faustregel für die Entscheidung</h2>
+
+<p>Fragen Sie, worum es in der Logik geht. Beschreibt sie, wie Daten geformt, bewegt oder geschützt werden müssen, gehört sie in die Datenbank. Braucht sie Dinge außerhalb der Datenbank, etwa Live-Daten von außen, Netzwerkaufrufe oder die Benutzeroberfläche, gehört sie in den Code.</p>
+
+<div class="table-wrap"><table>
+  <thead><tr><th>Logik</th><th>Besserer Ort</th><th>Warum</th></tr></thead>
+  <tbody>
+    <tr><td>Massenladen, Zusammenführen, Deduplizieren</td><td>Gespeicherte Prozedur</td><td>Mengenbasiert und nah an den Daten</td></tr>
+    <tr><td>Regeln für referenzielle Integrität und Eindeutigkeit</td><td>Constraints</td><td>Für jeden Client durchgesetzt</td></tr>
+    <tr><td>Zugriffskontrolle auf Zeilenebene</td><td>Datenbankberechtigungen</td><td>Ein einziger Durchsetzungspunkt</td></tr>
+    <tr><td>Preisgestaltung, Rabatte, Scoring</td><td>Gespeicherte Prozedur</td><td>Mengenbasiert, eine Antwort für jeden Konsumenten, leicht zu prüfen</td></tr>
+    <tr><td>Workflow- und Freigabestatus</td><td>Gespeicherte Prozedur</td><td>Erlaubte Übergänge an einer Stelle durchgesetzt und prüfbar</td></tr>
+    <tr><td>Regeln, die Live-Daten brauchen (Marktpreise, API-Feeds)</td><td>Anwendungscode</td><td>Die Daten liegen außerhalb der Datenbank</td></tr>
+    <tr><td>Aufrufe externer Dienste</td><td>Anwendungscode</td><td>Die Datenbank sollte keine Netzwerkaufrufe machen</td></tr>
+  </tbody>
+</table></div>
+
+<h2>Das Urteil</h2>
+
+<p>Gespeicherte Prozeduren sind ein gutes Zuhause für Geschäftslogik, kein schlechtes. Regeln, die sich um die Daten drehen, etwa Scoring, Preisgestaltung, Workflow-Status und Integrität, gehören neben die Daten. Dort laufen sie mengenbasiert, geben jedem Konsumenten dieselbe Antwort und lassen sich leicht prüfen. Heben Sie den Anwendungscode für das auf, was wirklich außerhalb der Datenbank liegt: Live-Daten von außen, Netzwerkaufrufe und die Benutzeroberfläche.</p>
+
+<p>Manche Ingenieure werden trotzdem widersprechen, und einige haben echte Gründe: ein Team mit wenig SQL-Erfahrung oder eine Datenbank, die schon an ihrer Rechenleistungsgrenze liegt. Für alle anderen gilt: Fragen Sie, worum es in einer Regel geht, und legen Sie sie dorthin, wo diese Daten liegen. Treffen Sie diese Entscheidung bewusst, nicht aus Gewohnheit.</p>
