@@ -1,0 +1,149 @@
+<p class="lead">Bu yazı, sıfırdan başlanan yeni bir proje için veritabanı seçmekle ilgili. Kısa cevap: bir veritabanı motoru olarak Postgres gayet yeterli. Çalışan bir platform olarak ise CI/CD akışınıza ve veritabanının etrafında ihtiyaç duyduğunuz araçlara bağlı.</p>
+
+<p>Yazılımı bu çitin iki tarafında da üç on yıl geliştirdikten sonra konuya böyle bakıyorum.</p>
+
+<h2>Sorunun ardındaki soru</h2>
+
+<p>"Hangi veritabanıyla başlamalıyım?" aslında üç sorudur:</p>
+
+<ul>
+  <li><strong>İş nedir?</strong> Kimse SQL Server'a sırf veri saklamak için para ödemez. Onu veriyle çalışmak için kullanırız: saklı yordamlar, küme tabanlı dönüşümler, zamanlanmış işler, ETL ve raporlama; iş mantığı verinin hemen yanında çalışır. Önce bu iş yükünü tanımlayın, sonra Postgres'in bunu yapıp yapamadığını sorun.</li>
+  <li><strong>İhtiyacım olan yeteneklere sahip mi?</strong> İş yükümün bugün dayandığı özellikler: yordamlar, zamanlama, ETL, raporlama, güvenlik, araçlar. Kimse daha sonra bırakabilmek için veritabanı seçmez; o yüzden ölçüt, şimdi ihtiyacım olanı yapıp yapmadığıdır.</li>
+  <li><strong>Maliyeti nedir?</strong> İlk iki cevaptan çıkar, çünkü formülü iş belirler. Sürekli ve ağır bir iş yükü, açık tuttuğunuz CPU çekirdeği sayısıyla fiyatlanır. Dalgalı bir iş yükü ise ne sıklıkta çağrıldığına ve her işin ne kadar ağır olduğuna göre fiyatlanır; orada kullandıkça öde veya serverless katmanlar kazanabilir. Lisans, barındırma ve insan maliyeti bunların üstüne biner.</li>
+</ul>
+
+<p>İşe bağlı. Veriyi saklamak ve sorgulamak: kolay. Veriyle veritabanının içinde çalışmak: Postgres SQL'i ve yordamsal kodu iyi idare eder, ama etrafındaki platformu (zamanlama, ETL, raporlama) o kadar iyi değil. İkinci soru, iş yükünüzün hangi tarafta olduğunu gösterir. Üçüncüsü, yani maliyet, ilk ikisinden çıkar: ya sürekli açık bir CPU için ya da veritabanını ne sıklıkta ve ne kadar ağır çağırdığınız için ödersiniz.</p>
+
+<h2>Postgres bugün nerede</h2>
+
+<p>PostgreSQL 18, 25 Eylül 2025'te yayımlandı. Öne çıkan özellik, projenin depolamadan okumalarda 3 kata kadar hızlanma gösterdiğini söylediği yeni bir asenkron G/Ç alt sistemi. Ayrıca büyük sürüm yükseltmelerinde planlayıcı istatistiklerini koruyor; bu da yükseltme sonrası yaşanan en can sıkıcı yavaşlamalardan birini ortadan kaldırıyor. Geliştiriciye dönük eklemeler arasında sanal üretilmiş sütunlar, <code>uuidv7()</code>, OAuth 2.0 kimlik doğrulaması, <code>RETURNING</code> ifadelerinde <code>OLD</code> ve <code>NEW</code> ile zamansal kısıtlar var.</p>
+
+<p>Bu, 2010'un Postgres'i değil. Hatırladığım "SQL Server yapabilir, Postgres yapamaz" argümanlarının çoğu sessizce geçerliliğini yitirdi.</p>
+
+<h2>SQL Server bugün nerede</h2>
+
+<p>SQL Server 2025, Kasım 2025'te Ignite'ta genel kullanıma sunuldu. Microsoft onu yapay zekaya hazır bir veritabanı olarak konumluyor: yerel vektör tipi, DiskANN tabanlı vektör indeksleri, T-SQL'den model yönetimi, indekslemeli yerel JSON tipi, T-SQL'de düzenli ifadeler, yerleşik REST çağrıları ve değişiklik olayı akışı. Fabric yansıtması, analiz için verileri OneLake'e aktarır.</p>
+
+<p>Güçlü bir sürüm ve doğrudan zaten Microsoft dünyasında yaşayan geliştiricileri hedefliyor.</p>
+
+<h2>Postgres nerede kazanıyor</h2>
+
+<ul>
+  <li><strong>Lisanslama.</strong> Kendiniz çalıştırdığınızda çekirdek, sürüm veya Software Assurance başına ücret yok. Yönetilen bir bulut hizmetinde lisans fiyatın içindedir, bu yüzden orada çok daha az önem taşır.</li>
+  <li><strong>Taşınabilirlik.</strong> Linux, macOS, Windows, konteynerler ve her büyük bulutta yönetilen bir seçenek. Daha az bağımlılık.</li>
+  <li><strong>Genişletilebilirlik.</strong> PostGIS ve pgvector gibi eklentiler, özel tipler ve birkaç yordamsal dil.</li>
+  <li><strong>Standartlar ve özellikler.</strong> <code>JSONB</code>, diziler, aralık tipleri, kısmi ve ifade indeksleri ve işlemsel DDL (bir şema değişikliğini geri alabilirsiniz).</li>
+</ul>
+
+<h2>SQL Server nerede hâlâ kazanıyor</h2>
+
+<ul>
+  <li><strong>CI/CD ve kaynak kontrolü. SQL Server'ın en güçlü kozu.</strong> Veritabanı, kaynak kontrolünde bir proje olarak durur ve araçlar dağıtımı sizin için üretir. Postgres'te standart bir karşılığı yok; migrasyon betiklerini elle yazıp bakımını yaparsınız. Ayrıntılar aşağıdaki bölümde.</li>
+  <li><strong>Araçlar.</strong> SSMS, SQL Agent, SSIS, SSRS ve Profiler, sıkı entegre, cilalı bir alet çantası oluşturur. Postgres'te kendinizinkini pgAdmin, cron veya pg_cron ve üçüncü taraf araçlarla kurarsınız.</li>
+  <li><strong>Microsoft entegrasyonu.</strong> Active Directory ve Entra, .NET, Power BI, Fabric. Tüm şirketiniz Microsoft üzerinde çalışıyorsa sürtünme daha azdır.</li>
+  <li><strong>Yerleşik kurumsal özellikler.</strong> Columnstore, bellek içi OLTP ve olgun Always On erişilebilirlik grupları tek ürün olarak paketlenir ve desteklenir.</li>
+  <li><strong>Tek muhatap.</strong> Her şeyden tek bir satıcı sorumludur. Postgres'te bu rol için yönetilen bir sağlayıcı veya bir destek şirketi seçersiniz.</li>
+  <li><strong>Katmanlar.</strong> SQL Server'ın sürümleri ve hizmet katmanları, küçük bir iş yükünün ortalama bir orta seviye katmandan çok daha ucuza çalışmasını sağlar. Postgres'te böyle bir kademelenme yok: her yerde aynı motor olduğu için küçük uçtaki maliyeti, ucuz bir giriş sürümü değil, seçtiğiniz barındırma belirler.</li>
+</ul>
+
+<h2>Postgres hâlâ yetişmeye çalışıyor</h2>
+
+<p>Postgres'in depolama motoru ve SQL çekirdeği çok olgun. Onların etrafındaki katman, yani büyük kurumların kutudan çıkar çıkmaz beklediği özellikler daha genç; Postgres da son birkaç sürümdür SQL Server'ın çoktan kapattığı boşlukları kapatmakla uğraşıyor:</p>
+
+<ul>
+  <li><strong>İşlem kontrollü saklı yordamlar</strong> PostgreSQL 11'de (2018) geldi. T-SQL'de yordamlar ilk günlerinden beri var.</li>
+  <li><strong><code>MERGE</code></strong> ancak PostgreSQL 15'te (2022) geldi. SQL Server'da 2008'den beri var.</li>
+  <li><strong>Sanal üretilmiş sütunlar</strong> PostgreSQL 18'de yeni. SQL Server'da hesaplanmış sütunlar onlarca yıldır var.</li>
+  <li><strong><code>RETURNING</code> içinde <code>OLD</code> ve <code>NEW</code></strong> (PostgreSQL 18), T-SQL'deki <code>OUTPUT inserted/deleted</code> ifadesine Postgres'in cevabıdır.</li>
+  <li><strong>Zamansal kısıtlar</strong> (PostgreSQL 18), SQL Server'ın 2016'da getirdiği zamansal tablolara doğru atılmış bir adımdır.</li>
+  <li><strong>OAuth 2.0 kimlik doğrulaması</strong> (PostgreSQL 18), SQL Server'ın Active Directory ve Entra üzerinden elde ettiği tek oturum açma çözümüdür.</li>
+</ul>
+
+<p>Her sürüm Postgres'i SQL Server'a biraz daha yaklaştırıyor, ama geriye kalan boşluklar gerçek projelerin kaderini belirliyor ve en büyüğü CI/CD. Veritabanını kaynak kontrolünde tanımlamanın ve bir pipeline'dan dağıtmanın standart bir yolu olmadığında, her değişiklik elle yazılmış migrasyon betiklerine mal olur. Veritabanının kaynak dosyalarıyla tanımlanmasını isteyen bir ekip için bu ciddi bir dezavantajdır ve vazgeçirici olabilir.</p>
+
+<h2>CI/CD ve kaynak kontrolü: SQL Server'ın en büyük kazancı</h2>
+
+<p>Bu, SQL Server'ın Postgres karşısındaki en güçlü kazancı ve ilk tartacağım şey.</p>
+
+<p>SQL Server'da veritabanı, kaynak kontrolünde bir projedir. Tablolar, yordamlar, görünümler ve tetikleyiciler düz <code>CREATE</code> dosyaları olarak durur; araçlar (SSDT veritabanı projeleri, sqlpackage) bu projeyi canlı bir veritabanıyla karşılaştırır ve dağıtımı sizin için üretir. Siz istenen durumu düzenlersiniz, araç değişikliği kendisi çıkarır. Visual Studio, Azure DevOps ve GitHub Actions ile doğrudan entegre olur.</p>
+
+<p>Postgres'in standart bir karşılığı yok. Yaygın iş akışı migrasyon betikleridir: her değişiklik için veritabanını bir sürümden diğerine taşıyan numaralı bir betiği elle yazarsınız ve hepsini sonsuza dek saklarsınız. Flyway ve Liquibase gibi araçlar bu betikleri bir pipeline'dan otomatik uygulayabilir, ama commit'ten önce her birini elle yazması gereken yine bir insandır. SQL Server'da istenen durumu commit edersiniz ve pipeline değişikliği kendisi çıkarıp dağıtır. Dosyaları canlı bir veritabanıyla karşılaştıran durum tabanlı araçlar da var (örneğin Atlas ve pg-schema-diff), ama daha genç, daha az yaygın ve ilk elden değiller. Saklı yordamlar için ayrıca kendi yeniden oluşturma adımınıza ihtiyaç var.</p>
+
+<p>Veritabanınızın yalnızca kaynak dosyalarla tanımlanmasını istiyor ve her migrasyon betiğini elle yazıp bakımını yapmayı göze alamıyorsanız, SQL Server daha güvenli seçimdir.</p>
+
+<h2>Maliyet karşılaştırması: orta ölçekli bir veritabanı</h2>
+
+<p>Orta ölçekli bir veritabanı düşünelim: 20 GB, günün her saati değil, dalgalar halinde kullanılıyor. İki seçenek de Azure'da çalışacak. Ne öderdim?</p>
+
+<div class="table-wrap"><table>
+  <thead><tr><th>Seçenek (20 GB veritabanı)</th><th>Yıllık maliyet</th><th>Notlar</th></tr></thead>
+  <tbody>
+    <tr><td>Azure SQL Database, ücretsiz teklif</td><td>Günde 1 saat açıksa $0; günde 4 saatte yaklaşık $209; günde 12 saatte yaklaşık $986; günde 24 saatte yaklaşık $2.153. Depolama ücretsiz (32 GB).</td><td>Ücretsiz hesaplama ayda 100.000 vCore-saniye. Rakamlar, açıkken 0,5 vCore ve vCore-saniye başına yaklaşık $0,00015 varsayar (kendi tahminim). Bunun yerine veritabanını gelecek aya kadar duraklatabilirsiniz; bu $0'dır ama hak bittikten sonra erişilemez olur.</td></tr>
+    <tr><td>Azure SQL Database, Basic</td><td>mümkün değil</td><td>En fazla 2 GB.</td></tr>
+    <tr><td>Azure SQL Database, Standard S0</td><td>yaklaşık $180, depolama dahil</td><td>Kullanım ne olursa olsun ayda yaklaşık $15. 10 DTU, 250 GB'a kadar.</td></tr>
+    <tr><td>Azure Database for PostgreSQL, B1ms</td><td>yaklaşık $144 + $45 depolama (toplam yaklaşık $190)</td><td>Hesaplama ayda yaklaşık $12 (US East). Sağlanabilecek en küçük depolama 32 GiB. Yedekler, sağlanan depolama boyutuna kadar ücretsiz.</td></tr>
+  </tbody>
+</table></div>
+
+<p>Bu fiyatlar yaklaşıktır. Onları üçüncü taraf özetlerinden aldım ve Postgres depolama fiyatı kendi tahminim (GiB-ay başına yaklaşık $0,115). Karar vermeden önce Azure fiyatlandırma hesaplayıcısına bakın.</p>
+
+<p><strong>Çağrılar arttıkça ne ödersiniz ve ne hissedersiniz.</strong> Azure SQL'in $5 ve $15 fiyatları katman için sabittir. Veritabanı günde bir çağrı da alsa, bir milyon çağrı da alsa bunu ödersiniz. Sizi sınırlayan kapasitedir. Çağrılar katmanın 5 veya 10 DTU'sundan fazlasını gerektirdiğinde sorgular yavaşlar ve bunu çağrı başına ödeyerek değil, daha üst bir katmana geçerek çözersiniz.</p>
+
+<p>Postgres fiyat açısından aynı şekilde çalışır, ama sınırda farklı hissettirir. B1ms fiyatı da saatlik sabittir, kaç çağrı geldiği fark etmez. Ancak B1ms, "burstable" bir sunucudur ve çoğunlukla boşta duran veritabanları için tasarlanmıştır. Boştayken, tıpkı bir banka hesabı gibi kredi biriktirir ve yoğun anlar bunları harcar. Çok uzun süre yoğun kalırsa krediler biter ve sunucu yanıt vermeyi bırakabilir. Aynı şekilde, daha fazla vCore'a geçerek çözersiniz; Microsoft bunun saniyeler sürdüğünü söylüyor. Yani iki veritabanında da daha fazla çağrı faturayı artırmaz. Sizi daha büyük bir katmana iter ve faturayı o büyük katman artırır.</p>
+
+<p>Ücretsiz teklif ve serverless istisnadır. Gerçekten kullandığınız hesaplamayı saniye başına faturalarlar; bu yüzden çağrı sıklığı doğrudan önem taşır: sık çağrılar veritabanını uyanık tutar ve ücretsiz hakkı tüketir.</p>
+
+<p>Bu iş yükü için cevap, veritabanının günde kaç saat uyanık olduğuna bağlı. Uygulama veritabanını birkaç dakikalığına uyandırıp sonra sessizleşiyorsa ücretsiz teklif bunu karşılar. Aylık hak biterse, veritabanını gelecek aya kadar duraklatmak ile standart ücreti ödemek arasında seçim yaparsınız.</p>
+
+<p>Azure'da Postgres'in bir fiyat tabanı var. B1ms, yalnızca hesaplama için ayda yaklaşık $12, depolama ve yedeklerden önce yılda kabaca $144'tır; kullanılsa da kullanılmasa da. Serverless otomatik duraklatmanın bir karşılığını bulamadım. Esnek bir sunucuyu durdurabilirsiniz, ama siz önce başlatmazsanız Azure onu 7 gün sonra otomatik olarak yeniden başlatır. Burstable katman ayrıca boşta kalan veya temel seviyenin altında çalışan iş yükleri için tasarlanmıştır: CPU yüksek kalırsa krediler biter ve sunucuya erişilemez hale gelebilir; Microsoft bu katmanı esas olarak üretim dışı kullanım için tanımlıyor.</p>
+
+<p>İki şey tabloyu değiştirebilir:</p>
+
+<ul>
+  <li><strong>Paylaşım.</strong> Bir Postgres sunucusu birçok veritabanını barındırabilir; dolayısıyla tüm projeleriniz tek bir sunucudaysa $12 paylaşılır. SQL Server'ın ücretsiz teklifi veritabanı başınadır.</li>
+  <li><strong>Sürekli yük.</strong> Uygulama veritabanını günün her saati kullanıyorsa ücretsiz SQL hakkı (bir vCore'un yaklaşık 28 saati) hızla biter ve standart serverless ücretleri ödersiniz. Güncel bir saniye başı fiyat bulamadım; bu yüzden karar vermeden önce her iki seçeneği gerçek yükünüzle Azure hesaplayıcısında fiyatlandırın.</li>
+</ul>
+
+<p>Sonuç: Postgres daha ucuz değil. Daha ucuz olduğu yaygın bir efsanedir. Yazılım ücretsizdir, ama yönetilen bir bulut hizmetinde lisans için değil, hesaplama ve depolama için ödersiniz; SQL Server'ın lisansı da her iki durumda fiyatının içindedir. 20 GB'ta en ucuz SQL Server seçeneği her kullanım düzeyinde Postgres'e eşit veya ondan iyidir: günde yaklaşık 2 saat uyanık kalmaya kadar ücretsiz, sonra yılda yaklaşık $180'lık Standard S0 karşısında Postgres için yaklaşık $190. S0'daki fark küçük; bunu Postgres için en iyi ihtimalle yaklaşık eşitlik olarak okuyun, asla açıkça daha ucuz değil. Bunu mümkün kılan ücretsiz tekliflerle ilgili olarak Azure, Google, AWS, Oracle ve Cloudflare'in ücretsiz veritabanı ve hesaplama tekliflerini karşılaştıran <a href="https://stas.boston/blog/free-cloud-tiers">Hunting Freebies in the Clouds</a> yazısına bakın.</p>
+
+<h2>Karar vermenin pratik yolu</h2>
+
+<p>Şu durumlarda Postgres seçerdim:</p>
+
+<ul>
+  <li>Veritabanı küçükse ve çoğunlukla hiç değişmeyen veya evrilmeyen tablolar ve görünümlerden oluşuyorsa.</li>
+  <li>Lisanslama anlamlı bir gider kalemiyse veya çekirdek sayısı yüzünden sıkışıyorsanız.</li>
+  <li>Aynı veritabanını herhangi bir bulutta veya dizüstü bilgisayarda çalıştırmak istiyorsanız.</li>
+  <li>Ekibiniz Postgres'i zaten biliyorsa ya da öğrenmek istiyorsa.</li>
+</ul>
+
+<p>Şu durumlarda SQL Server seçerdim:</p>
+
+<ul>
+  <li>SQL şemanız sık değişiyorsa ve CI/CD önemliyse: veritabanının kaynak kontrolünde tanımlanmasını ve elle yazılmış migrasyon betikleri olmadan bir pipeline'dan dağıtılmasını istiyorsanız.</li>
+  <li>İş mantığınızın büyük bölümü saklı yordamlarda yaşayacaksa.</li>
+  <li>SSIS, SSRS ve SQL Agent'ı platformun parçası olarak istiyorsanız.</li>
+  <li>Şirket, Fabric ve Power BI dahil Microsoft yığınına bağlıysa.</li>
+</ul>
+
+<p>İkilemde kaldıysanız, önce CI/CD'yi tartın.</p>
+
+<h2>Hüküm</h2>
+
+<p>Postgres, veri kalıcılığı için temel ihtiyaçları olan küçücük bir proje için kullanılabilir. Daha büyük her şey için seçim; işe, veritabanının etrafında ihtiyaç duyduğunuz yeteneklere ve her şeyden önce SQL Server'ın en net kazandığı yer olan CI/CD akışınıza bağlıdır. Bir commit'i push edip veritabanının kendi kendine dağıtılmasını istiyorsanız, SQL Server ile başlayın.</p>
+
+<h2>Kaynaklar</h2>
+
+<ul>
+  <li><a href="https://postgresql.org/about/news/postgresql-18-released-3142/">PostgreSQL 18 release announcement</a></li>
+  <li><a href="https://www.postgresql.org/docs/current/release-18.html">PostgreSQL 18 release notes</a></li>
+  <li><a href="https://www.sqlservercentral.com/articles/sql-server-2025-has-arrived">SQL Server 2025 has arrived</a> (SQLServerCentral)</li>
+  <li><a href="https://www.neowin.net/news/microsoft-announces-general-availability-of-sql-2025-fabric-databases-and-documentdb/">Microsoft announces general availability of SQL Server 2025</a> (Neowin)</li>
+  <li><a href="https://learn.microsoft.com/azure/azure-sql/database/free-offer">Deploy Azure SQL Database for free</a> (Microsoft Learn)</li>
+  <li><a href="https://techcommunity.microsoft.com/blog/azuresqlblog/-/4471390">Azure SQL Database free offer overview</a> (Microsoft Tech Community)</li>
+  <li><a href="https://www.flexera.com/blog/finops/azure-sql-database-pricing/">Azure SQL Database pricing by tier</a> (Flexera)</li>
+  <li><a href="https://www.sqlservercentral.com/blogs/azure-sql-database-pricing">Azure SQL Database service tier costs</a> (SQLServerCentral)</li>
+  <li><a href="https://www.bytebase.com/dbcost/azure-flexible/instance/B1ms/">Azure Database for PostgreSQL B1ms pricing</a> (Bytebase)</li>
+  <li><a href="https://learn.microsoft.com/azure/postgresql/compute-storage/concepts-compute">Compute and storage concepts for flexible server</a> (Microsoft Learn)</li>
+  <li><a href="https://learn.microsoft.com/en-us/answers/questions/2223469/shut-down-azure-postgresql-without-azure-restartin">Shut down Azure PostgreSQL without automatic restart</a> (Microsoft Q&amp;A)</li>
+</ul>

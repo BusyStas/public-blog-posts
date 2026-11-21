@@ -10,6 +10,15 @@
       "isTrading": false
     },
     {
+      "code": "can-postgres-replace-sql-server",
+      "title": "Can Postgres Replace Microsoft SQL Server",
+      "summary": "Choosing a database for a new project from scratch: where Postgres and SQL Server each win, why CI/CD decides more than features, and what a 20 GB database really costs on Azure.",
+      "publishedOn": "2026-11-03",
+      "isCrypto": false,
+      "isAi": false,
+      "isTrading": false
+    },
+    {
       "code": "business-logic-in-stored-procedures",
       "title": "What AI Thinks About Business Logic in SQL Stored Procedures",
       "summary": "Logic that shapes data belongs in the database: set-based speed, easy debugging, Git deployment, and a real example that keeps database cost low with a daily file in Cloudflare R2.",

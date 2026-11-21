@@ -1,0 +1,149 @@
+<p class="lead">In diesem Beitrag geht es um die Wahl einer Datenbank für ein neues Projekt, das bei null beginnt. Kurze Antwort: Als Datenbank-Engine ist Postgres in Ordnung. Als funktionierende Plattform hängt es von Ihrem CI/CD-Workflow und den Werkzeugen ab, die Sie rund um die Datenbank brauchen.</p>
+
+<p>So denke ich darüber nach drei Jahrzehnten Softwareentwicklung auf beiden Seiten dieses Zauns.</p>
+
+<h2>Die Frage hinter der Frage</h2>
+
+<p>„Mit welcher Datenbank soll ich anfangen?“ sind in Wahrheit drei Fragen:</p>
+
+<ul>
+  <li><strong>Was ist die Aufgabe?</strong> Niemand zahlt für SQL Server, nur um Daten zu speichern. Wir nutzen es, um mit Daten zu arbeiten: gespeicherte Prozeduren, mengenbasierte Transformationen, geplante Jobs, ETL und Reporting, mit Geschäftslogik, die direkt neben den Daten läuft. Definieren Sie zuerst diese Arbeitslast und fragen Sie dann, ob Postgres sie bewältigen kann.</li>
+  <li><strong>Hat es die Fähigkeiten, die ich brauche?</strong> Die Funktionen, von denen meine Arbeitslast heute abhängt: Prozeduren, Zeitplanung, ETL, Reporting, Sicherheit, Werkzeuge. Niemand wählt eine Datenbank, um sie später verlassen zu können; der Test ist also, ob sie das leistet, was ich jetzt brauche.</li>
+  <li><strong>Was kostet es?</strong> Das folgt aus den ersten beiden Antworten, denn die Aufgabe bestimmt die Formel. Eine stetige, schwere Last wird danach bepreist, wie viele CPU-Kerne Sie laufen lassen. Eine schwankende Last wird danach bepreist, wie oft sie aufgerufen wird und wie schwer jeder Job ist, und dort können nutzungsbasierte oder Serverless-Stufen gewinnen. Lizenzen, Hosting und Personal kommen obendrauf.</li>
+</ul>
+
+<p>Es hängt von der Aufgabe ab. Daten speichern und abfragen: einfach. Innerhalb der Datenbank mit Daten arbeiten: Postgres beherrscht SQL und prozeduralen Code gut, aber nicht die Plattform drumherum (Zeitplanung, ETL, Reporting). Die zweite Frage zeigt, auf welcher Seite Ihre Arbeitslast liegt. Die dritte, die Kosten, folgt aus den ersten beiden: Sie zahlen entweder für eine dauerhaft laufende CPU oder dafür, wie oft und wie schwer Sie die Datenbank aufrufen.</p>
+
+<h2>Wo Postgres heute steht</h2>
+
+<p>PostgreSQL 18 erschien am 25. September 2025. Das Hauptmerkmal ist ein neues asynchrones I/O-Subsystem, das laut Projekt bis zu dreimal schnellere Lesezugriffe vom Speicher gezeigt hat. Außerdem bleiben die Planerstatistiken über Hauptversions-Upgrades hinweg erhalten, was eine der unangenehmeren Verlangsamungen nach einem Upgrade beseitigt. Zu den Neuerungen für Entwickler zählen virtuelle generierte Spalten, <code>uuidv7()</code>, OAuth-2.0-Authentifizierung, <code>OLD</code> und <code>NEW</code> in <code>RETURNING</code>-Klauseln sowie temporale Constraints.</p>
+
+<p>Das ist nicht das Postgres von 2010. Die meisten „SQL Server kann das, Postgres nicht“-Argumente, an die ich mich erinnere, sind stillschweigend verfallen.</p>
+
+<h2>Wo SQL Server heute steht</h2>
+
+<p>SQL Server 2025 wurde im November 2025 auf der Ignite allgemein verfügbar. Microsoft positioniert es als KI-fähige Datenbank: ein nativer Vektortyp, DiskANN-basierte Vektorindizes, Modellverwaltung aus T-SQL, ein nativer JSON-Typ mit Indizierung, reguläre Ausdrücke in T-SQL, eingebaute REST-Aufrufe und Change-Event-Streaming. Fabric-Spiegelung schiebt Daten für Analysen nach OneLake.</p>
+
+<p>Es ist ein starkes Release, das sich direkt an Entwickler richtet, die ohnehin in der Microsoft-Welt leben.</p>
+
+<h2>Wo Postgres gewinnt</h2>
+
+<ul>
+  <li><strong>Lizenzierung.</strong> Keine Gebühren pro Kern, pro Edition oder für Software Assurance, wenn Sie es selbst betreiben. Bei einem verwalteten Cloud-Dienst ist die Lizenz im Preis enthalten, daher spielt das dort eine viel geringere Rolle.</li>
+  <li><strong>Portabilität.</strong> Linux, macOS, Windows, Container und ein verwaltetes Angebot in jeder großen Cloud. Weniger Lock-in.</li>
+  <li><strong>Erweiterbarkeit.</strong> Erweiterungen wie PostGIS und pgvector, eigene Typen und mehrere prozedurale Sprachen.</li>
+  <li><strong>Standards und Funktionen.</strong> <code>JSONB</code>, Arrays, Bereichstypen, partielle und Ausdrucksindizes sowie transaktionales DDL (eine Schemaänderung lässt sich zurückrollen).</li>
+</ul>
+
+<h2>Wo SQL Server weiterhin gewinnt</h2>
+
+<ul>
+  <li><strong>CI/CD und Quellcodeverwaltung. Der stärkste Vorteil von SQL Server.</strong> Die Datenbank liegt als Projekt in der Quellcodeverwaltung, und die Werkzeuge erzeugen das Deployment für Sie. Postgres hat kein standardisiertes Gegenstück, daher schreiben und pflegen Sie Migrationsskripte von Hand. Details im nächsten Abschnitt.</li>
+  <li><strong>Werkzeuge.</strong> SSMS, SQL Agent, SSIS, SSRS und Profiler bilden einen eng integrierten, ausgereiften Werkzeugkasten. Bei Postgres stellen Sie sich Ihren eigenen aus pgAdmin, cron oder pg_cron und Drittanbieter-Tools zusammen.</li>
+  <li><strong>Microsoft-Integration.</strong> Active Directory und Entra, .NET, Power BI, Fabric. Wenn Ihr ganzes Unternehmen auf Microsoft läuft, ist die Reibung geringer.</li>
+  <li><strong>Eingebaute Enterprise-Funktionen.</strong> Columnstore, In-Memory-OLTP und ausgereifte Always-On-Verfügbarkeitsgruppen werden als ein Produkt gebündelt und unterstützt.</li>
+  <li><strong>Ein Ansprechpartner.</strong> Ein einziger Anbieter ist für alles verantwortlich. Bei Postgres wählen Sie für diese Rolle einen Managed-Anbieter oder eine Support-Firma.</li>
+  <li><strong>Stufen.</strong> Dank der Editionen und Servicestufen von SQL Server kann eine kleine Arbeitslast weit weniger kosten als eine durchschnittliche mittlere Stufe. Postgres hat dieses Gefälle nicht: Es ist überall dieselbe Engine, daher wird der Preis am unteren Ende durch das gewählte Hosting bestimmt, nicht durch eine günstige Einstiegsedition.</li>
+</ul>
+
+<h2>Postgres holt noch auf</h2>
+
+<p>Storage-Engine und SQL-Kern von Postgres sind sehr ausgereift. Die Schicht darum herum, also die Funktionen, die große Unternehmen von Haus aus erwarten, ist jünger, und Postgres hat die letzten Releases damit verbracht, Lücken zu schließen, die SQL Server längst geschlossen hat:</p>
+
+<ul>
+  <li><strong>Gespeicherte Prozeduren mit Transaktionssteuerung</strong> kamen mit PostgreSQL 11 (2018). T-SQL hat Prozeduren seit seinen Anfängen.</li>
+  <li><strong><code>MERGE</code></strong> kam erst mit PostgreSQL 15 (2022). SQL Server hat es seit 2008.</li>
+  <li><strong>Virtuelle generierte Spalten</strong> sind neu in PostgreSQL 18. SQL Server hat berechnete Spalten seit Jahrzehnten.</li>
+  <li><strong><code>OLD</code> und <code>NEW</code> in <code>RETURNING</code></strong> (PostgreSQL 18) ist die Antwort von Postgres auf die <code>OUTPUT inserted/deleted</code>-Klausel in T-SQL.</li>
+  <li><strong>Temporale Constraints</strong> (PostgreSQL 18) bewegen sich in Richtung der temporalen Tabellen, die SQL Server 2016 eingeführt hat.</li>
+  <li><strong>OAuth-2.0-Authentifizierung</strong> (PostgreSQL 18) ist die Single-Sign-on-Lösung, die SQL Server über Active Directory und Entra erhält.</li>
+</ul>
+
+<p>Jedes Release bringt Postgres näher an SQL Server, doch die verbleibenden Lücken entscheiden reale Projekte, und die größte ist CI/CD. Ohne einen standardisierten Weg, die Datenbank in der Quellcodeverwaltung zu definieren und aus einer Pipeline auszurollen, kostet jede Änderung handgeschriebene Migrationsskripte. Für ein Team, das die Datenbank durch ihre Quelldateien definiert haben möchte, ist das ein ernster Nachteil und kann ein Ausschlusskriterium sein.</p>
+
+<h2>CI/CD und Quellcodeverwaltung: der größte Vorteil von SQL Server</h2>
+
+<p>Das ist der stärkste Vorteil von SQL Server gegenüber Postgres und das Erste, was ich abwägen würde.</p>
+
+<p>In SQL Server ist die Datenbank ein Projekt in der Quellcodeverwaltung. Tabellen, Prozeduren, Sichten und Trigger liegen als einfache <code>CREATE</code>-Dateien vor, und die Werkzeuge (SSDT-Datenbankprojekte, sqlpackage) vergleichen dieses Projekt mit einer laufenden Datenbank und erzeugen das Deployment für Sie. Sie bearbeiten den Sollzustand, und das Werkzeug ermittelt die Änderung. Es fügt sich direkt in Visual Studio, Azure DevOps und GitHub Actions ein.</p>
+
+<p>Postgres hat kein standardisiertes Gegenstück. Der gängige Workflow sind Migrationsskripte: Für jede Änderung schreiben Sie von Hand ein nummeriertes Skript, das die Datenbank von einer Version zur nächsten bringt, und bewahren alle für immer auf. Werkzeuge wie Flyway und Liquibase können diese Skripte automatisch aus einer Pipeline anwenden, aber ein Mensch muss jedes einzelne vor dem Commit von Hand schreiben. In SQL Server committen Sie den Sollzustand, und die Pipeline ermittelt und deployt die Änderung selbst. Zustandsbasierte Werkzeuge, die Dateien mit einer laufenden Datenbank vergleichen, gibt es (zum Beispiel Atlas und pg-schema-diff), aber sie sind jünger, weniger verbreitet und nicht von Haus aus dabei. Für gespeicherte Prozeduren brauchen Sie obendrein einen eigenen Neuaufbau-Schritt.</p>
+
+<p>Wenn Sie Ihre Datenbank allein durch Quelldateien definiert haben möchten und es sich nicht leisten können, jedes Migrationsskript von Hand zu schreiben und zu pflegen, ist SQL Server die sicherere Wahl.</p>
+
+<h2>Kostenvergleich: eine mittelgroße Datenbank</h2>
+
+<p>Nehmen wir eine mittelgroße Datenbank: 20 GB, stoßweise statt rund um die Uhr genutzt. Beide Optionen würden in Azure laufen. Was würde ich zahlen?</p>
+
+<div class="table-wrap"><table>
+  <thead><tr><th>Option (20-GB-Datenbank)</th><th>Kosten pro Jahr</th><th>Hinweise</th></tr></thead>
+  <tbody>
+    <tr><td>Azure SQL Database, kostenloses Angebot</td><td>$0, wenn 1 Stunde pro Tag wach; etwa $209 bei 4 Stunden pro Tag; etwa $986 bei 12 Stunden pro Tag; etwa $2.153 bei 24 Stunden pro Tag. Der Speicher ist kostenlos (32 GB).</td><td>Die kostenlose Rechenleistung beträgt 100.000 vCore-Sekunden pro Monat. Die Zahlen gehen von 0,5 vCore im wachen Zustand und etwa $0,00015 pro vCore-Sekunde aus (meine Schätzung). Sie können die Datenbank stattdessen bis zum nächsten Monat pausieren, was $0 kostet, sie aber unzugänglich macht, sobald das Kontingent aufgebraucht ist.</td></tr>
+    <tr><td>Azure SQL Database, Basic</td><td>nicht möglich</td><td>Maximal 2 GB.</td></tr>
+    <tr><td>Azure SQL Database, Standard S0</td><td>etwa $180, Speicher inklusive</td><td>Etwa $15 im Monat bei jeder Nutzung. 10 DTUs, bis zu 250 GB.</td></tr>
+    <tr><td>Azure Database for PostgreSQL, B1ms</td><td>etwa $144 + $45 Speicher (insgesamt etwa $190)</td><td>Die Rechenleistung kostet etwa $12 im Monat (US East). 32 GiB sind der kleinste bereitstellbare Speicher. Backups sind bis zur Größe des bereitgestellten Speichers kostenlos.</td></tr>
+  </tbody>
+</table></div>
+
+<p>Diese Preise sind ungefähr. Ich habe sie aus Zusammenfassungen von Drittanbietern entnommen, und der Postgres-Speicherpreis ist meine eigene Schätzung (etwa $0,115 pro GiB und Monat). Prüfen Sie den Azure-Preisrechner, bevor Sie sich festlegen.</p>
+
+<p><strong>Was Sie zahlen und was Sie spüren, wenn die Aufrufe zunehmen.</strong> Die Azure-SQL-Preise von $5 und $15 sind für die Stufe fest. Sie zahlen sie, ob die Datenbank einen Aufruf am Tag erhält oder eine Million. Begrenzt werden Sie durch die Kapazität. Wenn die Aufrufe mehr als die 5 oder 10 DTUs der Stufe brauchen, werden Abfragen langsam, und Sie lösen das durch den Wechsel in eine höhere Stufe, nicht durch Bezahlen pro Aufruf.</p>
+
+<p>Postgres funktioniert beim Preis genauso, fühlt sich aber an der Grenze anders an. Auch der B1ms-Preis ist pro Stunde fest, egal wie viele Aufrufe eintreffen. Aber der B1ms ist ein „burstable“ Server, gebaut für Datenbanken, die meist im Leerlauf sind. Im Leerlauf spart er wie ein Bankkonto Guthaben an, und arbeitsreiche Momente verbrauchen es. Bleibt er zu lange ausgelastet, ist das Guthaben aufgebraucht, und der Server kann aufhören zu antworten. Sie lösen das auf dieselbe Weise, indem Sie auf mehr vCores wechseln, was laut Microsoft Sekunden dauert. Bei beiden Datenbanken erhöhen mehr Aufrufe also nicht die Rechnung. Sie drängen Sie in eine größere Stufe, und die größere Stufe erhöht sie.</p>
+
+<p>Das kostenlose Angebot und Serverless sind die Ausnahme. Sie rechnen die tatsächlich genutzte Rechenleistung sekundengenau ab, daher zählt die Aufrufhäufigkeit direkt: Häufige Aufrufe halten die Datenbank wach und verbrauchen das kostenlose Kontingent.</p>
+
+<p>Für diese Arbeitslast hängt die Antwort davon ab, wie viele Stunden am Tag die Datenbank wach ist. Wenn die Anwendung die Datenbank nur für ein paar Minuten weckt und dann ruhig bleibt, reicht das kostenlose Angebot. Ist das Monatskontingent aufgebraucht, wählen Sie zwischen Pausieren der Datenbank bis zum nächsten Monat und Zahlen der Standardpreise.</p>
+
+<p>Postgres auf Azure hat einen Mindestpreis. Der B1ms kostet allein für die Rechenleistung etwa $12 im Monat, grob $144 im Jahr vor Speicher und Backups, egal ob ihn jemand nutzt. Ein Gegenstück zur Serverless-Autopause habe ich nicht gefunden. Sie können einen Flexible Server stoppen, aber Azure startet ihn nach 7 Tagen automatisch wieder, wenn Sie ihn nicht vorher selbst starten. Die Burstable-Stufe ist außerdem für Arbeitslasten gedacht, die im Leerlauf oder unter der Basislinie bleiben: Bleibt die CPU hoch, ist das Guthaben aufgebraucht und der Server kann unerreichbar werden, und Microsoft beschreibt die Stufe vor allem für Nicht-Produktionsumgebungen.</p>
+
+<p>Zwei Dinge können das Bild verändern:</p>
+
+<ul>
+  <li><strong>Teilen.</strong> Ein Postgres-Server kann viele Datenbanken hosten; liegen alle Ihre Projekte auf einem Server, werden die $12 geteilt. Das kostenlose Angebot von SQL Server gilt pro Datenbank.</li>
+  <li><strong>Konstante Last.</strong> Greift die Anwendung rund um die Uhr auf die Datenbank zu, ist das kostenlose SQL-Kontingent (etwa 28 Stunden eines vCores) schnell weg, und Sie zahlen die Standard-Serverless-Preise. Einen aktuellen Sekundenpreis habe ich nicht gefunden, bepreisen Sie also vor der Entscheidung beide Optionen im Azure-Rechner mit Ihrer echten Last.</li>
+</ul>
+
+<p>Fazit: Postgres ist nicht billiger. Dass es billiger sei, ist ein verbreiteter Mythos. Die Software ist kostenlos, aber bei einem verwalteten Cloud-Dienst zahlen Sie für Rechenleistung und Speicher, nicht für eine Lizenz, und die Lizenz von SQL Server ist ohnehin im Preis enthalten. Bei 20 GB ist die günstigste SQL-Server-Option auf jeder Nutzungsstufe mindestens so gut wie Postgres: kostenlos bis etwa 2 Stunden Wachzeit am Tag, danach Standard S0 mit etwa $180 im Jahr gegenüber etwa $190 bei Postgres. Der Abstand bei S0 ist klein; lesen Sie ihn als bestenfalls etwa gleichauf für Postgres, aber nie eindeutig billiger. Zu den kostenlosen Angeboten, die das möglich machen, siehe <a href="https://stas.boston/blog/free-cloud-tiers">Hunting Freebies in the Clouds</a>, das die kostenlosen Datenbank- und Compute-Angebote von Azure, Google, AWS, Oracle und Cloudflare vergleicht.</p>
+
+<h2>Ein praktischer Weg zur Entscheidung</h2>
+
+<p>Ich würde Postgres wählen, wenn:</p>
+
+<ul>
+  <li>Die Datenbank klein ist und hauptsächlich aus Tabellen und Sichten besteht, die sich nie ändern oder weiterentwickeln.</li>
+  <li>Lizenzen ein spürbarer Kostenpunkt sind oder Sie bei den Kernen unter Druck stehen.</li>
+  <li>Sie dieselbe Datenbank in jeder Cloud oder auf einem Laptop betreiben wollen.</li>
+  <li>Ihr Team Postgres bereits kennt oder lernen möchte.</li>
+</ul>
+
+<p>Ich würde SQL Server wählen, wenn:</p>
+
+<ul>
+  <li>Ihr SQL-Schema sich häufig ändert und CI/CD wichtig ist: Sie wollen die Datenbank in der Quellcodeverwaltung definieren und ohne handgeschriebene Migrationsskripte aus einer Pipeline ausrollen.</li>
+  <li>Ein großer Teil Ihrer Geschäftslogik in gespeicherten Prozeduren liegen wird.</li>
+  <li>Sie SSIS, SSRS und SQL Agent als Teil der Plattform wollen.</li>
+  <li>Das Unternehmen auf den Microsoft-Stack festgelegt ist, einschließlich Fabric und Power BI.</li>
+</ul>
+
+<p>Wenn Sie unentschlossen sind, wägen Sie zuerst CI/CD ab.</p>
+
+<h2>Fazit</h2>
+
+<p>Postgres lässt sich für ein winziges Projekt mit grundlegendem Bedarf an Datenpersistenz einsetzen. Für alles Größere hängt die Wahl von der Aufgabe ab, von den Fähigkeiten, die Sie rund um die Datenbank brauchen, und vor allem von Ihrem CI/CD-Workflow, wo SQL Server am deutlichsten gewinnt. Wenn Sie einen Commit pushen und die Datenbank sich selbst ausrollen soll, fangen Sie mit SQL Server an.</p>
+
+<h2>Quellen</h2>
+
+<ul>
+  <li><a href="https://postgresql.org/about/news/postgresql-18-released-3142/">PostgreSQL 18 release announcement</a></li>
+  <li><a href="https://www.postgresql.org/docs/current/release-18.html">PostgreSQL 18 release notes</a></li>
+  <li><a href="https://www.sqlservercentral.com/articles/sql-server-2025-has-arrived">SQL Server 2025 has arrived</a> (SQLServerCentral)</li>
+  <li><a href="https://www.neowin.net/news/microsoft-announces-general-availability-of-sql-2025-fabric-databases-and-documentdb/">Microsoft announces general availability of SQL Server 2025</a> (Neowin)</li>
+  <li><a href="https://learn.microsoft.com/azure/azure-sql/database/free-offer">Deploy Azure SQL Database for free</a> (Microsoft Learn)</li>
+  <li><a href="https://techcommunity.microsoft.com/blog/azuresqlblog/-/4471390">Azure SQL Database free offer overview</a> (Microsoft Tech Community)</li>
+  <li><a href="https://www.flexera.com/blog/finops/azure-sql-database-pricing/">Azure SQL Database pricing by tier</a> (Flexera)</li>
+  <li><a href="https://www.sqlservercentral.com/blogs/azure-sql-database-pricing">Azure SQL Database service tier costs</a> (SQLServerCentral)</li>
+  <li><a href="https://www.bytebase.com/dbcost/azure-flexible/instance/B1ms/">Azure Database for PostgreSQL B1ms pricing</a> (Bytebase)</li>
+  <li><a href="https://learn.microsoft.com/azure/postgresql/compute-storage/concepts-compute">Compute and storage concepts for flexible server</a> (Microsoft Learn)</li>
+  <li><a href="https://learn.microsoft.com/en-us/answers/questions/2223469/shut-down-azure-postgresql-without-azure-restartin">Shut down Azure PostgreSQL without automatic restart</a> (Microsoft Q&amp;A)</li>
+</ul>

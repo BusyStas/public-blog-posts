@@ -1,0 +1,149 @@
+<p class="lead">Catatan ini tentang memilih pangkalan data untuk projek baharu, bermula dari kosong. Jawapan ringkas: sebagai enjin pangkalan data, Postgres memang baik. Sebagai platform kerja, ia bergantung pada aliran kerja CI/CD anda dan alatan yang anda perlukan di sekeliling pangkalan data.</p>
+
+<p>Beginilah cara saya berfikir selepas tiga dekad membina perisian di kedua-dua belah pagar ini.</p>
+
+<h2>Soalan di sebalik soalan</h2>
+
+<p>"Pangkalan data mana yang patut saya mulakan?" sebenarnya tiga soalan:</p>
+
+<ul>
+  <li><strong>Apakah tugasnya?</strong> Tiada sesiapa membayar untuk SQL Server hanya untuk menyimpan data. Kita menggunakannya untuk bekerja dengan data: prosedur tersimpan, transformasi berasaskan set, tugas berjadual, ETL dan pelaporan, dengan logik perniagaan berjalan betul-betul di sebelah data. Tentukan beban kerja itu dahulu, kemudian tanya sama ada Postgres boleh melakukannya.</li>
+  <li><strong>Adakah ia mempunyai keupayaan yang saya perlukan?</strong> Ciri yang menjadi sandaran beban kerja saya hari ini: prosedur, penjadualan, ETL, pelaporan, keselamatan, alatan. Tiada sesiapa memilih pangkalan data supaya boleh meninggalkannya kemudian, jadi ujiannya ialah sama ada ia melakukan apa yang saya perlukan sekarang.</li>
+  <li><strong>Berapakah kosnya?</strong> Ia mengikuti dua jawapan pertama, kerana tugas menentukan formulanya. Beban kerja yang stabil dan berat dinilai mengikut bilangan teras CPU yang anda biarkan berjalan. Beban kerja yang berselang-seli dinilai mengikut kekerapan ia dipanggil dan betapa beratnya setiap tugas, dan di situ peringkat bayar-mengikut-guna atau serverless boleh menang. Pelesenan, pengehosan dan tenaga manusia berada di atas itu.</li>
+</ul>
+
+<p>Ia bergantung pada tugas. Menyimpan dan membuat pertanyaan data: mudah. Bekerja dengan data di dalam pangkalan data: Postgres mengendalikan SQL dan kod prosedur dengan baik, tetapi tidak platform di sekelilingnya (penjadualan, ETL, pelaporan). Soalan kedua menunjukkan di sebelah mana beban kerja anda berada. Soalan ketiga, kos, mengikuti dua yang pertama: anda membayar sama ada untuk CPU yang sentiasa hidup atau untuk seberapa kerap dan seberapa berat anda memanggil pangkalan data.</p>
+
+<h2>Di mana Postgres sekarang</h2>
+
+<p>PostgreSQL 18 dikeluarkan pada 25 September 2025. Sorotannya ialah subsistem I/O tak segerak yang baharu, yang menurut projek itu menunjukkan bacaan sehingga 3 kali ganda lebih pantas daripada storan. Ia juga mengekalkan statistik perancang merentas naik taraf versi utama, yang menghapuskan salah satu kelembapan selepas naik taraf yang lebih menyakitkan. Tambahan untuk pembangun termasuk lajur janaan maya, <code>uuidv7()</code>, pengesahan OAuth 2.0, <code>OLD</code> dan <code>NEW</code> dalam klausa <code>RETURNING</code>, dan kekangan temporal.</p>
+
+<p>Ini bukan Postgres tahun 2010. Kebanyakan hujah "SQL Server boleh, Postgres tak boleh" yang saya ingat telah luput secara senyap.</p>
+
+<h2>Di mana SQL Server sekarang</h2>
+
+<p>SQL Server 2025 mencapai ketersediaan umum di Ignite pada November 2025. Microsoft meletakkannya sebagai pangkalan data sedia-AI: jenis vektor asli, indeks vektor berasaskan DiskANN, pengurusan model daripada T-SQL, jenis JSON asli dengan pengindeksan, ungkapan nahu biasa dalam T-SQL, panggilan REST terbina dalam, dan penstriman peristiwa perubahan. Pencerminan Fabric menolak data ke OneLake untuk analitik.</p>
+
+<p>Ia keluaran yang kukuh, dan disasarkan terus kepada pembangun yang sudah hidup dalam dunia Microsoft.</p>
+
+<h2>Di mana Postgres menang</h2>
+
+<ul>
+  <li><strong>Pelesenan.</strong> Tiada yuran setiap teras, setiap edisi atau Software Assurance apabila anda menjalankannya sendiri. Pada perkhidmatan awan terurus, lesen sudah terbina dalam harga, jadi perkara ini jauh kurang penting di situ.</li>
+  <li><strong>Kebolehpindahan.</strong> Linux, macOS, Windows, kontena, dan tawaran terurus pada setiap awan utama. Kurang terkunci kepada satu pembekal.</li>
+  <li><strong>Kebolehlanjutan.</strong> Sambungan seperti PostGIS dan pgvector, jenis tersuai, dan beberapa bahasa prosedur.</li>
+  <li><strong>Piawaian dan ciri.</strong> <code>JSONB</code>, tatasusunan, jenis julat, indeks separa dan indeks ungkapan, dan DDL transaksi (anda boleh membatalkan perubahan skema).</li>
+</ul>
+
+<h2>Di mana SQL Server masih menang</h2>
+
+<ul>
+  <li><strong>CI/CD dan kawalan sumber. Kemenangan terkuat SQL Server.</strong> Pangkalan data berada dalam kawalan sumber sebagai projek, dan alatan menjana penggunaan untuk anda. Postgres tidak mempunyai setara piawai, jadi anda menulis dan menyelenggara skrip migrasi secara manual. Butiran dalam bahagian di bawah.</li>
+  <li><strong>Alatan.</strong> SSMS, SQL Agent, SSIS, SSRS dan Profiler membentuk kotak alat yang terintegrasi erat dan digilap. Dalam Postgres anda menghimpun sendiri daripada pgAdmin, cron atau pg_cron, dan alatan pihak ketiga.</li>
+  <li><strong>Integrasi Microsoft.</strong> Active Directory dan Entra, .NET, Power BI, Fabric. Jika seluruh syarikat anda berjalan atas Microsoft, geseran lebih rendah.</li>
+  <li><strong>Ciri perusahaan terbina dalam.</strong> Columnstore, OLTP dalam memori, dan kumpulan ketersediaan Always On yang matang dibungkus dan disokong sebagai satu produk.</li>
+  <li><strong>Satu pihak bertanggungjawab.</strong> Seorang pembekal tunggal bertanggungjawab ke atas segalanya. Dengan Postgres anda memilih pembekal terurus atau syarikat sokongan untuk peranan itu.</li>
+  <li><strong>Peringkat.</strong> Edisi dan peringkat perkhidmatan SQL Server membolehkan beban kerja kecil berharga jauh lebih rendah daripada peringkat pertengahan biasa. Postgres tidak mempunyai kecerunan sebegitu: ia enjin yang sama di mana-mana, jadi kos di hujung kecil ditentukan oleh pengehosan yang anda pilih, bukan edisi permulaan yang murah.</li>
+</ul>
+
+<h2>Postgres masih mengejar</h2>
+
+<p>Enjin storan dan teras SQL Postgres sangat matang. Lapisan di sekelilingnya, ciri yang dijangka oleh perusahaan besar sedia ada dalam kotak, lebih muda, dan Postgres telah menghabiskan beberapa keluaran lepas menutup jurang yang telah lama ditutup oleh SQL Server:</p>
+
+<ul>
+  <li><strong>Prosedur tersimpan dengan kawalan transaksi</strong> tiba dalam PostgreSQL 11 (2018). T-SQL mempunyai prosedur sejak hari-hari awalnya.</li>
+  <li><strong><code>MERGE</code></strong> hanya tiba dalam PostgreSQL 15 (2022). SQL Server telah memilikinya sejak 2008.</li>
+  <li><strong>Lajur janaan maya</strong> baharu dalam PostgreSQL 18. SQL Server telah mempunyai lajur terkira selama beberapa dekad.</li>
+  <li><strong><code>OLD</code> dan <code>NEW</code> dalam <code>RETURNING</code></strong> (PostgreSQL 18) ialah jawapan Postgres kepada klausa <code>OUTPUT inserted/deleted</code> dalam T-SQL.</li>
+  <li><strong>Kekangan temporal</strong> (PostgreSQL 18) bergerak ke arah jadual temporal yang diperkenalkan SQL Server pada 2016.</li>
+  <li><strong>Pengesahan OAuth 2.0</strong> (PostgreSQL 18) ialah penyelesaian log masuk tunggal yang diperoleh SQL Server melalui Active Directory dan Entra.</li>
+</ul>
+
+<p>Setiap keluaran membawa Postgres lebih dekat kepada SQL Server, tetapi jurang yang tinggal menentukan projek sebenar, dan yang terbesar ialah CI/CD. Tanpa cara piawai untuk menentukan pangkalan data dalam kawalan sumber dan menggunakannya daripada saluran paip, setiap perubahan memerlukan skrip migrasi yang ditulis secara manual. Bagi pasukan yang mahu pangkalan data ditakrifkan oleh fail sumbernya, itu kelemahan serius dan boleh menjadi penentu.</p>
+
+<h2>CI/CD dan kawalan sumber: kemenangan terbesar SQL Server</h2>
+
+<p>Ini kemenangan terkuat SQL Server berbanding Postgres, dan perkara pertama yang akan saya timbang.</p>
+
+<p>Dalam SQL Server pangkalan data ialah projek dalam kawalan sumber. Jadual, prosedur, paparan dan pencetus wujud sebagai fail <code>CREATE</code> biasa, dan alatan (projek pangkalan data SSDT, sqlpackage) membandingkan projek itu dengan pangkalan data langsung dan menjana penggunaan untuk anda. Anda mengedit keadaan yang dikehendaki, dan alat itu mengira perubahannya. Ia terus bersambung dengan Visual Studio, Azure DevOps dan GitHub Actions.</p>
+
+<p>Postgres tidak mempunyai setara piawai. Aliran kerja arus perdana ialah skrip migrasi: untuk setiap perubahan anda menulis skrip bernombor secara manual yang menggerakkan pangkalan data daripada satu versi ke versi seterusnya, dan anda menyimpan kesemuanya selama-lamanya. Alatan seperti Flyway dan Liquibase boleh menggunakan skrip itu secara automatik daripada saluran paip, tetapi seorang manusia masih perlu menulis setiap satu secara manual sebelum commit. Dalam SQL Server anda commit keadaan yang dikehendaki dan saluran paip mengira serta menggunakan perubahan itu sendiri. Alatan berasaskan keadaan yang membandingkan fail dengan pangkalan data langsung memang wujud (Atlas dan pg-schema-diff, misalnya), tetapi ia lebih muda, kurang digunakan, dan bukan pihak pertama. Prosedur tersimpan memerlukan langkah pembinaan semula anda sendiri di atasnya.</p>
+
+<p>Jika anda mahu pangkalan data anda ditakrifkan oleh fail sumber sahaja dan tidak mampu menulis serta menyelenggara setiap skrip migrasi secara manual, SQL Server ialah pilihan yang lebih selamat.</p>
+
+<h2>Perbandingan kos: pangkalan data bersaiz sederhana</h2>
+
+<p>Ambil pangkalan data bersaiz sederhana: 20 GB, digunakan secara berkala dan bukan sepanjang masa. Kedua-dua pilihan akan berjalan di Azure. Berapa yang akan saya bayar?</p>
+
+<div class="table-wrap"><table>
+  <thead><tr><th>Pilihan (pangkalan data 20 GB)</th><th>Kos setahun</th><th>Nota</th></tr></thead>
+  <tbody>
+    <tr><td>Azure SQL Database, tawaran percuma</td><td>$0 jika jaga 1 jam sehari; kira-kira $209 pada 4 jam sehari; kira-kira $986 pada 12 jam sehari; kira-kira $2,153 pada 24 jam sehari. Storan percuma (32 GB).</td><td>Pengkomputeran percuma ialah 100,000 vCore-saat sebulan. Angka mengandaikan 0.5 vCore semasa jaga dan kira-kira $0.00015 setiap vCore-saat (anggaran saya). Anda boleh menjeda pangkalan data sehingga bulan depan, yang berkos $0 tetapi menjadikannya tidak boleh diakses setelah peruntukan habis.</td></tr>
+    <tr><td>Azure SQL Database, Basic</td><td>tidak boleh</td><td>Maksimum 2 GB.</td></tr>
+    <tr><td>Azure SQL Database, Standard S0</td><td>kira-kira $180, storan termasuk</td><td>Kira-kira $15 sebulan pada sebarang tahap penggunaan. 10 DTU, sehingga 250 GB.</td></tr>
+    <tr><td>Azure Database for PostgreSQL, B1ms</td><td>kira-kira $144 + $45 storan (kira-kira $190 jumlah)</td><td>Pengkomputeran kira-kira $12 sebulan (US East). 32 GiB ialah storan terkecil yang boleh diperuntukkan. Sandaran percuma sehingga saiz storan yang diperuntukkan.</td></tr>
+  </tbody>
+</table></div>
+
+<p>Harga ini adalah anggaran. Saya mengambilnya daripada ringkasan pihak ketiga, dan harga storan Postgres ialah anggaran saya sendiri (kira-kira $0.115 setiap GiB sebulan). Semak kalkulator harga Azure sebelum anda membuat komitmen.</p>
+
+<p><strong>Apa yang anda bayar, dan apa yang anda rasa, apabila panggilan bertambah.</strong> Harga Azure SQL $5 dan $15 adalah tetap bagi peringkat itu. Anda membayarnya sama ada pangkalan data menerima satu panggilan sehari atau sejuta. Apa yang mengehadkan anda ialah kapasiti. Apabila panggilan memerlukan lebih daripada 5 atau 10 DTU peringkat itu, pertanyaan menjadi perlahan, dan anda menyelesaikannya dengan beralih ke peringkat lebih tinggi, bukan dengan membayar setiap panggilan.</p>
+
+<p>Postgres berfungsi sama dari segi harga, dengan rasa yang berbeza pada had. Harga B1ms juga tetap setiap jam, tidak kira berapa banyak panggilan tiba. Tetapi B1ms ialah pelayan "burstable", dibina untuk pangkalan data yang kebanyakannya melahu. Semasa melahu ia mengumpul kredit, seperti akaun bank, dan saat sibuk membelanjakannya. Jika ia kekal sibuk terlalu lama, kredit habis dan pelayan boleh berhenti bertindak balas. Anda menyelesaikannya dengan cara yang sama, dengan beralih ke lebih banyak vCore, yang menurut Microsoft mengambil masa beberapa saat. Jadi dengan kedua-dua pangkalan data, lebih banyak panggilan tidak menaikkan bil. Ia menolak anda ke peringkat yang lebih besar, dan peringkat yang lebih besar itulah yang menaikkannya.</p>
+
+<p>Tawaran percuma dan serverless ialah pengecualian. Ia mengenakan bayaran untuk pengkomputeran yang anda gunakan sebenarnya, per saat, jadi kekerapan panggilan penting secara langsung: panggilan yang kerap mengekalkan pangkalan data jaga dan menghabiskan peruntukan percuma.</p>
+
+<p>Bagi beban kerja ini jawapannya bergantung pada berapa jam sehari pangkalan data itu jaga. Jika aplikasi membangunkan pangkalan data beberapa minit pada satu masa dan kemudian senyap, tawaran percuma menampungnya. Jika peruntukan bulanan habis, anda memilih antara menjeda pangkalan data sehingga bulan depan dan membayar kadar standard.</p>
+
+<p>Postgres di Azure mempunyai had bawah harga. B1ms kira-kira $12 sebulan untuk pengkomputeran sahaja, kira-kira $144 setahun sebelum storan dan sandaran, sama ada sesiapa menggunakannya atau tidak. Saya tidak menemui setara jeda automatik serverless untuknya. Anda boleh menghentikan pelayan fleksibel, tetapi Azure memulakannya semula secara automatik selepas 7 hari melainkan anda memulakannya sendiri dahulu. Peringkat burstable juga bertujuan untuk beban kerja yang kekal melahu atau di bawah garis dasar: jika CPU kekal tinggi, kredit habis dan pelayan boleh menjadi tidak dapat dicapai, dan Microsoft menerangkan peringkat itu terutamanya untuk kegunaan bukan pengeluaran.</p>
+
+<p>Dua perkara boleh mengubah gambaran:</p>
+
+<ul>
+  <li><strong>Perkongsian.</strong> Satu pelayan Postgres boleh menghoskan banyak pangkalan data, jadi jika semua projek anda berada pada satu pelayan, $12 itu dikongsi. Tawaran percuma SQL Server adalah bagi setiap pangkalan data.</li>
+  <li><strong>Beban berterusan.</strong> Jika aplikasi mengakses pangkalan data sepanjang masa, peruntukan SQL percuma (kira-kira 28 jam satu vCore) cepat habis dan anda akan membayar kadar serverless standard. Saya tidak menemui kadar per saat semasa, jadi nilaikan kedua-dua pilihan dalam kalkulator Azure pada beban sebenar anda sebelum memutuskan.</li>
+</ul>
+
+<p>Kesimpulan: Postgres tidak lebih murah. Bahawa ia lebih murah ialah mitos biasa. Perisiannya percuma, tetapi pada perkhidmatan awan terurus anda membayar untuk pengkomputeran dan storan, bukan untuk lesen, dan lesen SQL Server sudah terbina dalam harganya pula. Pada 20 GB pilihan SQL Server termurah menyamai atau mengatasi Postgres pada setiap tahap penggunaan: percuma sehingga kira-kira 2 jam jaga sehari, kemudian Standard S0 pada kira-kira $180 setahun berbanding kira-kira $190 untuk Postgres. Jurang pada S0 kecil, jadi bacalah sebagai sama sahaja paling baik bagi Postgres, dan tidak pernah jelas lebih murah. Untuk tawaran percuma yang menjadikan ini mungkin, lihat <a href="https://stas.boston/blog/free-cloud-tiers">Hunting Freebies in the Clouds</a>, yang membandingkan tawaran pangkalan data dan pengkomputeran percuma daripada Azure, Google, AWS, Oracle dan Cloudflare.</p>
+
+<h2>Cara praktikal untuk memutuskan</h2>
+
+<p>Saya akan memilih Postgres apabila:</p>
+
+<ul>
+  <li>Pangkalan data kecil dan kebanyakannya jadual dan paparan yang tidak pernah berubah atau berkembang.</li>
+  <li>Pelesenan ialah item kos yang bermakna, atau anda ditekan oleh bilangan teras.</li>
+  <li>Anda mahu menjalankan pangkalan data yang sama pada mana-mana awan atau pada komputer riba.</li>
+  <li>Pasukan anda sudah mengenali Postgres, atau mahu mempelajarinya.</li>
+</ul>
+
+<p>Saya akan memilih SQL Server apabila:</p>
+
+<ul>
+  <li>Skema SQL anda kerap berubah dan CI/CD penting: anda mahu pangkalan data ditakrifkan dalam kawalan sumber dan digunakan daripada saluran paip tanpa skrip migrasi yang ditulis secara manual.</li>
+  <li>Sebahagian besar logik perniagaan anda akan berada dalam prosedur tersimpan.</li>
+  <li>Anda mahu SSIS, SSRS dan SQL Agent sebagai sebahagian daripada platform.</li>
+  <li>Syarikat komited kepada tindanan Microsoft, termasuk Fabric dan Power BI.</li>
+</ul>
+
+<p>Jika anda masih ragu, timbang CI/CD dahulu.</p>
+
+<h2>Keputusan</h2>
+
+<p>Postgres boleh digunakan untuk projek kecil dengan keperluan asas untuk penyimpanan data. Untuk apa-apa yang lebih besar, pilihan bergantung pada tugas, keupayaan yang anda perlukan di sekeliling pangkalan data, dan yang paling utama aliran kerja CI/CD anda, di mana SQL Server menang dengan paling jelas. Jika anda mahu menolak satu commit dan pangkalan data menggunakan dirinya sendiri, mulakan dengan SQL Server.</p>
+
+<h2>Sumber</h2>
+
+<ul>
+  <li><a href="https://postgresql.org/about/news/postgresql-18-released-3142/">PostgreSQL 18 release announcement</a></li>
+  <li><a href="https://www.postgresql.org/docs/current/release-18.html">PostgreSQL 18 release notes</a></li>
+  <li><a href="https://www.sqlservercentral.com/articles/sql-server-2025-has-arrived">SQL Server 2025 has arrived</a> (SQLServerCentral)</li>
+  <li><a href="https://www.neowin.net/news/microsoft-announces-general-availability-of-sql-2025-fabric-databases-and-documentdb/">Microsoft announces general availability of SQL Server 2025</a> (Neowin)</li>
+  <li><a href="https://learn.microsoft.com/azure/azure-sql/database/free-offer">Deploy Azure SQL Database for free</a> (Microsoft Learn)</li>
+  <li><a href="https://techcommunity.microsoft.com/blog/azuresqlblog/-/4471390">Azure SQL Database free offer overview</a> (Microsoft Tech Community)</li>
+  <li><a href="https://www.flexera.com/blog/finops/azure-sql-database-pricing/">Azure SQL Database pricing by tier</a> (Flexera)</li>
+  <li><a href="https://www.sqlservercentral.com/blogs/azure-sql-database-pricing">Azure SQL Database service tier costs</a> (SQLServerCentral)</li>
+  <li><a href="https://www.bytebase.com/dbcost/azure-flexible/instance/B1ms/">Azure Database for PostgreSQL B1ms pricing</a> (Bytebase)</li>
+  <li><a href="https://learn.microsoft.com/azure/postgresql/compute-storage/concepts-compute">Compute and storage concepts for flexible server</a> (Microsoft Learn)</li>
+  <li><a href="https://learn.microsoft.com/en-us/answers/questions/2223469/shut-down-azure-postgresql-without-azure-restartin">Shut down Azure PostgreSQL without automatic restart</a> (Microsoft Q&amp;A)</li>
+</ul>

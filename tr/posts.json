@@ -4,6 +4,10 @@
       "title": "Yapay Zeka Sol Gezinme Çubuğunu Neden Öldürmeyecek",
       "summary": "Yalnızca sohbetten oluşan arayüzler modern görünür, ancak menü kullanıcıların ihtiyaç duyduğu site haritasıdır. Yapay zekanın neden gezinmenin içinde çalışması gerektiği; sesli komutlar, Notion ve Claude'dan dersler."
     },
+    "can-postgres-replace-sql-server": {
+      "title": "Postgres, Microsoft SQL Server'ın yerini alabilir mi?",
+      "summary": "Sıfırdan yeni bir proje için veritabanı seçmek: Postgres ve SQL Server nerede kazanır, CI/CD neden özelliklerden daha belirleyicidir ve Azure'da 20 GB'lık bir veritabanı gerçekte ne kadar tutar."
+    },
     "business-logic-in-stored-procedures": {
       "title": "Yapay Zekâ, SQL Saklı Yordamlarındaki İş Mantığı Hakkında Ne Düşünüyor?",
       "summary": "Veriyi şekillendiren mantık veritabanına aittir: küme tabanlı hız, kolay hata ayıklama, Git ile dağıtım ve Cloudflare R2'deki günlük bir dosyayla veritabanı maliyetini düşük tutan gerçek bir örnek."

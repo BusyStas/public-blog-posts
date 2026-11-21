@@ -4,6 +4,10 @@
       "title": "Dlaczego AI nie zabije lewego paska nawigacji",
       "summary": "Interfejsy wyłącznie czatowe brzmią nowocześnie, ale menu to mapa serwisu, której potrzebują użytkownicy. Dlaczego AI powinna działać wewnątrz nawigacji, z lekcjami z poleceń głosowych, Notiona i Claude'a."
     },
+    "can-postgres-replace-sql-server": {
+      "title": "Czy Postgres może zastąpić Microsoft SQL Server?",
+      "summary": "Wybór bazy danych dla nowego projektu od zera: gdzie wygrywa Postgres, a gdzie SQL Server, dlaczego CI/CD waży więcej niż funkcje i ile naprawdę kosztuje baza 20 GB w Azure."
+    },
     "business-logic-in-stored-procedures": {
       "title": "Co AI sądzi o logice biznesowej w procedurach składowanych SQL",
       "summary": "Logika kształtująca dane należy do bazy danych: szybkość operacji zbiorczych, proste debugowanie, wdrażanie przez Git i prawdziwy przykład, w którym codzienny plik w Cloudflare R2 utrzymuje niskie koszty bazy danych."

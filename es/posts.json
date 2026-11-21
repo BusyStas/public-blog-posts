@@ -4,6 +4,10 @@
       "title": "Por qué la IA no acabará con la barra de navegación izquierda",
       "summary": "Las interfaces solo de chat suenan modernas, pero un menú es el mapa del sitio que los usuarios necesitan. Por qué la IA debe trabajar dentro de la navegación, con lecciones de los comandos de voz, Notion y Claude."
     },
+    "can-postgres-replace-sql-server": {
+      "title": "¿Puede Postgres reemplazar a Microsoft SQL Server?",
+      "summary": "Cómo elegir una base de datos para un proyecto nuevo desde cero: dónde gana cada una, por qué el CI/CD pesa más que las funciones y cuánto cuesta de verdad una base de 20 GB en Azure."
+    },
     "business-logic-in-stored-procedures": {
       "title": "Qué piensa la IA de la lógica de negocio en los procedimientos almacenados de SQL",
       "summary": "La lógica que da forma a los datos pertenece a la base de datos: velocidad por conjuntos, depuración sencilla, despliegue con Git y un ejemplo real que mantiene bajo el coste de la base de datos con un archivo diario en Cloudflare R2."

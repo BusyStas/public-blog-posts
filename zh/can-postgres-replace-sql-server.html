@@ -1,0 +1,149 @@
+<p class="lead">本文讨论的是为一个全新项目从零开始选择数据库。简短的回答是：作为数据库引擎，Postgres 完全没问题；作为一个可工作的平台，则取决于你的 CI/CD 流程，以及数据库周边所需的工具。</p>
+
+<p>这是我在这道栅栏两侧构建软件三十年后的思考方式。</p>
+
+<h2>问题背后的问题</h2>
+
+<p>“我应该从哪个数据库开始？”其实是三个问题：</p>
+
+<ul>
+  <li><strong>任务是什么？</strong>没有人花钱买 SQL Server 只是为了存储数据。我们用它来处理数据：存储过程、基于集合的转换、定时作业、ETL 和报表，业务逻辑就运行在数据旁边。先定义这种工作负载，再问 Postgres 能不能胜任。</li>
+  <li><strong>它具备我需要的能力吗？</strong>我的工作负载今天所依赖的功能：存储过程、调度、ETL、报表、安全、工具。没有人选数据库是为了以后能离开它，所以检验标准是它能否满足我现在的需要。</li>
+  <li><strong>它的成本是多少？</strong>成本由前两个答案决定，因为任务决定了计算公式。持续的重负载按你保持运行的 CPU 核数计价；突发型负载按调用频率和每个任务的重量计价，这时按用量付费或无服务器（serverless）层级可能更划算。许可、托管和人力成本则叠加在这之上。</li>
+</ul>
+
+<p>这取决于任务。存储和查询数据：很容易。在数据库内部处理数据：Postgres 能很好地处理 SQL 和过程式代码，但它周边的平台（调度、ETL、报表）则不然。第二个问题会显示你的工作负载属于哪一边。第三个问题即成本，由前两个问题决定：你要么为一直开着的 CPU 付费，要么为调用数据库的频率和重量付费。</p>
+
+<h2>Postgres 现状</h2>
+
+<p>PostgreSQL 18 于 2025 年 9 月 25 日发布。最大的亮点是全新的异步 I/O 子系统，项目方称存储读取速度最高提升至 3 倍。它还会在大版本升级时保留规划器统计信息，消除了升级后最令人头疼的性能下降之一。面向开发者的新增功能包括虚拟生成列、<code>uuidv7()</code>、OAuth 2.0 认证、<code>RETURNING</code> 子句中的 <code>OLD</code> 和 <code>NEW</code>，以及时态约束。</p>
+
+<p>这已经不是 2010 年的 Postgres 了。我记忆中大多数“SQL Server 能做、Postgres 不能”的论点都已悄然过时。</p>
+
+<h2>SQL Server 现状</h2>
+
+<p>SQL Server 2025 于 2025 年 11 月在 Ignite 大会上正式发布。微软将其定位为面向 AI 的数据库：原生向量类型、基于 DiskANN 的向量索引、通过 T-SQL 管理模型、带索引的原生 JSON 类型、T-SQL 中的正则表达式、内置 REST 调用和变更事件流。Fabric 镜像会把数据推送到 OneLake 用于分析。</p>
+
+<p>这是一个强大的版本，直接面向已经身处微软生态的开发者。</p>
+
+<h2>Postgres 的优势</h2>
+
+<ul>
+  <li><strong>许可。</strong>自行运行时没有按核心、按版本或 Software Assurance 收费。在托管云服务上，许可已包含在价格里，所以那里这一点的意义小得多。</li>
+  <li><strong>可移植性。</strong>支持 Linux、macOS、Windows、容器，并且每个主要云都有托管服务。锁定更少。</li>
+  <li><strong>可扩展性。</strong>PostGIS 和 pgvector 等扩展、自定义类型，以及多种过程语言。</li>
+  <li><strong>标准与功能。</strong><code>JSONB</code>、数组、范围类型、部分索引和表达式索引，以及事务性 DDL（可以回滚架构变更）。</li>
+</ul>
+
+<h2>SQL Server 仍然占优之处</h2>
+
+<ul>
+  <li><strong>CI/CD 与源代码管理。这是 SQL Server 最强的优势。</strong>数据库以项目形式存放在源代码管理中，工具会为你生成部署脚本。Postgres 没有标准的对应方案，所以你得手写并维护迁移脚本。详见下一节。</li>
+  <li><strong>工具。</strong>SSMS、SQL Agent、SSIS、SSRS 和 Profiler 构成了高度集成、打磨精良的工具箱。在 Postgres 中，你要用 pgAdmin、cron 或 pg_cron 以及第三方工具自己拼装。</li>
+  <li><strong>微软生态集成。</strong>Active Directory 和 Entra、.NET、Power BI、Fabric。如果你的整个公司都运行在微软之上，摩擦会更小。</li>
+  <li><strong>内置企业功能。</strong>列存储、内存 OLTP 和成熟的 Always On 可用性组作为一个产品打包并获得支持。</li>
+  <li><strong>单一责任方。</strong>由一个供应商对一切负责。使用 Postgres 时，你需要选择一个托管服务商或支持公司来担任这个角色。</li>
+  <li><strong>层级。</strong>SQL Server 的版本和服务层级让小型工作负载的成本远低于一般的中档层级。Postgres 没有这样的梯度：它到处都是同一个引擎，所以小规模时的成本由你选择的托管方式决定，而不是由便宜的入门版本决定。</li>
+</ul>
+
+<h2>Postgres 仍在追赶</h2>
+
+<p>Postgres 的存储引擎和 SQL 核心非常成熟。围绕它们的那一层，也就是大型企业期望开箱即用的功能，则相对年轻，而 Postgres 在最近几个版本里一直在补上 SQL Server 早已补上的差距：</p>
+
+<ul>
+  <li><strong>带事务控制的存储过程</strong>在 PostgreSQL 11（2018 年）才出现。T-SQL 从最早期就有存储过程。</li>
+  <li><strong><code>MERGE</code></strong> 直到 PostgreSQL 15（2022 年）才出现。SQL Server 自 2008 年起就有。</li>
+  <li><strong>虚拟生成列</strong>是 PostgreSQL 18 的新功能。SQL Server 的计算列已有几十年历史。</li>
+  <li><strong><code>RETURNING</code> 中的 <code>OLD</code> 和 <code>NEW</code></strong>（PostgreSQL 18）是 Postgres 对 T-SQL 中 <code>OUTPUT inserted/deleted</code> 子句的回应。</li>
+  <li><strong>时态约束</strong>（PostgreSQL 18）朝着 SQL Server 在 2016 年引入的时态表迈进。</li>
+  <li><strong>OAuth 2.0 认证</strong>（PostgreSQL 18）相当于 SQL Server 通过 Active Directory 和 Entra 获得的单点登录方案。</li>
+</ul>
+
+<p>每个版本都让 Postgres 更接近 SQL Server，但剩下的差距决定着真实项目的成败，其中最大的就是 CI/CD。没有在源代码管理中定义数据库并通过流水线部署的标准方式，每次变更都要付出手写迁移脚本的代价。对于希望由源文件来定义数据库的团队，这是一个严重的缺点，甚至可能成为决定性的障碍。</p>
+
+<h2>CI/CD 与源代码管理：SQL Server 最大的优势</h2>
+
+<p>这是 SQL Server 相对 Postgres 最强的优势，也是我首先会权衡的一点。</p>
+
+<p>在 SQL Server 中，数据库是源代码管理里的一个项目。表、存储过程、视图和触发器都以普通的 <code>CREATE</code> 文件形式存在，工具（SSDT 数据库项目、sqlpackage）会把该项目与线上数据库进行比较，并为你生成部署。你编辑的是期望状态，由工具算出变更。它可以直接接入 Visual Studio、Azure DevOps 和 GitHub Actions。</p>
+
+<p>Postgres 没有标准的对应方案。主流工作方式是迁移脚本：每次变更都要手写一个带编号的脚本，把数据库从一个版本推进到下一个版本，并且永远保留所有脚本。Flyway 和 Liquibase 这类工具可以从流水线中自动应用这些脚本，但每一个脚本仍然需要人在提交前手写完成。在 SQL Server 中，你提交的是期望状态，流水线会自己算出并部署变更。基于状态、把文件与线上数据库做比对的工具确实存在（例如 Atlas 和 pg-schema-diff），但它们更年轻、使用更少，也不是官方出品。存储过程还需要你自己额外编写重建步骤。</p>
+
+<p>如果你希望数据库完全由源文件定义，又承担不起手写和维护每一个迁移脚本的成本，SQL Server 是更稳妥的选择。</p>
+
+<h2>成本比较：中等规模的数据库</h2>
+
+<p>以一个中等规模的数据库为例：20 GB，突发式使用而非全天候使用。两种方案都在 Azure 上运行。我会花多少钱？</p>
+
+<div class="table-wrap"><table>
+  <thead><tr><th>方案（20 GB 数据库）</th><th>每年成本</th><th>备注</th></tr></thead>
+  <tbody>
+    <tr><td>Azure SQL Database，免费套餐</td><td>每天唤醒 1 小时为 $0；每天 4 小时约 $209；每天 12 小时约 $986；每天 24 小时约 $2,153。存储免费（32 GB）。</td><td>免费计算额度为每月 100,000 vCore 秒。数字假设唤醒时为 0.5 vCore，每 vCore 秒约 $0.00015（我的估算）。你也可以把数据库暂停到下个月，这样花费 $0，但额度用完后将无法访问。</td></tr>
+    <tr><td>Azure SQL Database，Basic</td><td>不可行</td><td>最大 2 GB。</td></tr>
+    <tr><td>Azure SQL Database，Standard S0</td><td>约 $180，含存储</td><td>无论使用量多少，每月约 $15。10 DTU，最大 250 GB。</td></tr>
+    <tr><td>Azure Database for PostgreSQL，B1ms</td><td>约 $144 + $45 存储（合计约 $190）</td><td>计算费用约每月 $12（美国东部）。32 GiB 是可预配的最小存储。备份在预配存储大小以内免费。</td></tr>
+  </tbody>
+</table></div>
+
+<p>这些价格是近似值。我取自第三方汇总，其中 Postgres 的存储价格是我自己的估算（约每 GiB 每月 $0.115）。在做决定之前，请查看 Azure 定价计算器。</p>
+
+<p><strong>随着调用增加，你支付什么、感受到什么。</strong>Azure SQL 的 $5 和 $15 价格对该层级是固定的。无论数据库每天收到一次调用还是一百万次，你都付这个价。限制你的是容量。当调用所需超过该层级的 5 或 10 DTU 时，查询会变慢，你的解决办法是升级到更高的层级，而不是按调用付费。</p>
+
+<p>Postgres 在价格上的运作方式相同，只是在达到上限时的感觉不同。B1ms 的价格同样按小时固定，不管有多少调用。但 B1ms 是一种“可突发”（burstable）服务器，为大多数时间空闲的数据库而设计。空闲时它会像银行账户一样积攒积分，繁忙时刻则消耗积分。如果长时间保持繁忙，积分用完，服务器可能停止响应。解决办法相同：升级到更多 vCore，微软称这只需几秒钟。所以对这两种数据库而言，更多的调用都不会抬高账单，而是把你推向更大的层级，更大的层级才会抬高账单。</p>
+
+<p>免费套餐和 serverless 是例外。它们按你实际使用的计算量、以秒为单位计费，所以调用频率直接产生影响：频繁调用会让数据库一直醒着，并耗尽免费额度。</p>
+
+<p>对于这种工作负载，答案取决于数据库每天醒着多少小时。如果应用每次只唤醒数据库几分钟，然后就安静下来，免费套餐就能覆盖。如果月度额度用完，你可以选择暂停数据库到下个月，或者按标准价格付费。</p>
+
+<p>Azure 上的 Postgres 有价格底线。仅计算部分，B1ms 每月约 $12，在计入存储和备份之前每年约 $144，无论是否有人使用。我没有找到相当于 serverless 自动暂停的功能。你可以停止灵活服务器，但如果你不在 7 天内自己再启动，Azure 会自动重新启动它。可突发层级也是为保持空闲或低于基线的工作负载设计的：如果 CPU 持续偏高，积分会耗尽，服务器可能无法访问，而且微软将该层级主要描述为用于非生产环境。</p>
+
+<p>有两点可能改变局面：</p>
+
+<ul>
+  <li><strong>共享。</strong>一台 Postgres 服务器可以托管多个数据库，所以如果你所有的项目都放在同一台服务器上，这 $12 是分摊的。SQL Server 的免费套餐则是按数据库计算的。</li>
+  <li><strong>持续负载。</strong>如果应用全天候访问数据库，SQL 的免费额度（约 28 小时的单 vCore）很快就会用完，你将按标准 serverless 价格付费。我没有找到当前的每秒费率，所以在决定之前，请用你的真实负载在 Azure 计算器中为两种方案估价。</li>
+</ul>
+
+<p>结论：Postgres 并不更便宜。认为它更便宜是一个常见的误解。软件本身免费，但在托管云服务上，你为计算和存储付费，而不是为许可付费，而 SQL Server 的许可无论如何都包含在它的价格里。在 20 GB 的规模下，最便宜的 SQL Server 方案在每个使用水平上都不逊于 Postgres：每天唤醒约 2 小时以内免费，之后是约每年 $180 的 Standard S0，对比 Postgres 的约 $190。S0 的差距很小，所以对 Postgres 来说，最好的情况也只是大致持平，绝不是明显更便宜。关于让这一切成立的免费套餐，请参阅 <a href="https://stas.boston/blog/free-cloud-tiers">Hunting Freebies in the Clouds</a>，它比较了 Azure、Google、AWS、Oracle 和 Cloudflare 的免费数据库与计算套餐。</p>
+
+<h2>一种实用的决策方式</h2>
+
+<p>我会在以下情况选择 Postgres：</p>
+
+<ul>
+  <li>数据库很小，主要是永远不会变化或演进的表和视图。</li>
+  <li>许可费用是一项有意义的支出，或者你正被核心数量所困扰。</li>
+  <li>你想在任何云上或笔记本电脑上运行同一个数据库。</li>
+  <li>你的团队已经熟悉 Postgres，或者想学习它。</li>
+</ul>
+
+<p>我会在以下情况选择 SQL Server：</p>
+
+<ul>
+  <li>你的 SQL 架构经常变化，并且 CI/CD 很重要：你希望数据库在源代码管理中定义，并通过流水线部署，而无需手写迁移脚本。</li>
+  <li>你的大部分业务逻辑将放在存储过程中。</li>
+  <li>你希望 SSIS、SSRS 和 SQL Agent 成为平台的一部分。</li>
+  <li>公司致力于微软技术栈，包括 Fabric 和 Power BI。</li>
+</ul>
+
+<p>如果你拿不定主意，请先权衡 CI/CD。</p>
+
+<h2>结论</h2>
+
+<p>Postgres 可以用于只需要基本数据持久化的微型项目。对于更大的项目，选择取决于任务、你在数据库周边所需的能力，以及最重要的 CI/CD 流程，而这正是 SQL Server 胜出最明显的地方。如果你想提交一次代码就让数据库自动部署，请从 SQL Server 开始。</p>
+
+<h2>资料来源</h2>
+
+<ul>
+  <li><a href="https://postgresql.org/about/news/postgresql-18-released-3142/">PostgreSQL 18 release announcement</a></li>
+  <li><a href="https://www.postgresql.org/docs/current/release-18.html">PostgreSQL 18 release notes</a></li>
+  <li><a href="https://www.sqlservercentral.com/articles/sql-server-2025-has-arrived">SQL Server 2025 has arrived</a> (SQLServerCentral)</li>
+  <li><a href="https://www.neowin.net/news/microsoft-announces-general-availability-of-sql-2025-fabric-databases-and-documentdb/">Microsoft announces general availability of SQL Server 2025</a> (Neowin)</li>
+  <li><a href="https://learn.microsoft.com/azure/azure-sql/database/free-offer">Deploy Azure SQL Database for free</a> (Microsoft Learn)</li>
+  <li><a href="https://techcommunity.microsoft.com/blog/azuresqlblog/-/4471390">Azure SQL Database free offer overview</a> (Microsoft Tech Community)</li>
+  <li><a href="https://www.flexera.com/blog/finops/azure-sql-database-pricing/">Azure SQL Database pricing by tier</a> (Flexera)</li>
+  <li><a href="https://www.sqlservercentral.com/blogs/azure-sql-database-pricing">Azure SQL Database service tier costs</a> (SQLServerCentral)</li>
+  <li><a href="https://www.bytebase.com/dbcost/azure-flexible/instance/B1ms/">Azure Database for PostgreSQL B1ms pricing</a> (Bytebase)</li>
+  <li><a href="https://learn.microsoft.com/azure/postgresql/compute-storage/concepts-compute">Compute and storage concepts for flexible server</a> (Microsoft Learn)</li>
+  <li><a href="https://learn.microsoft.com/en-us/answers/questions/2223469/shut-down-azure-postgresql-without-azure-restartin">Shut down Azure PostgreSQL without automatic restart</a> (Microsoft Q&amp;A)</li>
+</ul>

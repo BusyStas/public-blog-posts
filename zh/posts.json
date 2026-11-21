@@ -4,6 +4,10 @@
       "title": "为什么 AI 不会杀死左侧导航栏",
       "summary": "纯聊天界面听起来很现代,但菜单是用户需要的站点地图。为什么 AI 应该在导航之内工作,以及来自语音命令、Notion 和 Claude 的经验。"
     },
+    "can-postgres-replace-sql-server": {
+      "title": "Postgres 能取代 Microsoft SQL Server 吗？",
+      "summary": "为全新项目从零选择数据库：Postgres 与 SQL Server 各自的优势，为什么 CI/CD 比功能更关键，以及 20 GB 数据库在 Azure 上的真实成本。"
+    },
     "business-logic-in-stored-procedures": {
       "title": "AI 如何看待 SQL 存储过程中的业务逻辑",
       "summary": "塑造数据的逻辑应当放在数据库中:基于集合的速度、便于调试、通过 Git 部署,以及一个借助 Cloudflare R2 中每日文件来压低数据库成本的真实案例。"

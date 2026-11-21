@@ -4,6 +4,10 @@
       "title": "AIが左側ナビゲーションバーを葬らない理由",
       "summary": "チャットだけのインターフェースは現代的に聞こえますが、メニューはユーザーが必要とするサイトマップです。AIがナビゲーションの内側で働くべき理由を、音声コマンド、Notion、Claudeの教訓とともに解説します。"
     },
+    "can-postgres-replace-sql-server": {
+      "title": "Postgres は Microsoft SQL Server の代わりになるか",
+      "summary": "新規プロジェクトをゼロから始めるときのデータベース選び。Postgres と SQL Server それぞれの強み、機能より CI/CD が決め手になる理由、Azure での 20 GB データベースの実際のコスト。"
+    },
     "business-logic-in-stored-procedures": {
       "title": "SQL ストアドプロシージャ内のビジネスロジックについて、AI はどう考えるか",
       "summary": "データを形づくるロジックはデータベースに置くべきです。セット指向の速さ、簡単なデバッグ、Git によるデプロイ、そして Cloudflare R2 の日次ファイルでデータベースのコストを抑える実例を紹介します。"

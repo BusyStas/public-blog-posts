@@ -4,6 +4,10 @@
       "title": "Mengapa AI Tidak Akan Membunuh Bar Navigasi Kiri",
       "summary": "Antara muka sembang sahaja kedengaran moden, tetapi menu ialah peta tapak yang diperlukan pengguna. Mengapa AI patut bekerja di dalam navigasi, dengan pengajaran daripada arahan suara, Notion dan Claude."
     },
+    "can-postgres-replace-sql-server": {
+      "title": "Bolehkah Postgres Menggantikan Microsoft SQL Server?",
+      "summary": "Memilih pangkalan data untuk projek baharu dari kosong: di mana Postgres dan SQL Server masing-masing menang, mengapa CI/CD lebih menentukan daripada ciri, dan kos sebenar pangkalan data 20 GB di Azure."
+    },
     "business-logic-in-stored-procedures": {
       "title": "Apa Pendapat AI tentang Logik Perniagaan dalam Prosedur Tersimpan SQL",
       "summary": "Logik yang membentuk data patut berada dalam pangkalan data: kelajuan berasaskan set, penyahpepijatan yang mudah, penempatan melalui Git dan contoh sebenar yang mengekalkan kos pangkalan data rendah dengan fail harian di Cloudflare R2."

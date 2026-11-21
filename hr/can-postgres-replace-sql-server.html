@@ -1,0 +1,149 @@
+<p class="lead">Ovaj članak govori o odabiru baze podataka za novi projekt koji počinje od nule. Kratak odgovor: kao mehanizam baze podataka Postgres je u redu. Kao radna platforma ovisi o vašem CI/CD tijeku rada i alatima koji su vam potrebni oko baze podataka.</p>
+
+<p>Ovako razmišljam nakon tri desetljeća razvoja softvera s obje strane ove ograde.</p>
+
+<h2>Pitanje iza pitanja</h2>
+
+<p>„S kojom bazom podataka da počnem?” zapravo su tri pitanja:</p>
+
+<ul>
+  <li><strong>Što je zadatak?</strong> Nitko ne plaća SQL Server samo da bi pohranjivao podatke. Koristimo ga za rad s podacima: pohranjene procedure, skupovne transformacije, zakazani poslovi, ETL i izvještavanje, s poslovnom logikom koja se izvršava odmah uz podatke. Prvo definirajte to opterećenje, a zatim pitajte može li ga Postgres odraditi.</li>
+  <li><strong>Ima li mogućnosti koje trebam?</strong> Značajke o kojima moje opterećenje danas ovisi: procedure, zakazivanje, ETL, izvještavanje, sigurnost, alati. Nitko ne bira bazu podataka da bi je kasnije mogao napustiti, pa je test radi li ono što mi je sada potrebno.</li>
+  <li><strong>Koliko košta?</strong> To proizlazi iz prva dva odgovora, jer zadatak određuje formulu. Stalno, teško opterećenje cijeni se prema broju CPU jezgri koje držite upaljenima. Nepravilno se cijeni prema tome koliko se često poziva i koliko je svaki posao težak, a tamo mogu pobijediti razine s plaćanjem po upotrebi ili serverless. Licenciranje, hosting i ljudi dolaze povrh toga.</li>
+</ul>
+
+<p>Ovisi o zadatku. Pohrana i upiti nad podacima: lako. Rad s podacima unutar baze: Postgres dobro podnosi SQL i proceduralni kod, ali ne i platformu oko njega (zakazivanje, ETL, izvještavanje). Drugo pitanje pokazuje na kojoj je strani vaše opterećenje. Treće, trošak, proizlazi iz prva dva: plaćate ili stalno uključen CPU ili koliko često i koliko teško pozivate bazu podataka.</p>
+
+<h2>Gdje je Postgres danas</h2>
+
+<p>PostgreSQL 18 izašao je 25. rujna 2025. Glavna novost je novi asinkroni I/O podsustav, za koji projekt navodi da je pokazao do 3 puta brže čitanje s pohrane. Također čuva statistiku planera kroz nadogradnje glavnih verzija, što uklanja jedno od neugodnijih usporavanja nakon nadogradnje. Dodaci za programere uključuju virtualne generirane stupce, <code>uuidv7()</code>, OAuth 2.0 autentifikaciju, <code>OLD</code> i <code>NEW</code> u <code>RETURNING</code> klauzulama te vremenska ograničenja.</p>
+
+<p>Ovo nije Postgres iz 2010. Većina argumenata tipa „SQL Server to može, Postgres ne može” kojih se sjećam tiho je istekla.</p>
+
+<h2>Gdje je SQL Server danas</h2>
+
+<p>SQL Server 2025 postao je općenito dostupan na konferenciji Ignite u studenome 2025. Microsoft ga pozicionira kao bazu podataka spremnu za AI: izvorni vektorski tip, vektorski indeksi temeljeni na DiskANN-u, upravljanje modelima iz T-SQL-a, izvorni JSON tip s indeksiranjem, regularni izrazi u T-SQL-u, ugrađeni REST pozivi i strujanje događaja promjena. Fabric mirroring šalje podatke u OneLake za analitiku.</p>
+
+<p>Snažno je izdanje, usmjereno izravno na programere koji već žive u Microsoftovu svijetu.</p>
+
+<h2>Gdje Postgres pobjeđuje</h2>
+
+<ul>
+  <li><strong>Licenciranje.</strong> Nema naknada po jezgri, po izdanju ni za Software Assurance kad ga sami pokrećete. Na upravljanoj oblačnoj usluzi licenca je ugrađena u cijenu, pa je tamo to puno manje važno.</li>
+  <li><strong>Prenosivost.</strong> Linux, macOS, Windows, kontejneri i upravljana ponuda u svakom većem oblaku. Manje ovisnosti o dobavljaču.</li>
+  <li><strong>Proširivost.</strong> Ekstenzije poput PostGIS-a i pgvectora, prilagođeni tipovi i nekoliko proceduralnih jezika.</li>
+  <li><strong>Standardi i značajke.</strong> <code>JSONB</code>, nizovi, rasponski tipovi, djelomični i izrazni indeksi te transakcijski DDL (promjenu sheme možete poništiti).</li>
+</ul>
+
+<h2>Gdje SQL Server i dalje pobjeđuje</h2>
+
+<ul>
+  <li><strong>CI/CD i kontrola izvornog koda. Najjača pobjeda SQL Servera.</strong> Baza podataka živi u kontroli izvornog koda kao projekt, a alati umjesto vas generiraju isporuku. Postgres nema standardni ekvivalent, pa migracijske skripte pišete i održavate ručno. Detalji u sljedećem odjeljku.</li>
+  <li><strong>Alati.</strong> SSMS, SQL Agent, SSIS, SSRS i Profiler čine čvrsto integriranu, dotjeranu alatnicu. U Postgresu vlastitu slažete od pgAdmina, crona ili pg_crona i alata trećih strana.</li>
+  <li><strong>Integracija s Microsoftom.</strong> Active Directory i Entra, .NET, Power BI, Fabric. Ako cijela vaša tvrtka radi na Microsoftu, trenja je manje.</li>
+  <li><strong>Ugrađene enterprise značajke.</strong> Columnstore, OLTP u memoriji i zrele Always On grupe dostupnosti isporučuju se i podržavaju kao jedan proizvod.</li>
+  <li><strong>Jedna kontakt točka.</strong> Jedan dobavljač odgovara za sve. S Postgresom za tu ulogu birate upravljanog pružatelja ili tvrtku za podršku.</li>
+  <li><strong>Razine.</strong> Izdanja i razine usluge SQL Servera omogućuju da malo opterećenje košta daleko manje od prosječne srednje razine. Postgres nema takav gradijent: svugdje je isti mehanizam, pa trošak na malom kraju određuje hosting koji odaberete, a ne jeftino početno izdanje.</li>
+</ul>
+
+<h2>Postgres još sustiže</h2>
+
+<p>Mehanizam pohrane i SQL jezgra Postgresa vrlo su zreli. Sloj oko njih, značajke koje velike tvrtke očekuju odmah u paketu, mlađi je, a Postgres je zadnjih nekoliko izdanja provodio zatvarajući praznine koje je SQL Server zatvorio davno:</p>
+
+<ul>
+  <li><strong>Pohranjene procedure s kontrolom transakcija</strong> stigle su u PostgreSQL 11 (2018.). T-SQL ima procedure od najranijih dana.</li>
+  <li><strong><code>MERGE</code></strong> stigao je tek u PostgreSQL 15 (2022.). SQL Server ga ima od 2008.</li>
+  <li><strong>Virtualni generirani stupci</strong> novi su u PostgreSQL 18. SQL Server ima izračunate stupce desetljećima.</li>
+  <li><strong><code>OLD</code> i <code>NEW</code> u <code>RETURNING</code></strong> (PostgreSQL 18) je odgovor Postgresa na klauzulu <code>OUTPUT inserted/deleted</code> u T-SQL-u.</li>
+  <li><strong>Vremenska ograničenja</strong> (PostgreSQL 18) kreću se prema temporalnim tablicama koje je SQL Server uveo 2016.</li>
+  <li><strong>OAuth 2.0 autentifikacija</strong> (PostgreSQL 18) je rješenje jedinstvene prijave koje SQL Server dobiva putem Active Directoryja i Entre.</li>
+</ul>
+
+<p>Svako izdanje približava Postgres SQL Serveru, ali preostale praznine odlučuju stvarne projekte, a najveća je CI/CD. Bez standardnog načina da se baza podataka definira u kontroli izvornog koda i isporuči iz pipelinea, svaka promjena košta ručno pisane migracijske skripte. Za tim koji želi da bazu podataka definiraju njegove izvorne datoteke to je ozbiljan nedostatak i može biti presudan.</p>
+
+<h2>CI/CD i kontrola izvornog koda: najveća pobjeda SQL Servera</h2>
+
+<p>Ovo je najjača prednost SQL Servera nad Postgresom i prvo što bih odvagnuo.</p>
+
+<p>U SQL Serveru je baza podataka projekt u kontroli izvornog koda. Tablice, procedure, prikazi i okidači žive kao obične <code>CREATE</code> datoteke, a alati (SSDT projekti baza podataka, sqlpackage) uspoređuju taj projekt s aktivnom bazom i umjesto vas generiraju isporuku. Vi uređujete željeno stanje, a alat izračunava promjenu. Izravno se uklapa u Visual Studio, Azure DevOps i GitHub Actions.</p>
+
+<p>Postgres nema standardni ekvivalent. Uobičajeni tijek rada su migracijske skripte: za svaku promjenu ručno napišete numeriranu skriptu koja bazu prebacuje iz jedne verzije u sljedeću, a sve ih čuvate zauvijek. Alati poput Flywaya i Liquibasea mogu te skripte automatski primjenjivati iz pipelinea, ali čovjek još uvijek mora svaku od njih ručno napisati prije commita. U SQL Serveru commitate željeno stanje, a pipeline sam izračuna i isporuči promjenu. Postoje alati temeljeni na stanju koji uspoređuju datoteke s aktivnom bazom (na primjer Atlas i pg-schema-diff), ali su mlađi, manje rašireni i nisu izvorni. Pohranjene procedure povrh toga trebaju vlastiti korak ponovne izgradnje.</p>
+
+<p>Ako želite da vašu bazu podataka definiraju samo izvorne datoteke i ne možete si priuštiti ručno pisanje i održavanje svake migracijske skripte, SQL Server je sigurniji izbor.</p>
+
+<h2>Usporedba troškova: baza podataka srednje veličine</h2>
+
+<p>Uzmimo bazu podataka srednje veličine: 20 GB, koja se koristi u naletima, a ne neprekidno. Obje opcije radile bi na Azureu. Što bih platio?</p>
+
+<div class="table-wrap"><table>
+  <thead><tr><th>Opcija (baza od 20 GB)</th><th>Trošak godišnje</th><th>Napomene</th></tr></thead>
+  <tbody>
+    <tr><td>Azure SQL Database, besplatna ponuda</td><td>$0 ako je budna 1 sat dnevno; oko $209 uz 4 sata dnevno; oko $986 uz 12 sati dnevno; oko $2.153 uz 24 sata dnevno. Pohrana je besplatna (32 GB).</td><td>Besplatno računanje je 100.000 vCore-sekundi mjesečno. Brojke pretpostavljaju 0,5 vCore dok je budna i oko $0,00015 po vCore-sekundi (moja procjena). Umjesto toga bazu možete pauzirati do sljedećeg mjeseca, što košta $0, ali je čini nedostupnom kad se kvota potroši.</td></tr>
+    <tr><td>Azure SQL Database, Basic</td><td>nije moguće</td><td>Najviše 2 GB.</td></tr>
+    <tr><td>Azure SQL Database, Standard S0</td><td>oko $180, pohrana uključena</td><td>Oko $15 mjesečno uz bilo koju razinu korištenja. 10 DTU-a, do 250 GB.</td></tr>
+    <tr><td>Azure Database for PostgreSQL, B1ms</td><td>oko $144 + $45 za pohranu (ukupno oko $190)</td><td>Računanje je oko $12 mjesečno (US East). 32 GiB je najmanja pohrana koju možete osigurati. Sigurnosne kopije su besplatne do veličine osigurane pohrane.</td></tr>
+  </tbody>
+</table></div>
+
+<p>Ove su cijene približne. Uzeo sam ih iz sažetaka trećih strana, a cijena pohrane za Postgres je moja vlastita procjena (oko $0,115 po GiB-mjesecu). Provjerite Azureov kalkulator cijena prije nego što se obvežete.</p>
+
+<p><strong>Što plaćate i što osjećate kako se pozivi povećavaju.</strong> Cijene Azure SQL-a od $5 i $15 fiksne su za razinu. Plaćate ih bilo da baza dobiva jedan poziv dnevno ili milijun. Ograničava vas kapacitet. Kad pozivi trebaju više od 5 ili 10 DTU-a razine, upiti se uspore, a to rješavate prelaskom na višu razinu, a ne plaćanjem po pozivu.</p>
+
+<p>Postgres s cijenom funkcionira jednako, ali na granici se osjeća drukčije. Cijena B1ms-a također je fiksna po satu, bez obzira na broj poziva. No B1ms je „burstable” poslužitelj, napravljen za baze podataka koje su uglavnom u mirovanju. Dok miruje, štedi kredite kao bankovni račun, a zaposleni trenuci ih troše. Ako predugo ostane zauzet, krediti se potroše i poslužitelj može prestati odgovarati. Rješavate to na isti način, prelaskom na više vCore-ova, što prema Microsoftu traje sekunde. Dakle, kod obje baze više poziva ne podiže račun. Oni vas guraju na veću razinu, a veća razina ga podiže.</p>
+
+<p>Besplatna ponuda i serverless su iznimka. Naplaćuju računanje koje stvarno koristite, po sekundi, pa učestalost poziva izravno utječe: česti pozivi drže bazu budnom i troše besplatnu kvotu.</p>
+
+<p>Za ovo opterećenje odgovor ovisi o tome koliko je sati dnevno baza budna. Ako aplikacija bazu budi na nekoliko minuta i potom utihne, besplatna ponuda to pokriva. Ako se mjesečna kvota potroši, birate između pauziranja baze do sljedećeg mjeseca i plaćanja standardnih cijena.</p>
+
+<p>Postgres na Azureu ima donju granicu cijene. B1ms košta oko $12 mjesečno samo za računanje, otprilike $144 godišnje prije pohrane i sigurnosnih kopija, koristi li ga itko ili ne. Nisam našao ekvivalent serverless automatskog pauziranja. Fleksibilni poslužitelj možete zaustaviti, ali ga Azure automatski ponovno pokreće nakon 7 dana ako ga prije toga sami ne pokrenete. Burstable razina također je namijenjena opterećenjima koja miruju ili ostaju ispod osnovne razine: ako CPU ostane visok, krediti se potroše i poslužitelj može postati nedostupan, a Microsoft tu razinu opisuje kao namijenjenu prvenstveno neprodukcijskoj upotrebi.</p>
+
+<p>Dvije stvari mogu promijeniti sliku:</p>
+
+<ul>
+  <li><strong>Dijeljenje.</strong> Jedan Postgres poslužitelj može ugostiti mnogo baza podataka, pa ako su svi vaši projekti na jednom poslužitelju, tih $12 se dijeli. Besplatna ponuda SQL Servera vrijedi po bazi podataka.</li>
+  <li><strong>Stalno opterećenje.</strong> Ako aplikacija pristupa bazi neprekidno, besplatna SQL kvota (oko 28 sati jednog vCore-a) brzo se potroši i plaćali biste standardne serverless cijene. Nisam našao aktualnu cijenu po sekundi, pa prije odluke obje opcije izračunajte u Azureovu kalkulatoru uz svoje stvarno opterećenje.</li>
+</ul>
+
+<p>Zaključak: Postgres nije jeftiniji. Da je jeftiniji uobičajen je mit. Softver je besplatan, ali na upravljanoj oblačnoj usluzi plaćate računanje i pohranu, a ne licencu, a licenca SQL Servera ionako je ugrađena u njegovu cijenu. Uz 20 GB najjeftinija opcija SQL Servera izjednačuje se s Postgresom ili ga nadmašuje na svakoj razini korištenja: besplatno do otprilike 2 sata budnosti dnevno, zatim Standard S0 za oko $180 godišnje naspram oko $190 za Postgres. Razlika kod S0 je mala, pa je čitajte kao u najboljem slučaju otprilike jednako za Postgres, a nikad jasno jeftinije. Za besplatne ponude koje to omogućuju pogledajte <a href="https://stas.boston/blog/free-cloud-tiers">Hunting Freebies in the Clouds</a>, koji uspoređuje besplatne ponude baza podataka i računanja Azurea, Googlea, AWS-a, Oraclea i Cloudflarea.</p>
+
+<h2>Praktičan način odlučivanja</h2>
+
+<p>Odabrao bih Postgres kad:</p>
+
+<ul>
+  <li>je baza podataka mala i uglavnom se sastoji od tablica i prikaza koji se nikad ne mijenjaju niti razvijaju.</li>
+  <li>je licenciranje značajna stavka troška ili vas stežu jezgre.</li>
+  <li>želite istu bazu podataka pokretati u bilo kojem oblaku ili na laptopu.</li>
+  <li>vaš tim već poznaje Postgres ili ga želi naučiti.</li>
+</ul>
+
+<p>Odabrao bih SQL Server kad:</p>
+
+<ul>
+  <li>se vaša SQL shema često mijenja, a CI/CD je važan: želite bazu podataka definiranu u kontroli izvornog koda i isporučenu iz pipelinea bez ručno pisanih migracijskih skripti.</li>
+  <li>će velik dio vaše poslovne logike živjeti u pohranjenim procedurama.</li>
+  <li>želite SSIS, SSRS i SQL Agent kao dio platforme.</li>
+  <li>je tvrtka predana Microsoftovu stogu, uključujući Fabric i Power BI.</li>
+</ul>
+
+<p>Ako ste na ogradi, prvo odvagnite CI/CD.</p>
+
+<h2>Presuda</h2>
+
+<p>Postgres se može koristiti za sićušan projekt s osnovnim potrebama trajne pohrane podataka. Za sve veće, izbor ovisi o zadatku, o mogućnostima koje su vam potrebne oko baze podataka i, prije svega, o vašem CI/CD tijeku rada, u kojem SQL Server pobjeđuje najjasnije. Ako želite pushati commit i da se baza podataka sama isporuči, počnite sa SQL Serverom.</p>
+
+<h2>Izvori</h2>
+
+<ul>
+  <li><a href="https://postgresql.org/about/news/postgresql-18-released-3142/">PostgreSQL 18 release announcement</a></li>
+  <li><a href="https://www.postgresql.org/docs/current/release-18.html">PostgreSQL 18 release notes</a></li>
+  <li><a href="https://www.sqlservercentral.com/articles/sql-server-2025-has-arrived">SQL Server 2025 has arrived</a> (SQLServerCentral)</li>
+  <li><a href="https://www.neowin.net/news/microsoft-announces-general-availability-of-sql-2025-fabric-databases-and-documentdb/">Microsoft announces general availability of SQL Server 2025</a> (Neowin)</li>
+  <li><a href="https://learn.microsoft.com/azure/azure-sql/database/free-offer">Deploy Azure SQL Database for free</a> (Microsoft Learn)</li>
+  <li><a href="https://techcommunity.microsoft.com/blog/azuresqlblog/-/4471390">Azure SQL Database free offer overview</a> (Microsoft Tech Community)</li>
+  <li><a href="https://www.flexera.com/blog/finops/azure-sql-database-pricing/">Azure SQL Database pricing by tier</a> (Flexera)</li>
+  <li><a href="https://www.sqlservercentral.com/blogs/azure-sql-database-pricing">Azure SQL Database service tier costs</a> (SQLServerCentral)</li>
+  <li><a href="https://www.bytebase.com/dbcost/azure-flexible/instance/B1ms/">Azure Database for PostgreSQL B1ms pricing</a> (Bytebase)</li>
+  <li><a href="https://learn.microsoft.com/azure/postgresql/compute-storage/concepts-compute">Compute and storage concepts for flexible server</a> (Microsoft Learn)</li>
+  <li><a href="https://learn.microsoft.com/en-us/answers/questions/2223469/shut-down-azure-postgresql-without-azure-restartin">Shut down Azure PostgreSQL without automatic restart</a> (Microsoft Q&amp;A)</li>
+</ul>
