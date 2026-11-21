@@ -1,5 +1,9 @@
 {
   "posts": {
+    "ai-wont-kill-left-navigation-bar": {
+      "title": "Yapay Zeka Sol Gezinme Çubuğunu Neden Öldürmeyecek",
+      "summary": "Yalnızca sohbetten oluşan arayüzler modern görünür, ancak menü kullanıcıların ihtiyaç duyduğu site haritasıdır. Yapay zekanın neden gezinmenin içinde çalışması gerektiği; sesli komutlar, Notion ve Claude'dan dersler."
+    },
     "business-logic-in-stored-procedures": {
       "title": "Yapay Zekâ, SQL Saklı Yordamlarındaki İş Mantığı Hakkında Ne Düşünüyor?",
       "summary": "Veriyi şekillendiren mantık veritabanına aittir: küme tabanlı hız, kolay hata ayıklama, Git ile dağıtım ve Cloudflare R2'deki günlük bir dosyayla veritabanı maliyetini düşük tutan gerçek bir örnek."

@@ -1,5 +1,9 @@
 {
   "posts": {
+    "ai-wont-kill-left-navigation-bar": {
+      "title": "Por que a IA não vai matar a barra de navegação à esquerda",
+      "summary": "Interfaces só de chat parecem modernas, mas o menu é o mapa do site de que os usuários precisam. Por que a IA deve trabalhar dentro da navegação, com lições dos comandos de voz, do Notion e do Claude."
+    },
     "business-logic-in-stored-procedures": {
       "title": "O que a IA pensa sobre lógica de negócio em procedimentos armazenados SQL",
       "summary": "A lógica que molda os dados pertence ao banco de dados: velocidade baseada em conjuntos, depuração simples, implantação com Git e um exemplo real que mantém o custo do banco baixo com um arquivo diário no Cloudflare R2."

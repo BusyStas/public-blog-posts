@@ -1,0 +1,55 @@
+<p class="lead">Wraz z falą AI pojawił się nowy obóz i ma jasny cel: lewy pasek nawigacji. A przy okazji menu, karty, pulpity i wszystko inne, co szlifowaliśmy przez trzydzieści lat.</p>
+
+<p>Ich propozycja jest prosta. Daj użytkownikowi jedno okno czatu i nic więcej. AI ustali, czego potrzebujesz, zdecyduje, co pokazać, i narysuje to na miejscu. Żadnych menu do nauczenia się, żadnych ekranów do zaprojektowania.</p>
+
+<p>Zawodowo tworzę oprogramowanie i ten pomysł mi się podoba. Uważam jednak, że jest trafny tylko w połowie, a błędna połowa jest ta kosztowna.</p>
+
+<h2>W czym obóz "tylko czat" ma rację</h2>
+
+<p>Stary interfejs ma realną wadę: każdy ekran to zgadywanie. Projektant z góry zdecydował, czego będziesz chciał, i ułożył to w sztywnym układzie. Jeśli twoja potrzeba wypada między dwoma ekranami, sklejasz części ręcznie.</p>
+
+<p>Trzy argumenty na ich korzyść:</p>
+
+<ul>
+  <li><strong>Intencja wygrywa z nawigacją.</strong> Powiedzenie "pokaż zamówienia z ostatniego kwartału od klientów, którzy odeszli" jest szybsze niż szukanie właściwego raportu, potem właściwego filtra, potem właściwego eksportu.</li>
+  <li><strong>Długi ogon wreszcie jest obsłużony.</strong> Żaden zespół nie zbuduje ekranu na każde pytanie. Model może odpowiedzieć na tysięczne pytanie, którego nikt nie przewidział.</li>
+  <li><strong>Oprogramowanie firmowe jest rozdęte.</strong> Każdy, kto korzystał z paska bocznego z 40 pozycjami, wie, że menu bywa objawem produktu bez ostrości, a nie zaletą.</li>
+</ul>
+
+<h2>Gdzie "tylko czat" się załamuje</h2>
+
+<p>Puste pole tekstowe wymaga od użytkownika znajomości tego, co jest możliwe, a to jedyna rzecz, której nie może wiedzieć.</p>
+
+<ul>
+  <li><strong>Możliwość odkrycia.</strong> Menu to mapa serwisu produktu. Pokazuje, spośród jakich usług można wybierać, zanim o cokolwiek poprosisz, a wybór z listy jest zawsze łatwiejszy niż układanie prośby od zera. Okno czatu nic nie mówi o tym, co istnieje, więc użytkownicy proszą tylko o to, co już sobie wyobrażają, a AI nie zastąpi tej mapy, bo nie pokaże ci tego, o co nie wiedziałeś, że trzeba zapytać.</li>
+  <li><strong>Stałe miejsca.</strong> Ludzie chcą wrócić na ten sam ekran i znaleźć go tam, gdzie go zostawili. Widoku, który AI składa od nowa za każdym razem, nie da się nauczyć, zapisać w zakładkach ani opisać koledze ("kliknij Rozliczenia, potem Faktury").</li>
+  <li><strong>Szybkość przy powtarzalnej pracy.</strong> Wpisanie zdania i czekanie na wygenerowanie jest wolniejsze niż jedno kliknięcie przycisku, którego używasz pięćdziesiąt razy dziennie. Pamięć mięśniowa to zaleta.</li>
+  <li><strong>Przewidywalność i zaufanie.</strong> Gdy dwie osoby zadają to samo pytanie, powinny zobaczyć te same liczby w tej samej formie. Generowane układy się zmieniają, a ekranowi, który zmienia się między wizytami, trudno ufać, trudno go audytować i wspierać.</li>
+  <li><strong>Koszt i opóźnienie.</strong> Każdy widok staje się wywołaniem modelu. Ekran statyczny nic nie kosztuje przy wizycie; generowany kosztuje pieniądze i sekundy, za każdym razem.</li>
+</ul>
+
+<h2>Już to słyszeliśmy</h2>
+
+<p>Piszę oprogramowanie od trzydziestu lat, a "interfejs zniknie" to powracająca przepowiednia. Linię poleceń miał zastąpić interfejs graficzny, ten z kolei głos, a polecenia głosowe miały uczynić ekrany zbędnymi. Wszyscy się martwili i nigdy do tego nie doszło. Głos zadomowił się przy minutnikach, muzyce i szybkich pytaniach i nigdy nie stał się sposobem obsługi prawdziwego oprogramowania. Każdy nowy interfejs przejął zadania, w których był dobry, a resztę zostawił w spokoju.</p>
+
+<p>Linia poleceń nadal tu jest, bo w pracy eksperckiej i powtarzalnej nic nie bije wpisania precyzyjnego polecenia. Czat to narzędzie tego samego rodzaju. Jest znakomity przy otwartych prośbach i słaby przy rutynowych.</p>
+
+<p>Wzorzec jest taki, że nowe interfejsy dodają się do starych. Rzadko je zastępują.</p>
+
+<p>Najlepszy dowód to produkty, które już mają AI. Notion ma wbudowanego asystenta AI i nadal zachowuje lewy pasek boczny. Claude jest w istocie produktem czatowym i nadal ma po lewej menu z czatami, projektami i resztą funkcji. Gdyby "tylko czat" był lepszym rozwiązaniem, zespoły budujące AI byłyby pierwsze do porzucenia menu. Zostawiły je, bo menu daje użytkownikom strukturę i świadomość wszystkiego, co mają do dyspozycji, a okno czatu tego nie da.</p>
+
+<h2>Moje podejście: stabilny szkielet, generatywne ciało</h2>
+
+<p>Zachowaj nawigację i pozwól AI pracować w jej obrębie. Projekt, który bym zbudował, ma trzy warstwy:</p>
+
+<ol>
+  <li><strong>Stabilna rama.</strong> Pasek boczny, główne sekcje, miejsca, które użytkownicy mogą zapisać w zakładkach i do których mogą wracać. To mapa produktu.</li>
+  <li><strong>Obok pole czatu lub poleceń.</strong> Służy do wyrażania intencji: "porównaj te dwa konta", "co się zmieniło od poniedziałku?". To skrót przez mapę, a nie jej zamiennik.</li>
+  <li><strong>Generowane widoki, które można zapisać.</strong> Gdy AI zbuduje przydatny widok, użytkownik może go przypiąć do ramy. Jednorazowa odpowiedź staje się stałym ekranem, a interfejs rośnie z realnego użycia, a nie z domysłu projektanta.</li>
+</ol>
+
+<p>Dzięki temu zostaje to, czego chce obóz "tylko czat" (odpowiedzi dopasowane do pytania), i to, czego potrzebują użytkownicy (punkt oparcia i produkt, którego można się nauczyć).</p>
+
+<h2>Podsumowanie</h2>
+
+<p>Lewy pasek nawigacji nie jest problemem. Problemem jest zła nawigacja. AI powinna sprawiać, by interfejsy lepiej reagowały na to, o co ludzie proszą, a nie odbierać im miejsca, które potrafią znaleźć.</p>

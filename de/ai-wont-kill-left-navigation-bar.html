@@ -1,0 +1,55 @@
+<p class="lead">Mit der KI-Welle ist ein neues Lager entstanden, und es hat ein klares Ziel: die linke Navigationsleiste. Dazu die Menüs, die Tabs, die Dashboards und alles andere, woran wir dreißig Jahre lang gefeilt haben.</p>
+
+<p>Ihr Vorschlag ist einfach. Gib den Nutzern ein Chatfenster und sonst nichts. Die KI findet heraus, was du brauchst, entscheidet, was angezeigt wird, und zeichnet es auf der Stelle. Keine Menüs zum Lernen, keine Bildschirme zum Entwerfen.</p>
+
+<p>Ich entwickle beruflich Software, und die Idee gefällt mir. Ich halte sie aber nur für zur Hälfte richtig, und die falsche Hälfte ist die teure.</p>
+
+<h2>Was das Nur-Chat-Lager richtig sieht</h2>
+
+<p>Die alte Oberfläche hat einen echten Mangel: Jeder Bildschirm ist eine Vermutung. Ein Designer hat im Voraus entschieden, was man wollen würde, und es in ein festes Layout gebracht. Fällt dein Bedürfnis zwischen zwei Bildschirme, musst du die Teile von Hand zusammennähen.</p>
+
+<p>Drei Punkte sprechen für sie:</p>
+
+<ul>
+  <li><strong>Absicht schlägt Navigation.</strong> "Zeig mir die Bestellungen des letzten Quartals von abgewanderten Kunden" zu sagen, ist schneller, als den richtigen Bericht, dann den richtigen Filter und dann den richtigen Export zu finden.</li>
+  <li><strong>Der lange Schwanz wird endlich bedient.</strong> Kein Team kann für jede Frage einen Bildschirm bauen. Ein Modell kann die tausendste Frage beantworten, an die niemand gedacht hat.</li>
+  <li><strong>Unternehmenssoftware ist aufgebläht.</strong> Wer eine Seitenleiste mit 40 Einträgen benutzt hat, weiß, dass das Menü oft ein Symptom eines unfokussierten Produkts ist und kein Vorzug.</li>
+</ul>
+
+<h2>Wo Nur-Chat scheitert</h2>
+
+<p>Ein leeres Textfeld verlangt vom Nutzer zu wissen, was möglich ist, und genau das kann er nicht wissen.</p>
+
+<ul>
+  <li><strong>Auffindbarkeit.</strong> Ein Menü ist die Sitemap des Produkts. Es zeigt, welche Leistungen zur Auswahl stehen, bevor man irgendetwas fragt, und aus einer Liste zu wählen ist immer leichter, als auf einer leeren Seite eine Anfrage zu formulieren. Eine Chatbox verrät nichts darüber, was es gibt, also fragen Nutzer nur nach dem, was sie sich schon vorstellen können, und KI kann diese Karte nicht ersetzen, weil sie dir nicht zeigen kann, wonach du nicht zu fragen wusstest.</li>
+  <li><strong>Feste Orte.</strong> Menschen wollen zum selben Bildschirm zurückkehren und ihn dort finden, wo sie ihn verlassen haben. Eine Ansicht, die die KI jedes Mal neu zusammensetzt, lässt sich nicht erlernen, nicht als Lesezeichen speichern und keinem Kollegen beschreiben ("klick auf Abrechnung, dann auf Rechnungen").</li>
+  <li><strong>Tempo bei Routinearbeit.</strong> Einen Satz zu tippen und auf die Generierung zu warten ist langsamer als ein Klick auf eine Schaltfläche, die man fünfzigmal am Tag benutzt. Muskelgedächtnis ist ein Vorteil.</li>
+  <li><strong>Berechenbarkeit und Vertrauen.</strong> Wenn zwei Personen dieselbe Frage stellen, sollten sie dieselben Zahlen in derselben Form sehen. Generierte Layouts driften, und ein Bildschirm, der sich zwischen Besuchen ändert, ist schwer zu vertrauen, zu prüfen oder zu betreuen.</li>
+  <li><strong>Kosten und Latenz.</strong> Jede Ansicht wird zu einem Modellaufruf. Ein statischer Bildschirm kostet pro Besuch nichts; ein generierter kostet jedes Mal Geld und Sekunden.</li>
+</ul>
+
+<h2>Das haben wir schon gehört</h2>
+
+<p>Ich schreibe seit dreißig Jahren Software, und "die Oberfläche verschwindet" ist eine wiederkehrende Vorhersage. Die Kommandozeile sollte von der grafischen Oberfläche abgelöst werden, diese von der Sprache, und Sprachbefehle sollten Bildschirme überflüssig machen. Alle haben sich Sorgen gemacht, und es ist nie passiert. Sprache blieb bei Timern, Musik und kurzen Fragen und wurde nie zu der Art, wie wir richtige Software bedienen. Jede neue Oberfläche übernahm die Aufgaben, die sie gut konnte, und ließ den Rest in Ruhe.</p>
+
+<p>Die Kommandozeile gibt es noch, weil für Expertenarbeit, die sich wiederholt, nichts einen präzisen getippten Befehl schlägt. Chat ist dieselbe Art von Werkzeug. Er ist hervorragend für offene Anfragen und schwach für Routine.</p>
+
+<p>Das Muster lautet: Neue Oberflächen kommen zu den alten hinzu. Sie ersetzen sie selten.</p>
+
+<p>Den besten Beleg liefern die Produkte, die bereits KI haben. Notion hat einen eingebauten KI-Assistenten und behält trotzdem seine linke Seitenleiste. Claude ist im Kern ein Chat-Produkt und hat trotzdem links ein Menü für Chats, Projekte und die übrigen Funktionen. Wäre Nur-Chat das bessere Design, wären die Teams, die KI bauen, die Ersten, die das Menü streichen. Sie haben es behalten, weil ein Menü den Nutzern Struktur gibt und ein Bewusstsein für alles, was ihnen zur Verfügung steht, und eine Chatbox kann das nicht.</p>
+
+<h2>Meine Haltung: stabiles Skelett, generatives Fleisch</h2>
+
+<p>Behalte die Navigation und lass die KI darin arbeiten. Das Design, das ich bauen würde, hat drei Ebenen:</p>
+
+<ol>
+  <li><strong>Ein stabiler Rahmen.</strong> Die Seitenleiste, die Hauptbereiche, die Orte, die Nutzer als Lesezeichen speichern und zu denen sie zurückkehren können. Das ist die Karte des Produkts.</li>
+  <li><strong>Ein Chat- oder Befehlsfeld daneben.</strong> Es dient der Absicht: "vergleiche diese beiden Konten", "was hat sich seit Montag geändert?". Es ist eine Abkürzung durch die Karte, kein Ersatz für sie.</li>
+  <li><strong>Generierte Ansichten, die man speichern kann.</strong> Wenn die KI eine nützliche Ansicht baut, kann der Nutzer sie im Rahmen anheften. Aus einer einmaligen Antwort wird ein dauerhafter Bildschirm, und die Oberfläche wächst aus echter Nutzung statt aus der Vermutung eines Designers.</li>
+</ol>
+
+<p>So bleibt erhalten, was das Nur-Chat-Lager will (auf die Frage zugeschnittene Antworten) und was Nutzer brauchen (einen Ort zum Stehen und ein Produkt, das sie lernen können).</p>
+
+<h2>Fazit</h2>
+
+<p>Die linke Navigationsleiste ist nicht das Problem. Schlechte Navigation ist es. KI sollte Oberflächen empfänglicher für das machen, was Menschen fragen, und ihnen nicht die Orte nehmen, die sie zu finden wissen.</p>

@@ -1,5 +1,9 @@
 {
   "posts": {
+    "ai-wont-kill-left-navigation-bar": {
+      "title": "Dlaczego AI nie zabije lewego paska nawigacji",
+      "summary": "Interfejsy wyłącznie czatowe brzmią nowocześnie, ale menu to mapa serwisu, której potrzebują użytkownicy. Dlaczego AI powinna działać wewnątrz nawigacji, z lekcjami z poleceń głosowych, Notiona i Claude'a."
+    },
     "business-logic-in-stored-procedures": {
       "title": "Co AI sądzi o logice biznesowej w procedurach składowanych SQL",
       "summary": "Logika kształtująca dane należy do bazy danych: szybkość operacji zbiorczych, proste debugowanie, wdrażanie przez Git i prawdziwy przykład, w którym codzienny plik w Cloudflare R2 utrzymuje niskie koszty bazy danych."

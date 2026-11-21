@@ -1,5 +1,9 @@
 {
   "posts": {
+    "ai-wont-kill-left-navigation-bar": {
+      "title": "Mengapa AI Tidak Akan Membunuh Bar Navigasi Kiri",
+      "summary": "Antara muka sembang sahaja kedengaran moden, tetapi menu ialah peta tapak yang diperlukan pengguna. Mengapa AI patut bekerja di dalam navigasi, dengan pengajaran daripada arahan suara, Notion dan Claude."
+    },
     "business-logic-in-stored-procedures": {
       "title": "Apa Pendapat AI tentang Logik Perniagaan dalam Prosedur Tersimpan SQL",
       "summary": "Logik yang membentuk data patut berada dalam pangkalan data: kelajuan berasaskan set, penyahpepijatan yang mudah, penempatan melalui Git dan contoh sebenar yang mengekalkan kos pangkalan data rendah dengan fail harian di Cloudflare R2."

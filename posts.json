@@ -1,6 +1,15 @@
 {
   "posts": [
     {
+      "code": "ai-wont-kill-left-navigation-bar",
+      "title": "Why AI Won't Kill the Left Navigation Bar",
+      "summary": "Chat-only interfaces sound modern, but a menu is the site map users need. Why AI should work inside the navigation, with lessons from voice commands, Notion and Claude.",
+      "publishedOn": "2026-11-21",
+      "isCrypto": false,
+      "isAi": true,
+      "isTrading": false
+    },
+    {
       "code": "business-logic-in-stored-procedures",
       "title": "What AI Thinks About Business Logic in SQL Stored Procedures",
       "summary": "Logic that shapes data belongs in the database: set-based speed, easy debugging, Git deployment, and a real example that keeps database cost low with a daily file in Cloudflare R2.",

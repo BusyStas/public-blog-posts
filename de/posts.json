@@ -1,5 +1,9 @@
 {
   "posts": {
+    "ai-wont-kill-left-navigation-bar": {
+      "title": "Warum KI die linke Navigationsleiste nicht abschaffen wird",
+      "summary": "Reine Chat-Oberflächen klingen modern, doch ein Menü ist die Sitemap, die Nutzer brauchen. Warum KI innerhalb der Navigation arbeiten sollte, mit Lehren aus Sprachbefehlen, Notion und Claude."
+    },
     "business-logic-in-stored-procedures": {
       "title": "Was KI von Geschäftslogik in gespeicherten SQL-Prozeduren hält",
       "summary": "Logik, die Daten formt, gehört in die Datenbank: mengenbasierte Geschwindigkeit, einfaches Debugging, Deployment über Git und ein reales Beispiel, das die Datenbankkosten mit einer täglichen Datei in Cloudflare R2 niedrig hält."

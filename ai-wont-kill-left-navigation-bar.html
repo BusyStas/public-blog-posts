@@ -1,0 +1,55 @@
+<p class="lead">A new camp has appeared with the AI wave, and it has a clear target: the left navigation bar. Also the menus, the tabs, the dashboards, and everything else we spent thirty years refining.</p>
+
+<p>Their pitch is simple. Give users one chat window and nothing else. The AI works out what you need, decides what to show, and draws it on the spot. No menus to learn, no screens to design.</p>
+
+<p>I build software for a living, and I like the idea. I also think it is half right, and the wrong half is the expensive one.</p>
+
+<h2>What the chat-only camp gets right</h2>
+
+<p>The old UI has a real flaw: every screen is a guess. A designer decided in advance what you would want, then arranged it in a fixed layout. If your need falls between two screens, you do the stitching by hand.</p>
+
+<p>Three things in their favor:</p>
+
+<ul>
+  <li><strong>Intent beats navigation.</strong> Saying "show me last quarter's orders from customers who churned" is faster than finding the right report, then the right filter, then the right export.</li>
+  <li><strong>The long tail finally gets served.</strong> No team can build a screen for every question. A model can answer the thousandth question nobody planned for.</li>
+  <li><strong>Enterprise software is bloated.</strong> Anyone who has used a 40-item sidebar knows the menu is often a symptom of an unfocused product, not a feature.</li>
+</ul>
+
+<h2>Where chat-only breaks</h2>
+
+<p>A blank text box asks the user to know what is possible, and that is the one thing they cannot know.</p>
+
+<ul>
+  <li><strong>Discoverability.</strong> A menu is the site map of the product. It shows which services you can choose from before you ask for anything, and picking from a list is always easier than composing a request from a blank page. A chat box tells you nothing about what exists, so users only ask for what they already imagine, and AI cannot replace that map because it cannot show you what you did not know to ask.</li>
+  <li><strong>Stable places.</strong> People want to return to the same screen and find it where they left it. A view the AI composes fresh each time cannot be learned, bookmarked, or described to a colleague ("click Billing, then Invoices").</li>
+  <li><strong>Speed for repeat work.</strong> Typing a sentence and waiting for generation is slower than one click on a button you use fifty times a day. Muscle memory is a feature.</li>
+  <li><strong>Predictability and trust.</strong> When two people ask the same question, they should see the same numbers in the same shape. Generated layouts drift, and a screen that changes between visits is hard to trust, audit, or support.</li>
+  <li><strong>Cost and latency.</strong> Every view becomes a model call. A static screen costs nothing per visit; a generated one costs money and seconds, every time.</li>
+</ul>
+
+<h2>We have heard this before</h2>
+
+<p>I have been writing software for thirty years, and "the interface will disappear" is a recurring prediction. The command line was supposed to be replaced by the GUI, the GUI by voice, and voice commands were supposed to make screens obsolete. Everyone worried about it, and it never happened. Voice settled into timers, music, and quick questions, and it never grew into the way we run real software. Each new interface took over the jobs it was good at and left the rest alone.</p>
+
+<p>The command line is still here, because for expert, repeatable work nothing beats typing a precise command. Chat is the same kind of tool. It is excellent for open-ended requests and weak for routine ones.</p>
+
+<p>The pattern is that new interfaces add to the old ones. They rarely replace them.</p>
+
+<p>The best evidence is in the products that already have AI. Notion has a built-in AI assistant, and it still keeps its left sidebar. Claude is a chat product at its core, and it still has a left menu for chats, projects, and the rest of its features. If chat-only were the better design, the teams building AI would be the first to drop the menu. They kept it, because a menu gives users structure and awareness of everything at their disposal, and a chat box cannot.</p>
+
+<h2>My take: stable skeleton, generative flesh</h2>
+
+<p>Keep the navigation, and let the AI work inside it. The design I would build has three layers:</p>
+
+<ol>
+  <li><strong>A stable frame.</strong> The sidebar, the main sections, the places users can bookmark and return to. This is the map of the product.</li>
+  <li><strong>A chat or command box beside it.</strong> Used for intent: "compare these two accounts", "what changed since Monday?". It is a shortcut through the map, not a replacement for it.</li>
+  <li><strong>Generated views that can be saved.</strong> When the AI builds a useful view, the user can pin it into the frame. A one-off answer becomes a permanent screen, and the interface grows from real use instead of from a designer's guess.</li>
+</ol>
+
+<p>This keeps what the chat-only camp wants (answers shaped to the question) and what users need (a place to stand, and a product they can learn).</p>
+
+<h2>The bottom line</h2>
+
+<p>The left navigation bar is not the problem. Bad navigation is. AI should make interfaces more responsive to what people ask, and it should not take away the places they know how to find.</p>

@@ -1,5 +1,9 @@
 {
   "posts": {
+    "ai-wont-kill-left-navigation-bar": {
+      "title": "Zašto AI neće ubiti lijevu navigacijsku traku",
+      "summary": "Sučelja samo s chatom zvuče moderno, ali izbornik je mapa weba koja je korisnicima potrebna. Zašto AI treba raditi unutar navigacije, uz lekcije iz glasovnih naredbi, Notiona i Claudea."
+    },
     "business-logic-in-stored-procedures": {
       "title": "Što umjetna inteligencija misli o poslovnoj logici u SQL pohranjenim procedurama",
       "summary": "Logika koja oblikuje podatke pripada bazi podataka: brzina skupnih operacija, jednostavno ispravljanje pogrešaka, isporuka putem Gita i stvaran primjer u kojem dnevna datoteka u Cloudflare R2 održava niske troškove baze."
