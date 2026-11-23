@@ -7,7 +7,8 @@
       "publishedOn": "2026-11-21",
       "isCrypto": false,
       "isAi": true,
-      "isTrading": false
+      "isTrading": false,
+      "IsAboutStartingLLC": false
     },
     {
       "code": "can-postgres-replace-sql-server",
@@ -16,7 +17,8 @@
       "publishedOn": "2026-11-03",
       "isCrypto": false,
       "isAi": false,
-      "isTrading": false
+      "isTrading": false,
+      "IsAboutStartingLLC": false
     },
     {
       "code": "business-logic-in-stored-procedures",
@@ -25,7 +27,8 @@
       "publishedOn": "2026-11-01",
       "isCrypto": false,
       "isAi": true,
-      "isTrading": false
+      "isTrading": false,
+      "IsAboutStartingLLC": false
     },
     {
       "code": "ai-feature-trap",
@@ -34,7 +37,8 @@
       "publishedOn": "2026-10-28",
       "isCrypto": false,
       "isAi": true,
-      "isTrading": true
+      "isTrading": true,
+      "IsAboutStartingLLC": false
     },
     {
       "code": "digital-nomad-visas-us-citizens-2026",
@@ -43,7 +47,8 @@
       "publishedOn": "2026-10-26",
       "isCrypto": false,
       "isAi": false,
-      "isTrading": false
+      "isTrading": false,
+      "IsAboutStartingLLC": false
     },
     {
       "code": "free-cloud-tiers",
@@ -52,7 +57,8 @@
       "publishedOn": "2026-10-25",
       "isCrypto": false,
       "isAi": false,
-      "isTrading": false
+      "isTrading": false,
+      "IsAboutStartingLLC": false
     },
     {
       "code": "invisible-wallet-business",
@@ -61,7 +67,8 @@
       "publishedOn": "2026-10-24",
       "isCrypto": true,
       "isAi": false,
-      "isTrading": true
+      "isTrading": true,
+      "IsAboutStartingLLC": false
     },
     {
       "code": "phone-couldnt-buy-coffee",
@@ -70,7 +77,8 @@
       "publishedOn": "2026-10-23",
       "isCrypto": false,
       "isAi": false,
-      "isTrading": false
+      "isTrading": false,
+      "IsAboutStartingLLC": false
     },
     {
       "code": "write-code-on-solana",
@@ -79,7 +87,8 @@
       "publishedOn": "2026-10-22",
       "isCrypto": true,
       "isAi": false,
-      "isTrading": false
+      "isTrading": false,
+      "IsAboutStartingLLC": false
     },
     {
       "code": "smartest-developer",
@@ -88,7 +97,8 @@
       "publishedOn": "2026-10-10",
       "isCrypto": false,
       "isAi": true,
-      "isTrading": false
+      "isTrading": false,
+      "IsAboutStartingLLC": false
     },
     {
       "code": "ai-price-collapse",
@@ -97,7 +107,8 @@
       "publishedOn": "2026-10-04",
       "isCrypto": false,
       "isAi": true,
-      "isTrading": true
+      "isTrading": true,
+      "IsAboutStartingLLC": false
     }
   ]
 }

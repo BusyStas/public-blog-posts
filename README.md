@@ -7,14 +7,17 @@ A file is only the body: no `<html>`, no `<head>`, no site layout. Every site th
 wraps it in its own layout.
 
 `posts.json` is the master list: one entry per post with its `code`, `title`, `summary`,
-`publishedOn` (YYYY-MM-DD) and three topic flags, `isCrypto`, `isAi` and `isTrading`. The flags say
-which sites list the post (stas.club: crypto, agentics.actor: AI, exchanges.bet: trading); one post can
+`publishedOn` (YYYY-MM-DD) and four boolean topic flags, `isCrypto`, `isAi`, `isTrading` and
+`IsAboutStartingLLC`. The flags say which sites list the post (stas.club: crypto, agentics.actor: AI,
+exchanges.bet: trading, businesses.city: starting an LLC); one post can
 have several. They are set by hand.
 
 A nightly Google Cloud job (`BusyStas/gcp-jobs`, `lists-cache-uploader`) reads `posts.json` and copies
 each listed post's file into the Cloudflare R2 bucket `public-blog-posts`, then writes the lists
-(`blog-posts-all.json`, `-crypto`, `-ai`, `-trading`) into the bucket `public-blog-lists`. A file in
-this repo that is not listed in `posts.json` is never published.
+(`blog-posts-all.json`, `-crypto`, `-ai`, `-trading`, `-llc`) into the bucket `public-blog-lists`. A file in
+this repo that is not listed in `posts.json` is never published. The LLC list includes only posts with
+`IsAboutStartingLLC: true`. All existing posts start at false. An empty stream is still published as
+`{"updatedAt": ..., "data": []}`; businesses.city must show no entries, without fallback content.
 
 ## Languages
 English is the original, at the root. Every other language has a folder named by its code: `es`, `tr`, `ru`,
@@ -38,8 +41,8 @@ Keep everything in it fit for the public: no drafts with private notes, no perso
 ## Adding a post
 Every post needs both of these, in the same commit:
 1. The file `<code>.html` here (lowercase letters, digits and dashes only).
-2. Its entry in `posts.json` with the title, summary, **`publishedOn` date (YYYY-MM-DD)** and the three
-   flags. A post without a date is rejected by the job, so it is never published.
+2. Its entry in `posts.json` with the title, summary, **`publishedOn` date (YYYY-MM-DD)** and the four
+   boolean flags (including `IsAboutStartingLLC`). A post without a date is rejected by the job, so it is never published.
 3. Push to `main`. The next nightly run publishes it, or run the job by hand.
 4. Its translations (see Languages): title and summary in each `<lang>/posts.json`, and the body as
    `<lang>/<code>.html` for each of the 12 languages, in the same commit.
