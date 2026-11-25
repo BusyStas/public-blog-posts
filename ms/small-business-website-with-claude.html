@@ -1,0 +1,123 @@
+<p class="lead">Beberapa tahun lalu, perniagaan kecil yang mahukan laman web sebenar, dengan halaman tempahan, log masuk pelanggan atau galeri yang mengemas kini dirinya sendiri, mempunyai dua pilihan. Ia boleh membayar sebuah ejensi antara $5,000 hingga $15,000, atau bergelut dengan pembina seret-dan-lepas yang tidak pernah berfungsi tepat seperti yang diingini.</p>
+
+<p>Itu sudah berubah. Pembantu pengaturcaraan AI kini menulis kod, dan awan menjadi hos dengan kos yang sangat kecil. Beginilah rupa bilnya:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Apa</th><th>Anda bayar</th></tr></thead>
+<tbody>
+<tr><td><a href="https://claude.ai">Claude</a> (pembangun AI anda)</td><td>$240 setahun</td></tr>
+<tr><td><a href="https://azure.microsoft.com/products/azure-sql/database">Azure SQL Database</a>, pelan Basic</td><td>$5 sebulan</td></tr>
+<tr><td>Pengehosan <a href="https://cloud.google.com">Google Cloud</a></td><td>$10 sebulan</td></tr>
+<tr><td>Nama domain anda sendiri daripada <a href="https://unstoppabledomains.com">Unstoppable Domains</a></td><td>$100 sekali sahaja, dibahagikan sepanjang 10 tahun</td></tr>
+<tr><td><strong>Jumlah</strong></td><td><strong>$430 setahun</strong></td></tr>
+</tbody>
+</table></div>
+
+<p>Panduan ini untuk pemilik studio fotografi 1-2 orang, pusat jagaan kanak-kanak di rumah, sekolah luncur ais kecil, atau tutor dan jurulatih bebas. Anda tidak perlu tahu cara menulis kod. Anda hanya perlu bersedia mengikuti langkah-langkah dan menerangkan apa yang anda mahu dengan perkataan mudah.</p>
+
+<h2>Apa yang anda akan perolehi akhirnya</h2>
+
+<ul>
+  <li>Alamat anda sendiri (contohnya <em>namaanda.com</em>) dan bukannya subdomain percuma daripada pembina laman</li>
+  <li>Laman yang sepenuhnya milik anda, tanpa "yuran platform" bulanan yang naik setiap tahun</li>
+  <li>Ciri yang tidak dijual dalam templat: senarai menunggu untuk kelas luncur ais anda, portal ibu bapa untuk jagaan kanak-kanak anda, halaman tempahan kelas untuk tuisyen anda</li>
+  <li>Semuanya disimpan dalam akaun anda sendiri, supaya anda boleh meninggalkan mana-mana pembekal</li>
+</ul>
+
+<h2>Langkah-langkahnya</h2>
+
+<h3>1. Daftar di GitHub</h3>
+
+<p><a href="https://github.com/signup">GitHub</a> ialah tempat anda menerangkan laman web anda dan menyimpan kod sumber. Ia percuma dan akan menjadi milik anda selama-lamanya. Anggaplah ia sebagai peti simpanan selamat dengan sejarah penuh setiap perubahan, supaya anda sentiasa boleh membatalkan kesilapan. Daftar, kemudian <a href="https://github.com/new">cipta tiga repositori kosong</a>, dan pilih keterlihatan <strong>Private</strong> (peribadi) untuk setiap satu. Gunakan nama perniagaan anda sebagai ganti YourName:</p>
+<ul>
+  <li><code>web-YourName</code> untuk laman web</li>
+  <li><code>api-YourName</code> untuk kod pelayan</li>
+  <li><code>db-YourName</code> untuk skrip pangkalan data</li>
+</ul>
+
+<h3>2. Pasang Claude Desktop</h3>
+
+<p>Muat turun <a href="https://claude.com/download">aplikasi desktop Claude</a> untuk komputer anda, pasangnya dan log masuk dengan akaun Claude anda. Anda memerlukan pelan berbayar, iaitu $240 setahun dalam jadual kos di atas. Setelah anda ada Claude, langkah-langkah di bawah hanyalah gambaran keseluruhan: Claude akan membimbing anda dalam setiap butiran tentang apa yang perlu dibuat dan bagaimana.</p>
+
+<h3>3. Daftar domain anda di Unstoppable Domains</h3>
+
+<p>Pergi ke <a href="https://unstoppabledomains.com">unstoppabledomains.com</a> dan cari satu nama. Pendek lebih baik daripada bijak. Sesebuah domain boleh berharga serendah $5 setahun, dan lebih baik membayar 10 tahun terus di muka untuk $50. Beli dengan akaun anda sendiri dan catat log masuk di tempat yang selamat. Domain ialah satu-satunya bahagian perniagaan anda yang mesti sentiasa menjadi milik anda.</p>
+
+<h3>4. Daftar di Google Cloud (GCP)</h3>
+
+<p><a href="https://console.cloud.google.com">Google Cloud</a> ialah tempat laman anda benar-benar berjalan. Daftar. Ia percuma, dan anda hanya membayar untuk apa yang anda gunakan apabila sesuatu mula berjalan. Kemudian <a href="https://console.cloud.google.com/projectcreate">cipta projek</a> dan tambahkan kad pembayaran. Lakukan ini dengan segera: <a href="https://console.cloud.google.com/billing/budgets">tetapkan amaran bajet</a> pada $15 sebulan. Ini ialah jaring keselamatan. Anda akan menerima e-mel lama sebelum sesuatu yang mengejutkan berlaku.</p>
+
+<h3>5. Daftar di Microsoft Azure</h3>
+
+<p>Pangkalan data anda berada di Microsoft, jadi anda memerlukan akaun di sana juga. Daftar di <a href="https://azure.microsoft.com/free">azure.microsoft.com/free</a> dan tambahkan kad pembayaran. Kemudian buka <a href="https://portal.azure.com">portal Azure</a> dan tetapkan amaran perbelanjaan: cari <strong>Cost Management + Billing</strong>, pilih <strong>Budgets</strong>, dan cipta bajet bulanan $10 dengan amaran e-mel pada 80%.</p>
+
+<h3>6. Cipta pangkalan data anda, dengan memilih pelan Basic</h3>
+
+<p>Dalam <a href="https://portal.azure.com">portal Azure</a>, cari <strong>SQL databases</strong>, klik <strong>Create</strong>, dan isi borang:</p>
+<ol>
+  <li><strong>Subscription:</strong> biarkan lalai.</li>
+  <li><strong>Resource group:</strong> klik <em>Create new</em> dan namakan mengikut perniagaan anda (contohnya <code>mystudio-rg</code>).</li>
+  <li><strong>Database name:</strong> sesuatu yang pendek, seperti <code>mystudio-db</code>.</li>
+  <li><strong>Server:</strong> klik <em>Create new</em>. Beri nama unik, kerana ia menjadi sebahagian daripada alamat pangkalan data anda. Pilih <strong>lokasi</strong> yang dekat dengan pelanggan anda dan catat yang mana satu anda pilih. Untuk pengesahan, pilih <strong>SQL authentication</strong>, kemudian tetapkan log masuk pentadbir dan kata laluan rawak yang panjang (30+ aksara) daripada pengurus kata laluan anda.</li>
+  <li><strong>Want to use SQL elastic pool?</strong> Pilih <strong>No</strong>.</li>
+  <li><strong>Workload environment:</strong> pilih <strong>Development</strong>.</li>
+  <li><strong>Compute + storage:</strong> klik <em>Configure database</em>. Di bawah <strong>Service tier</strong>, pilih <strong>Basic</strong>. Pastikan ia menunjukkan <strong>5 DTUs</strong> dan <strong>2 GB</strong>, kemudian klik Apply. Harga (sekitar $5 sebulan) dipaparkan pada borang sebelum anda mengesahkan.</li>
+  <li><strong>Backup storage redundancy:</strong> pilih <strong>Locally-redundant</strong>, yang paling murah.</li>
+  <li>Pada tab <strong>Networking</strong>, tetapkan <em>Connectivity method</em> kepada <strong>Public endpoint</strong>. Hidupkan <strong>Allow Azure services and resources to access this server</strong>, dan hidupkan <strong>Add current client IP address</strong> supaya anda boleh menyambung dari komputer anda sendiri.</li>
+  <li>Klik <strong>Review + create</strong>, semak harga yang dipaparkan, kemudian klik <strong>Create</strong>. Ia siap dalam beberapa minit.</li>
+</ol>
+
+<p>Jangan taip SQL sendiri. Setelah pangkalan data wujud, beritahu Claude apa yang dijejak oleh perniagaan anda dan biarkan ia mencipta jadual.</p>
+
+<h3>7. Hidupkan Cloud Run</h3>
+
+<p><a href="https://cloud.google.com/run">Cloud Run</a> ialah perkhidmatan Google Cloud yang menjalankan laman web anda. Ia hanya bangun apabila ada yang melawat, dan itulah sebabnya bil pengehosan kekal sekitar $10. Mula-mula, <a href="https://console.cloud.google.com/apis/library/run.googleapis.com">dayakan perkhidmatan Cloud Run dan Cloud Build</a>. Kemudian cipta bekas yang disambungkan kepada kod anda:</p>
+<ol>
+  <li>Dalam <a href="https://console.cloud.google.com/run">konsol Cloud Run</a>, klik <strong>Create service</strong> (atau <em>Create container</em>).</li>
+  <li>Pilih <strong>Connect Repo</strong>, yang menggunakan kod anda terus daripada repositori.</li>
+  <li>Pilih <strong>GitHub</strong>, log masuk, dan pilih repositori <code>web-YourName</code> anda.</li>
+  <li>Di bawah penskalaan, tetapkan <strong>Maximum instances</strong> kepada <strong>1</strong>. Ini menghalang bil pengehosan anda daripada membesar.</li>
+  <li>Klik <strong>Create</strong>.</li>
+</ol>
+
+<h3>8. Sambungkan Claude ke GitHub</h3>
+
+<p>Sambungkan akaun GitHub anda ke Claude. Dalam Claude, pergi ke <strong>Customize &gt; Connectors</strong>, pilih <strong>GitHub Integration</strong>, dan klik <strong>Connect</strong>. Kemudian, dalam sembang, klik <strong>+</strong> di sudut kiri bawah kotak mesej, pilih <strong>Add from GitHub</strong>, dan pilih repositori anda.</p>
+
+<p>Google Cloud tidak memerlukan sambungan ke Claude, kerana dalam langkah 7 anda sudah memautkannya ke repositori GitHub anda. Selepas itu, setiap kali anda mengubah kod sumber di GitHub, fungsi baharu akan muncul secara langsung dalam seminit dua. Anda memberitahu Claude apa yang hendak dibina, dan Claude menyimpan ke GitHub manakala Google melaksanakannya secara automatik. Anda tidak perlu buat apa-apa lagi, cuma beritahu Claude skrin dan fungsi yang anda mahu.</p>
+
+<h3>9. Terangkan laman anda dengan perkataan mudah</h3>
+
+<p>Inilah kerja sebenar. Tulis satu halaman tentang perniagaan anda: siapa pelanggan anda, apa yang mereka perlu lakukan di laman anda, dan apa yang anda mahu mereka lihat. Contohnya:</p>
+
+<blockquote><p><em>"Saya menjalankan studio fotografi dengan dua orang. Saya mahu halaman utama dengan hasil kerja terbaik saya, satu halaman untuk setiap jenis sesi dengan harga, borang permintaan tempahan yang menghantar e-mel kepada saya, dan halaman galeri peribadi di mana pelanggan memasukkan kod untuk melihat gambar mereka."</em></p></blockquote>
+
+<p>Penerangan yang baik sentiasa mengalahkan kemahiran teknikal.</p>
+
+<h3>10. Bina satu halaman pada satu masa</h3>
+
+<p>Jangan minta semuanya sekali gus. Minta halaman utama, lihatnya, dan katakan apa yang perlu diubah ("besarkan gambar", "warna lebih lembut", "letak nombor telefon saya di atas"). Kemudian beralih ke halaman seterusnya. Setiap perubahan mengambil masa beberapa minit, bukan beberapa minggu.</p>
+
+<h3>11. Halakan domain anda ke laman</h3>
+
+<p>Dalam Cloud Run, <a href="https://cloud.google.com/run/docs/mapping-custom-domains">tambahkan domain tersuai anda</a> dan salin rekod yang diberikan ke dalam tetapan Unstoppable Domains anda. Dalam sejam lebih, alamat anda sendiri memaparkan laman anda, lengkap dengan simbol mangga (HTTPS).</p>
+
+<h3>12. Teruskan memperbaikinya</h3>
+
+<p>Kerana semuanya milik anda, anda boleh menambah ciri apabila terfikir satu: halaman testimoni, pendaftaran surat berita, jadual kelas yang menunjukkan tempat kosong. Terangkan, semak, dan ia terus beroperasi.</p>
+
+<h2>Beberapa amaran jujur</h2>
+
+<ul>
+  <li><strong>Ketahui had pelan Basic.</strong> Harganya tetap, jadi bulan yang sibuk tidak akan menaikkan bil anda. Tetapi 5 DTU ialah enjin kecil, dan 2 GB ialah had storan. Ia lebih daripada cukup untuk tempahan dan borang hubungan, tetapi perlahan jika setiap paparan halaman menanyakan pangkalan data. Minta Claude menyimpan halaman awam (seperti senarai harga) dalam cache supaya pelawat langsung tidak menanyakan pangkalan data, dan simpan gambar serta video dalam storan awan, bukan dalam pangkalan data.</li>
+  <li><strong>Kunci pangkalan data.</strong> Cloud Run tidak mempunyai alamat tetap, jadi laman kecil lazimnya membenarkan sambungan dari mana-mana alamat dan bergantung pada kata laluan yang kukuh serta sambungan yang disulitkan. Itu berfungsi, tetapi menjadikan kata laluan rawak yang panjang itu penting. Jangan sekali-kali menggunakannya di tempat lain.</li>
+  <li><strong>Pastikan log masuk anda selamat.</strong> Gunakan pengurus kata laluan. Jangan sekali-kali tampal kata laluan atau nombor kad ke dalam sembang, dan jangan benarkan sesiapa meletakkannya dalam kod anda.</li>
+  <li><strong>Lindungi data pelanggan anda.</strong> Jika laman anda mengumpul nama kanak-kanak, gambar atau butiran hubungan, kumpul hanya apa yang benar-benar anda perlukan. Semak apa yang dikehendaki oleh negeri atau negara anda, dan tulis halaman privasi dalam bahasa yang mudah.</li>
+  <li><strong>Anda pemiliknya, jadi semak hasil kerja.</strong> Claude pantas, tetapi anda patut membaca apa yang dibinanya, klik setiap butang, dan tanya "apa yang berlaku jika seseorang menaip sesuatu yang pelik di sini?"</li>
+</ul>
+
+<h2>Kesimpulan</h2>
+
+<p>Bahagian yang mahal bagi sebuah laman web dahulunya ialah masa pembangun. Kos itu telah runtuh. Yang tinggal ialah mengenali perniagaan anda cukup baik untuk menerangkannya, dan itu sesuatu yang sudah anda lakukan lebih baik daripada mana-mana ejensi.</p>
+
+<p>Jumlah: sekitar $430 setahun, atau kira-kira $36 sebulan.</p>

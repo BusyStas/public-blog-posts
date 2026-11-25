@@ -1,0 +1,123 @@
+<p class="lead">A few years ago, a small business that wanted a real website, with a booking page, a client login or a gallery that updates itself, had two choices. It could pay an agency $5,000 to $15,000, or it could fight a drag-and-drop builder that never quite did what it wanted.</p>
+
+<p>That has changed. An AI coding assistant now writes the code, and the cloud hosts it for pocket change. Here is what the bill looks like:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>What</th><th>You pay</th></tr></thead>
+<tbody>
+<tr><td><a href="https://claude.ai">Claude</a> (your AI developer)</td><td>$240 per year</td></tr>
+<tr><td><a href="https://azure.microsoft.com/products/azure-sql/database">Azure SQL Database</a>, Basic plan</td><td>$5 per month</td></tr>
+<tr><td><a href="https://cloud.google.com">Google Cloud</a> hosting</td><td>$10 per month</td></tr>
+<tr><td>Your own domain name from <a href="https://unstoppabledomains.com">Unstoppable Domains</a></td><td>$100 once, spread over 10 years</td></tr>
+<tr><td><strong>Total</strong></td><td><strong>$430 per year</strong></td></tr>
+</tbody>
+</table></div>
+
+<p>This guide is for owners of a 1-2 person photography studio, a home child care, a small skating school, or an independent tutor or coach. You don't need to know how to code. You do need to be willing to follow steps and describe what you want in plain words.</p>
+
+<h2>What you'll end up with</h2>
+
+<ul>
+  <li>Your own address (for example, <em>yourname.com</em>) instead of a free-builder subdomain</li>
+  <li>A site you fully own, with no monthly "platform fee" that rises every year</li>
+  <li>Features nobody sells in a template: a waitlist for your skating classes, a parent portal for your child care, a lesson-booking page for your tutoring</li>
+  <li>Everything stored in your own accounts, so you can walk away from any vendor</li>
+</ul>
+
+<h2>The steps</h2>
+
+<h3>1. Register on GitHub</h3>
+
+<p><a href="https://github.com/signup">GitHub</a> is where you describe your website, and keep the source code. It is free, and it will belong to you forever. Think of it as a safe deposit box with a full history of every change, so you can always undo a mistake. Sign up, then <a href="https://github.com/new">create three empty repositories</a>, and choose visibility <strong>Private</strong> for each. Use your business name in place of YourName:</p>
+<ul>
+  <li><code>web-YourName</code> for the website</li>
+  <li><code>api-YourName</code> for the server code</li>
+  <li><code>db-YourName</code> for the database scripts</li>
+</ul>
+
+<h3>2. Install Claude Desktop</h3>
+
+<p>Download the <a href="https://claude.com/download">Claude desktop app</a> for your computer, install it, and sign in with your Claude account. You'll need a paid plan, which is the $240 a year in the cost table above. Once you have Claude, the steps below are just an overview: Claude will guide you through every detail of what to do and how.</p>
+
+<h3>3. Register your domain at Unstoppable Domains</h3>
+
+<p>Go to <a href="https://unstoppabledomains.com">unstoppabledomains.com</a> and search for a name. Short beats clever. A domain can cost as little as $5 per year, and it's better to pay 10 years upfront for $50. Buy it under your own account and write down the login somewhere safe. The domain is the one piece of your business that must always be yours.</p>
+
+<h3>4. Register on Google Cloud (GCP)</h3>
+
+<p><a href="https://console.cloud.google.com">Google Cloud</a> is where your site will actually run. Sign up. It is free, and you only pay for what you use once something starts to run. Then <a href="https://console.cloud.google.com/projectcreate">create a project</a> and attach a payment card. Do this right away: <a href="https://console.cloud.google.com/billing/budgets">set a budget alert</a> at $15 a month. It's a safety net. You'll get an email long before anything surprising happens.</p>
+
+<h3>5. Register on Microsoft Azure</h3>
+
+<p>Your database lives at Microsoft, so you need an account there too. Sign up at <a href="https://azure.microsoft.com/free">azure.microsoft.com/free</a> and attach a payment card. Then open the <a href="https://portal.azure.com">Azure portal</a> and set a spending alert: search for <strong>Cost Management + Billing</strong>, choose <strong>Budgets</strong>, and create a monthly budget of $10 with an email alert at 80%.</p>
+
+<h3>6. Create your database, choosing the Basic plan</h3>
+
+<p>In the <a href="https://portal.azure.com">Azure portal</a>, search for <strong>SQL databases</strong>, click <strong>Create</strong>, and fill in the form:</p>
+<ol>
+  <li><strong>Subscription:</strong> leave the default.</li>
+  <li><strong>Resource group:</strong> click <em>Create new</em> and name it after your business (for example, <code>mystudio-rg</code>).</li>
+  <li><strong>Database name:</strong> something short, like <code>mystudio-db</code>.</li>
+  <li><strong>Server:</strong> click <em>Create new</em>. Give it a unique name, since it becomes part of your database address. Pick a <strong>location</strong> close to your customers and note which one you chose. For authentication, choose <strong>SQL authentication</strong>, then set an admin login and a long random password (30+ characters) from your password manager.</li>
+  <li><strong>Want to use SQL elastic pool?</strong> Choose <strong>No</strong>.</li>
+  <li><strong>Workload environment:</strong> choose <strong>Development</strong>.</li>
+  <li><strong>Compute + storage:</strong> click <em>Configure database</em>. Under <strong>Service tier</strong>, choose <strong>Basic</strong>. Confirm it shows <strong>5 DTUs</strong> and <strong>2 GB</strong>, then click Apply. The price (about $5 a month) shows on the form before you commit.</li>
+  <li><strong>Backup storage redundancy:</strong> choose <strong>Locally-redundant</strong>, the cheapest.</li>
+  <li>On the <strong>Networking</strong> tab, set <em>Connectivity method</em> to <strong>Public endpoint</strong>. Turn on <strong>Allow Azure services and resources to access this server</strong>, and turn on <strong>Add current client IP address</strong> so you can connect from your own computer.</li>
+  <li>Click <strong>Review + create</strong>, check the price shown, then click <strong>Create</strong>. It deploys in a few minutes.</li>
+</ol>
+
+<p>Don't type the SQL yourself. Once the database exists, tell Claude what your business tracks and let it create the tables.</p>
+
+<h3>7. Turn on Cloud Run</h3>
+
+<p><a href="https://cloud.google.com/run">Cloud Run</a> is the Google Cloud service that runs your website. It only wakes up when someone visits, and that's why the hosting bill stays near $10. First, <a href="https://console.cloud.google.com/apis/library/run.googleapis.com">enable the Cloud Run and Cloud Build services</a>. Then create a container that is connected to your code:</p>
+<ol>
+  <li>In the <a href="https://console.cloud.google.com/run">Cloud Run console</a>, click <strong>Create service</strong> (or <em>Create container</em>).</li>
+  <li>Choose <strong>Connect Repo</strong>, which deploys your code straight from a repository.</li>
+  <li>Choose <strong>GitHub</strong>, sign in, and select your <code>web-YourName</code> repository.</li>
+  <li>Under scaling, set <strong>Maximum instances</strong> to <strong>1</strong>. This keeps your hosting bill from growing.</li>
+  <li>Click <strong>Create</strong>.</li>
+</ol>
+
+<h3>8. Connect Claude to GitHub</h3>
+
+<p>Connect your GitHub account to Claude. In Claude, go to <strong>Customize &gt; Connectors</strong>, select <strong>GitHub Integration</strong>, and click <strong>Connect</strong>. Then, in a chat, click <strong>+</strong> at the lower left of the message box, choose <strong>Add from GitHub</strong>, and pick your repositories.</p>
+
+<p>Google Cloud needs no connection to Claude, because in step 7 you already linked it to your GitHub repository. After that, whenever you change your source code in GitHub, the new functionality will appear live in a minute or two. You tell Claude what to build, and Claude saves to GitHub and Google deploys it automatically. You don't need to do anything, only tell Claude what screens and functionality you want.</p>
+
+<h3>9. Describe your site in plain words</h3>
+
+<p>This is the real work. Write one page about your business: who your customers are, what they need to do on your site, and what you want them to see. For example:</p>
+
+<blockquote><p><em>"I run a two-person photography studio. I want a home page with my best work, a page for each type of session with prices, a booking request form that emails me, and a private gallery page where clients enter a code to see their photos."</em></p></blockquote>
+
+<p>Good descriptions beat technical skill every time.</p>
+
+<h3>10. Build one page at a time</h3>
+
+<p>Don't ask for everything at once. Ask for the home page, look at it, and say what to change ("make the photos bigger," "softer colors," "put my phone number at the top"). Then move to the next page. Each change takes minutes, not weeks.</p>
+
+<h3>11. Point your domain at it</h3>
+
+<p>In Cloud Run, <a href="https://cloud.google.com/run/docs/mapping-custom-domains">add your custom domain</a> and copy the records it gives you into your Unstoppable Domains settings. Within an hour or so, your own address shows your site, with the padlock (HTTPS) included.</p>
+
+<h3>12. Keep improving it</h3>
+
+<p>Because you own the whole thing, you can add a feature whenever you think of one: a testimonials page, a newsletter signup, a class schedule that shows open spots. Describe it, review it, and it goes live.</p>
+
+<h2>A few honest warnings</h2>
+
+<ul>
+  <li><strong>Know the Basic plan's limits.</strong> The price is flat, so a busy month won't raise your bill. But 5 DTUs is a small engine, and 2 GB is the storage cap. It's plenty for bookings and contact forms, and slow if every page view hits it. Ask Claude to cache public pages (like a price list) so visitors don't query the database at all, and keep photos and videos in cloud storage, not in the database.</li>
+  <li><strong>Lock the database down.</strong> Cloud Run has no fixed address, so small sites commonly allow connections from any address and rely on a strong password plus encrypted connections. That works, but it makes the long random password essential. Never reuse it anywhere else.</li>
+  <li><strong>Keep your logins safe.</strong> Use a password manager. Never paste passwords or card numbers into a chat, and never let anyone put them in your code.</li>
+  <li><strong>Protect your clients' data.</strong> If your site collects children's names, photos or contact details, collect only what you truly need. Check what your state or country requires, and write a plain-language privacy page.</li>
+  <li><strong>You're the owner, so check the work.</strong> Claude is fast, but you should read what it builds, click every button, and ask "what happens if someone types something strange here?"</li>
+</ul>
+
+<h2>The bottom line</h2>
+
+<p>The expensive part of a website used to be the developer's time. That cost has collapsed. What's left is knowing your own business well enough to describe it, and that's something you already do better than any agency.</p>
+
+<p>Total: about $430 a year, or roughly $36 a month.</p>

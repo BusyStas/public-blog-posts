@@ -11,6 +11,16 @@
       "IsAboutStartingLLC": false
     },
     {
+      "code": "small-business-website-with-claude",
+      "title": "A Website for Your Small Business Used to Cost Thousands. Now It Costs About $430 a Year.",
+      "summary": "An AI assistant now writes the code and the cloud hosts it cheaply. A step-by-step guide for photographers, tutors, coaches and home child care: a real website for about $430 a year.",
+      "publishedOn": "2026-11-20",
+      "isCrypto": false,
+      "isAi": true,
+      "isTrading": false,
+      "IsAboutStartingLLC": false
+    },
+    {
       "code": "can-postgres-replace-sql-server",
       "title": "Can Postgres Replace Microsoft SQL Server",
       "summary": "Choosing a database for a new project from scratch: where Postgres and SQL Server each win, why CI/CD decides more than features, and what a 20 GB database really costs on Azure.",

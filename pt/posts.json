@@ -4,6 +4,10 @@
       "title": "Por que a IA não vai matar a barra de navegação à esquerda",
       "summary": "Interfaces só de chat parecem modernas, mas o menu é o mapa do site de que os usuários precisam. Por que a IA deve trabalhar dentro da navegação, com lições dos comandos de voz, do Notion e do Claude."
     },
+    "small-business-website-with-claude": {
+      "title": "Um site para a sua pequena empresa custava milhares de dólares. Agora custa cerca de 430 dólares por ano.",
+      "summary": "Agora uma IA escreve o código e a nuvem hospeda o site por muito pouco. Guia passo a passo para fotógrafos, professores particulares, treinadores e creches domésticas: um site de verdade por cerca de 430 dólares por ano."
+    },
     "can-postgres-replace-sql-server": {
       "title": "O Postgres pode substituir o Microsoft SQL Server?",
       "summary": "Como escolher um banco de dados para um projeto novo, do zero: onde o Postgres e o SQL Server ganham, por que o CI/CD pesa mais que os recursos e quanto custa de verdade um banco de 20 GB no Azure."

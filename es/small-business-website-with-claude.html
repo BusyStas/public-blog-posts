@@ -1,0 +1,123 @@
+<p class="lead">Hace unos años, un pequeño negocio que quería un sitio web de verdad, con página de reservas, acceso para clientes o una galería que se actualiza sola, tenía dos opciones. Podía pagar a una agencia entre 5.000 y 15.000 dólares, o pelearse con un constructor de arrastrar y soltar que nunca terminaba de hacer lo que quería.</p>
+
+<p>Eso ha cambiado. Ahora un asistente de programación con IA escribe el código, y la nube lo aloja por muy poco dinero. Así se ve la factura:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Qué</th><th>Pagas</th></tr></thead>
+<tbody>
+<tr><td><a href="https://claude.ai">Claude</a> (tu desarrollador con IA)</td><td>240 $ al año</td></tr>
+<tr><td><a href="https://azure.microsoft.com/products/azure-sql/database">Azure SQL Database</a>, plan Basic</td><td>5 $ al mes</td></tr>
+<tr><td>Alojamiento en <a href="https://cloud.google.com">Google Cloud</a></td><td>10 $ al mes</td></tr>
+<tr><td>Tu propio nombre de dominio en <a href="https://unstoppabledomains.com">Unstoppable Domains</a></td><td>100 $ una sola vez, repartidos en 10 años</td></tr>
+<tr><td><strong>Total</strong></td><td><strong>430 $ al año</strong></td></tr>
+</tbody>
+</table></div>
+
+<p>Esta guía es para dueños de un estudio de fotografía de 1 o 2 personas, una guardería en casa, una pequeña escuela de patinaje, o un tutor o entrenador independiente. No necesitas saber programar. Sí necesitas estar dispuesto a seguir los pasos y a describir con palabras sencillas lo que quieres.</p>
+
+<h2>Qué tendrás al final</h2>
+
+<ul>
+  <li>Tu propia dirección (por ejemplo, <em>tunombre.com</em>) en lugar de un subdominio gratuito de un constructor</li>
+  <li>Un sitio que es totalmente tuyo, sin una "cuota de plataforma" mensual que sube cada año</li>
+  <li>Funciones que nadie vende en una plantilla: una lista de espera para tus clases de patinaje, un portal para padres en tu guardería, una página de reserva de clases para tus tutorías</li>
+  <li>Todo guardado en tus propias cuentas, así que puedes dejar a cualquier proveedor cuando quieras</li>
+</ul>
+
+<h2>Los pasos</h2>
+
+<h3>1. Regístrate en GitHub</h3>
+
+<p><a href="https://github.com/signup">GitHub</a> es donde describes tu sitio web y guardas el código fuente. Es gratis y será tuyo para siempre. Piensa en él como una caja de seguridad con el historial completo de cada cambio, para que siempre puedas deshacer un error. Regístrate y luego <a href="https://github.com/new">crea tres repositorios vacíos</a>, y elige la visibilidad <strong>Private</strong> (privada) para cada uno. Usa el nombre de tu negocio en lugar de YourName:</p>
+<ul>
+  <li><code>web-YourName</code> para el sitio web</li>
+  <li><code>api-YourName</code> para el código del servidor</li>
+  <li><code>db-YourName</code> para los scripts de la base de datos</li>
+</ul>
+
+<h3>2. Instala Claude Desktop</h3>
+
+<p>Descarga la <a href="https://claude.com/download">aplicación de escritorio de Claude</a> para tu computadora, instálala e inicia sesión con tu cuenta de Claude. Necesitarás un plan de pago, que es el 240 $ al año de la tabla de costos de arriba. Cuando ya tengas Claude, los pasos siguientes son solo un resumen: Claude te guiará en cada detalle de qué hacer y cómo.</p>
+
+<h3>3. Registra tu dominio en Unstoppable Domains</h3>
+
+<p>Entra en <a href="https://unstoppabledomains.com">unstoppabledomains.com</a> y busca un nombre. Mejor corto que ingenioso. Un dominio puede costar desde 5 $ al año, y conviene pagar 10 años por adelantado por 50 $. Cómpralo con tu propia cuenta y anota el acceso en un lugar seguro. El dominio es la única pieza de tu negocio que siempre debe ser tuya.</p>
+
+<h3>4. Regístrate en Google Cloud (GCP)</h3>
+
+<p><a href="https://console.cloud.google.com">Google Cloud</a> es donde realmente funcionará tu sitio. Regístrate. Es gratis, y solo pagas por lo que usas cuando algo empiece a funcionar. Luego <a href="https://console.cloud.google.com/projectcreate">crea un proyecto</a> y añade una tarjeta de pago. Haz esto enseguida: <a href="https://console.cloud.google.com/billing/budgets">configura una alerta de presupuesto</a> de 15 $ al mes. Es una red de seguridad. Recibirás un correo mucho antes de que ocurra algo sorprendente.</p>
+
+<h3>5. Regístrate en Microsoft Azure</h3>
+
+<p>Tu base de datos vive en Microsoft, así que también necesitas una cuenta allí. Regístrate en <a href="https://azure.microsoft.com/free">azure.microsoft.com/free</a> y añade una tarjeta de pago. Luego abre el <a href="https://portal.azure.com">portal de Azure</a> y configura una alerta de gasto: busca <strong>Cost Management + Billing</strong>, elige <strong>Budgets</strong> y crea un presupuesto mensual de 10 $ con una alerta por correo al 80 %.</p>
+
+<h3>6. Crea tu base de datos, eligiendo el plan Basic</h3>
+
+<p>En el <a href="https://portal.azure.com">portal de Azure</a>, busca <strong>SQL databases</strong>, haz clic en <strong>Create</strong> y completa el formulario:</p>
+<ol>
+  <li><strong>Subscription:</strong> deja la opción por defecto.</li>
+  <li><strong>Resource group:</strong> haz clic en <em>Create new</em> y ponle el nombre de tu negocio (por ejemplo, <code>mystudio-rg</code>).</li>
+  <li><strong>Database name:</strong> algo corto, como <code>mystudio-db</code>.</li>
+  <li><strong>Server:</strong> haz clic en <em>Create new</em>. Dale un nombre único, porque pasa a formar parte de la dirección de tu base de datos. Elige una <strong>ubicación</strong> cercana a tus clientes y anota cuál elegiste. Como autenticación, elige <strong>SQL authentication</strong>, y luego define un usuario administrador y una contraseña larga y aleatoria (30 o más caracteres) de tu gestor de contraseñas.</li>
+  <li><strong>Want to use SQL elastic pool?</strong> Elige <strong>No</strong>.</li>
+  <li><strong>Workload environment:</strong> elige <strong>Development</strong>.</li>
+  <li><strong>Compute + storage:</strong> haz clic en <em>Configure database</em>. En <strong>Service tier</strong>, elige <strong>Basic</strong>. Confirma que muestra <strong>5 DTUs</strong> y <strong>2 GB</strong>, y haz clic en Apply. El precio (unos 5 $ al mes) aparece en el formulario antes de que te comprometas.</li>
+  <li><strong>Backup storage redundancy:</strong> elige <strong>Locally-redundant</strong>, la más barata.</li>
+  <li>En la pestaña <strong>Networking</strong>, pon <em>Connectivity method</em> en <strong>Public endpoint</strong>. Activa <strong>Allow Azure services and resources to access this server</strong> y activa <strong>Add current client IP address</strong> para poder conectarte desde tu propia computadora.</li>
+  <li>Haz clic en <strong>Review + create</strong>, comprueba el precio que aparece y luego haz clic en <strong>Create</strong>. Se despliega en unos minutos.</li>
+</ol>
+
+<p>No escribas el SQL tú mismo. Cuando la base de datos exista, dile a Claude qué registra tu negocio y deja que cree las tablas.</p>
+
+<h3>7. Activa Cloud Run</h3>
+
+<p><a href="https://cloud.google.com/run">Cloud Run</a> es el servicio de Google Cloud que ejecuta tu sitio web. Solo se despierta cuando alguien lo visita, y por eso la factura de alojamiento se queda cerca de 10 $. Primero, <a href="https://console.cloud.google.com/apis/library/run.googleapis.com">activa los servicios Cloud Run y Cloud Build</a>. Luego crea un contenedor conectado a tu código:</p>
+<ol>
+  <li>En la <a href="https://console.cloud.google.com/run">consola de Cloud Run</a>, haz clic en <strong>Create service</strong> (o <em>Create container</em>).</li>
+  <li>Elige <strong>Connect Repo</strong>, que despliega tu código directamente desde un repositorio.</li>
+  <li>Elige <strong>GitHub</strong>, inicia sesión y selecciona tu repositorio <code>web-YourName</code>.</li>
+  <li>En la escala, pon <strong>Maximum instances</strong> en <strong>1</strong>. Así tu factura de alojamiento no crece.</li>
+  <li>Haz clic en <strong>Create</strong>.</li>
+</ol>
+
+<h3>8. Conecta Claude con GitHub</h3>
+
+<p>Conecta tu cuenta de GitHub con Claude. En Claude, ve a <strong>Customize &gt; Connectors</strong>, selecciona <strong>GitHub Integration</strong> y haz clic en <strong>Connect</strong>. Luego, en un chat, haz clic en <strong>+</strong> en la parte inferior izquierda del cuadro de mensaje, elige <strong>Add from GitHub</strong> y selecciona tus repositorios.</p>
+
+<p>Google Cloud no necesita ninguna conexión con Claude, porque en el paso 7 ya lo vinculaste a tu repositorio de GitHub. A partir de ahí, cada vez que cambies tu código fuente en GitHub, la nueva funcionalidad aparecerá en vivo en uno o dos minutos. Tú le dices a Claude qué construir, y Claude guarda en GitHub y Google lo despliega automáticamente. No tienes que hacer nada más; solo dile a Claude qué pantallas y funciones quieres.</p>
+
+<h3>9. Describe tu sitio con palabras sencillas</h3>
+
+<p>Este es el trabajo de verdad. Escribe una página sobre tu negocio: quiénes son tus clientes, qué necesitan hacer en tu sitio y qué quieres que vean. Por ejemplo:</p>
+
+<blockquote><p><em>"Tengo un estudio de fotografía con dos personas. Quiero una página de inicio con mis mejores trabajos, una página por cada tipo de sesión con precios, un formulario de solicitud de reserva que me llegue por correo, y una página de galería privada donde los clientes escriban un código para ver sus fotos."</em></p></blockquote>
+
+<p>Una buena descripción vale más que cualquier conocimiento técnico.</p>
+
+<h3>10. Construye una página a la vez</h3>
+
+<p>No pidas todo de golpe. Pide la página de inicio, mírala y di qué cambiar ("haz las fotos más grandes", "colores más suaves", "pon mi teléfono arriba"). Luego pasa a la siguiente página. Cada cambio toma minutos, no semanas.</p>
+
+<h3>11. Apunta tu dominio al sitio</h3>
+
+<p>En Cloud Run, <a href="https://cloud.google.com/run/docs/mapping-custom-domains">añade tu dominio personalizado</a> y copia los registros que te da en la configuración de Unstoppable Domains. En una hora más o menos, tu propia dirección mostrará tu sitio, con el candado (HTTPS) incluido.</p>
+
+<h3>12. Sigue mejorándolo</h3>
+
+<p>Como todo es tuyo, puedes añadir una función cada vez que se te ocurra una: una página de testimonios, un registro al boletín, un horario de clases que muestre los cupos libres. Descríbela, revísala y ya está en vivo.</p>
+
+<h2>Algunas advertencias sinceras</h2>
+
+<ul>
+  <li><strong>Conoce los límites del plan Basic.</strong> El precio es fijo, así que un mes con mucha actividad no subirá tu factura. Pero 5 DTUs es un motor pequeño, y 2 GB es el tope de almacenamiento. Es suficiente para reservas y formularios de contacto, y lento si cada visita a una página consulta la base de datos. Pide a Claude que guarde en caché las páginas públicas (como una lista de precios) para que los visitantes no consulten la base de datos, y guarda fotos y videos en almacenamiento en la nube, no en la base de datos.</li>
+  <li><strong>Protege la base de datos.</strong> Cloud Run no tiene una dirección fija, así que los sitios pequeños suelen permitir conexiones desde cualquier dirección y confiar en una contraseña fuerte y conexiones cifradas. Funciona, pero hace que la contraseña larga y aleatoria sea imprescindible. No la reutilices en ningún otro sitio.</li>
+  <li><strong>Cuida tus accesos.</strong> Usa un gestor de contraseñas. Nunca pegues contraseñas ni números de tarjeta en un chat, y nunca dejes que nadie los ponga en tu código.</li>
+  <li><strong>Protege los datos de tus clientes.</strong> Si tu sitio recoge nombres de niños, fotos o datos de contacto, recoge solo lo que de verdad necesitas. Consulta qué exige tu estado o país, y escribe una página de privacidad en lenguaje claro.</li>
+  <li><strong>Tú eres el dueño, así que revisa el trabajo.</strong> Claude es rápido, pero debes leer lo que construye, hacer clic en cada botón y preguntarte "¿qué pasa si alguien escribe algo raro aquí?"</li>
+</ul>
+
+<h2>En resumen</h2>
+
+<p>Lo caro de un sitio web era el tiempo del programador. Ese costo se ha desplomado. Lo que queda es conocer tu negocio lo bastante bien como para describirlo, y eso ya lo haces mejor que cualquier agencia.</p>
+
+<p>Total: unos 430 $ al año, o unos 36 $ al mes.</p>

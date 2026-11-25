@@ -1,0 +1,123 @@
+<p class="lead">Birkaç yıl önce, rezervasyon sayfası, müşteri girişi ya da kendi kendine güncellenen bir galeri gibi gerçek bir web sitesi isteyen küçük bir işletmenin iki seçeneği vardı. Bir ajansa 5.000 ila 15.000 dolar ödeyebilir ya da hiçbir zaman tam istediğini yapmayan bir sürükle-bırak site oluşturucuyla uğraşabilirdi.</p>
+
+<p>Bu değişti. Artık kodu bir yapay zekâ kodlama asistanı yazıyor ve bulut bunu çok az bir ücretle barındırıyor. Fatura şöyle görünüyor:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Ne</th><th>Ödediğiniz</th></tr></thead>
+<tbody>
+<tr><td><a href="https://claude.ai">Claude</a> (yapay zekâ geliştiriciniz)</td><td>Yılda 240 $</td></tr>
+<tr><td><a href="https://azure.microsoft.com/products/azure-sql/database">Azure SQL Database</a>, Basic planı</td><td>Ayda 5 $</td></tr>
+<tr><td><a href="https://cloud.google.com">Google Cloud</a> barındırma</td><td>Ayda 10 $</td></tr>
+<tr><td><a href="https://unstoppabledomains.com">Unstoppable Domains</a> üzerinden kendi alan adınız</td><td>Bir kez 100 $, 10 yıla yayılmış</td></tr>
+<tr><td><strong>Toplam</strong></td><td><strong>Yılda 430 $</strong></td></tr>
+</tbody>
+</table></div>
+
+<p>Bu rehber, 1-2 kişilik bir fotoğraf stüdyosunun, evde çocuk bakımı yapan bir işletmenin, küçük bir buz pateni okulunun ya da bağımsız bir özel ders öğretmeninin veya koçun sahipleri için. Kod yazmayı bilmeniz gerekmiyor. Adımları izlemeye ve ne istediğinizi sade sözcüklerle anlatmaya hazır olmanız yeterli.</p>
+
+<h2>Sonunda elinizde ne olacak</h2>
+
+<ul>
+  <li>Ücretsiz bir site oluşturucunun alt alan adı yerine kendi adresiniz (örneğin <em>adiniz.com</em>)</li>
+  <li>Her yıl artan aylık "platform ücreti" olmadan, tamamen size ait bir site</li>
+  <li>Hiçbir şablonda satılmayan özellikler: buz pateni derslerinizde bekleme listesi, çocuk bakımınız için veli portalı, özel dersleriniz için ders rezervasyon sayfası</li>
+  <li>Her şey kendi hesaplarınızda saklanır, böylece istediğiniz sağlayıcıdan ayrılabilirsiniz</li>
+</ul>
+
+<h2>Adımlar</h2>
+
+<h3>1. GitHub'a kaydolun</h3>
+
+<p><a href="https://github.com/signup">GitHub</a>, web sitenizi tarif ettiğiniz ve kaynak kodunu sakladığınız yerdir. Ücretsizdir ve sonsuza dek size ait olacaktır. Onu, her değişikliğin tam geçmişini tutan bir kasa gibi düşünün; böylece bir hatayı her zaman geri alabilirsiniz. Kaydolun, ardından <a href="https://github.com/new">üç boş depo (repository) oluşturun</a> ve her biri için görünürlüğü <strong>Private</strong> (özel) seçin. YourName yerine işletmenizin adını kullanın:</p>
+<ul>
+  <li><code>web-YourName</code>: web sitesi için</li>
+  <li><code>api-YourName</code>: sunucu kodu için</li>
+  <li><code>db-YourName</code>: veritabanı betikleri için</li>
+</ul>
+
+<h3>2. Claude Desktop'ı kurun</h3>
+
+<p>Bilgisayarınız için <a href="https://claude.com/download">Claude masaüstü uygulamasını</a> indirin, kurun ve Claude hesabınızla giriş yapın. Ücretli bir plana ihtiyacınız olacak; bu, yukarıdaki maliyet tablosundaki yılda 240 $'dır. Claude'a sahip olduğunuzda aşağıdaki adımlar yalnızca bir genel bakıştır: Claude, ne yapacağınızı ve nasıl yapacağınızı her ayrıntısıyla size anlatacaktır.</p>
+
+<h3>3. Alan adınızı Unstoppable Domains'ten alın</h3>
+
+<p><a href="https://unstoppabledomains.com">unstoppabledomains.com</a> adresine gidin ve bir ad arayın. Kısa olan, akıllıca olandan iyidir. Bir alan adı yılda 5 $'a kadar düşük olabilir ve 10 yılı peşin 50 $'a ödemek daha iyidir. Kendi hesabınızla satın alın ve giriş bilgilerini güvenli bir yere yazın. Alan adı, işinizin her zaman size ait olması gereken tek parçasıdır.</p>
+
+<h3>4. Google Cloud'a (GCP) kaydolun</h3>
+
+<p><a href="https://console.cloud.google.com">Google Cloud</a>, sitenizin gerçekten çalışacağı yerdir. Kaydolun. Ücretsizdir ve yalnızca bir şeyler çalışmaya başladığında kullandığınız kadarını ödersiniz. Ardından <a href="https://console.cloud.google.com/projectcreate">bir proje oluşturun</a> ve bir ödeme kartı ekleyin. Bunu hemen yapın: ayda 15 $'lık bir <a href="https://console.cloud.google.com/billing/budgets">bütçe uyarısı ayarlayın</a>. Bu bir güvenlik ağıdır. Şaşırtıcı bir şey olmadan çok önce bir e-posta alırsınız.</p>
+
+<h3>5. Microsoft Azure'a kaydolun</h3>
+
+<p>Veritabanınız Microsoft'ta bulunur, bu yüzden orada da bir hesaba ihtiyacınız var. <a href="https://azure.microsoft.com/free">azure.microsoft.com/free</a> adresinden kaydolun ve bir ödeme kartı ekleyin. Ardından <a href="https://portal.azure.com">Azure portalını</a> açın ve bir harcama uyarısı ayarlayın: <strong>Cost Management + Billing</strong> araması yapın, <strong>Budgets</strong>'ı seçin ve %80'de e-posta uyarısı olan aylık 10 $'lık bir bütçe oluşturun.</p>
+
+<h3>6. Basic planını seçerek veritabanınızı oluşturun</h3>
+
+<p><a href="https://portal.azure.com">Azure portalında</a> <strong>SQL databases</strong> araması yapın, <strong>Create</strong>'e tıklayın ve formu doldurun:</p>
+<ol>
+  <li><strong>Subscription:</strong> varsayılanı bırakın.</li>
+  <li><strong>Resource group:</strong> <em>Create new</em>'e tıklayın ve işletmenizin adını verin (örneğin <code>mystudio-rg</code>).</li>
+  <li><strong>Database name:</strong> kısa bir ad, örneğin <code>mystudio-db</code>.</li>
+  <li><strong>Server:</strong> <em>Create new</em>'e tıklayın. Benzersiz bir ad verin; veritabanı adresinizin parçası olacak. Müşterilerinize yakın bir <strong>konum</strong> seçin ve hangisini seçtiğinizi not edin. Kimlik doğrulama için <strong>SQL authentication</strong>'ı seçin, ardından parola yöneticinizden bir yönetici girişi ve uzun, rastgele bir parola (30+ karakter) belirleyin.</li>
+  <li><strong>Want to use SQL elastic pool?</strong> <strong>No</strong>'yu seçin.</li>
+  <li><strong>Workload environment:</strong> <strong>Development</strong>'ı seçin.</li>
+  <li><strong>Compute + storage:</strong> <em>Configure database</em>'e tıklayın. <strong>Service tier</strong> altında <strong>Basic</strong>'i seçin. <strong>5 DTUs</strong> ve <strong>2 GB</strong> gösterdiğini doğrulayın, ardından Apply'a tıklayın. Fiyat (ayda yaklaşık 5 $) onaylamadan önce formda görünür.</li>
+  <li><strong>Backup storage redundancy:</strong> en ucuz seçenek olan <strong>Locally-redundant</strong>'ı seçin.</li>
+  <li><strong>Networking</strong> sekmesinde <em>Connectivity method</em>'u <strong>Public endpoint</strong> olarak ayarlayın. <strong>Allow Azure services and resources to access this server</strong>'ı açın ve kendi bilgisayarınızdan bağlanabilmek için <strong>Add current client IP address</strong>'i açın.</li>
+  <li><strong>Review + create</strong>'e tıklayın, gösterilen fiyatı kontrol edin, ardından <strong>Create</strong>'e tıklayın. Birkaç dakikada kurulur.</li>
+</ol>
+
+<p>SQL'i kendiniz yazmayın. Veritabanı oluşunca Claude'a işletmenizin neleri takip ettiğini söyleyin ve tabloları onun oluşturmasına izin verin.</p>
+
+<h3>7. Cloud Run'ı açın</h3>
+
+<p><a href="https://cloud.google.com/run">Cloud Run</a>, web sitenizi çalıştıran Google Cloud hizmetidir. Yalnızca biri ziyaret ettiğinde uyanır ve barındırma faturasının 10 $ civarında kalmasının nedeni budur. Önce <a href="https://console.cloud.google.com/apis/library/run.googleapis.com">Cloud Run ve Cloud Build hizmetlerini etkinleştirin</a>. Ardından kodunuza bağlı bir konteyner oluşturun:</p>
+<ol>
+  <li><a href="https://console.cloud.google.com/run">Cloud Run konsolunda</a> <strong>Create service</strong>'e (veya <em>Create container</em>) tıklayın.</li>
+  <li>Kodunuzu doğrudan bir depodan yayınlayan <strong>Connect Repo</strong>'yu seçin.</li>
+  <li><strong>GitHub</strong>'ı seçin, giriş yapın ve <code>web-YourName</code> deponuzu seçin.</li>
+  <li>Ölçeklendirme altında <strong>Maximum instances</strong> değerini <strong>1</strong> yapın. Bu, barındırma faturanızın büyümesini engeller.</li>
+  <li><strong>Create</strong>'e tıklayın.</li>
+</ol>
+
+<h3>8. Claude'u GitHub'a bağlayın</h3>
+
+<p>GitHub hesabınızı Claude'a bağlayın. Claude'da <strong>Customize &gt; Connectors</strong> bölümüne gidin, <strong>GitHub Integration</strong>'ı seçin ve <strong>Connect</strong>'e tıklayın. Ardından bir sohbette mesaj kutusunun sol alt köşesindeki <strong>+</strong>'ya tıklayın, <strong>Add from GitHub</strong>'ı seçin ve depolarınızı seçin.</p>
+
+<p>Google Cloud'un Claude ile bağlanmasına gerek yoktur, çünkü 7. adımda onu zaten GitHub deponuza bağladınız. Bundan sonra GitHub'daki kaynak kodunuzu her değiştirdiğinizde yeni işlevsellik bir iki dakika içinde canlıya çıkar. Claude'a ne yapmasını istediğinizi söylersiniz; Claude GitHub'a kaydeder ve Google bunu otomatik olarak yayına alır. Başka bir şey yapmanız gerekmez, yalnızca Claude'a hangi ekranları ve işlevleri istediğinizi söyleyin.</p>
+
+<h3>9. Sitenizi sade sözcüklerle anlatın</h3>
+
+<p>Asıl iş budur. İşletmeniz hakkında bir sayfa yazın: müşterileriniz kim, sitenizde ne yapmaları gerekiyor ve ne görmelerini istiyorsunuz. Örneğin:</p>
+
+<blockquote><p><em>"İki kişilik bir fotoğraf stüdyom var. En iyi işlerimin olduğu bir ana sayfa, her çekim türü için fiyatlı bir sayfa, bana e-posta gönderen bir rezervasyon talep formu ve müşterilerin fotoğraflarını görmek için kod girdiği özel bir galeri sayfası istiyorum."</em></p></blockquote>
+
+<p>İyi bir tarif, teknik beceriyi her zaman yener.</p>
+
+<h3>10. Her seferinde bir sayfa oluşturun</h3>
+
+<p>Her şeyi bir anda istemeyin. Ana sayfayı isteyin, bakın ve neyin değişeceğini söyleyin ("fotoğrafları büyüt", "daha yumuşak renkler", "telefon numaramı üste koy"). Sonra sonraki sayfaya geçin. Her değişiklik haftalar değil, dakikalar sürer.</p>
+
+<h3>11. Alan adınızı siteye yönlendirin</h3>
+
+<p>Cloud Run'da <a href="https://cloud.google.com/run/docs/mapping-custom-domains">özel alan adınızı ekleyin</a> ve verdiği kayıtları Unstoppable Domains ayarlarınıza kopyalayın. Yaklaşık bir saat içinde kendi adresiniz sitenizi gösterir, asma kilit (HTTPS) dahil.</p>
+
+<h3>12. Geliştirmeye devam edin</h3>
+
+<p>Her şey size ait olduğu için aklınıza geldiğinde bir özellik ekleyebilirsiniz: bir yorumlar sayfası, bülten kaydı, boş yerleri gösteren bir ders programı. Tarif edin, gözden geçirin, canlıya çıksın.</p>
+
+<h2>Birkaç dürüst uyarı</h2>
+
+<ul>
+  <li><strong>Basic planın sınırlarını bilin.</strong> Fiyat sabittir, yoğun bir ay faturanızı artırmaz. Ancak 5 DTU küçük bir motordur ve 2 GB depolama sınırıdır. Rezervasyonlar ve iletişim formları için fazlasıyla yeterlidir, ama her sayfa görüntülemesi veritabanına gidiyorsa yavaşlar. Claude'dan herkese açık sayfaları (fiyat listesi gibi) önbelleğe almasını isteyin, böylece ziyaretçiler veritabanını hiç sorgulamasın; fotoğraf ve videoları da veritabanında değil bulut depolamada tutun.</li>
+  <li><strong>Veritabanını kilitleyin.</strong> Cloud Run'ın sabit bir adresi yoktur, bu yüzden küçük siteler genellikle her adresten bağlantıya izin verir ve güçlü bir parola ile şifreli bağlantılara güvenir. Bu işe yarar ama uzun, rastgele parolayı vazgeçilmez kılar. Onu hiçbir yerde yeniden kullanmayın.</li>
+  <li><strong>Giriş bilgilerinizi güvende tutun.</strong> Bir parola yöneticisi kullanın. Parolaları ya da kart numaralarını asla bir sohbete yapıştırmayın ve kimsenin bunları kodunuza koymasına izin vermeyin.</li>
+  <li><strong>Müşterilerinizin verilerini koruyun.</strong> Siteniz çocukların adlarını, fotoğraflarını veya iletişim bilgilerini topluyorsa yalnızca gerçekten ihtiyacınız olanı toplayın. Eyaletinizin veya ülkenizin ne gerektirdiğini kontrol edin ve sade bir dille yazılmış bir gizlilik sayfası hazırlayın.</li>
+  <li><strong>Sahibi sizsiniz, o yüzden işi kontrol edin.</strong> Claude hızlıdır ama ürettiğini okumalı, her düğmeye tıklamalı ve "burada biri tuhaf bir şey yazarsa ne olur?" diye sormalısınız.</li>
+</ul>
+
+<h2>Sonuç</h2>
+
+<p>Bir web sitesinin pahalı kısmı geliştiricinin zamanıydı. Bu maliyet çöktü. Geriye kalan, kendi işinizi onu anlatabilecek kadar iyi bilmektir ve bunu zaten herhangi bir ajanstan daha iyi yapıyorsunuz.</p>
+
+<p>Toplam: yılda yaklaşık 430 $, yani ayda kabaca 36 $.</p>

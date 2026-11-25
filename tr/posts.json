@@ -4,6 +4,10 @@
       "title": "Yapay Zeka Sol Gezinme Çubuğunu Neden Öldürmeyecek",
       "summary": "Yalnızca sohbetten oluşan arayüzler modern görünür, ancak menü kullanıcıların ihtiyaç duyduğu site haritasıdır. Yapay zekanın neden gezinmenin içinde çalışması gerektiği; sesli komutlar, Notion ve Claude'dan dersler."
     },
+    "small-business-website-with-claude": {
+      "title": "Küçük işletmeniz için bir web sitesi eskiden binlerce dolara mal olurdu. Şimdi yılda yaklaşık 430 dolar.",
+      "summary": "Artık kodu bir yapay zekâ yazıyor ve bulut barındırmayı çok ucuza getiriyor. Fotoğrafçılar, özel öğretmenler, koçlar ve evde çocuk bakımı yapanlar için adım adım rehber: yılda yaklaşık 430 dolara gerçek bir web sitesi."
+    },
     "can-postgres-replace-sql-server": {
       "title": "Postgres, Microsoft SQL Server'ın yerini alabilir mi?",
       "summary": "Sıfırdan yeni bir proje için veritabanı seçmek: Postgres ve SQL Server nerede kazanır, CI/CD neden özelliklerden daha belirleyicidir ve Azure'da 20 GB'lık bir veritabanı gerçekte ne kadar tutar."

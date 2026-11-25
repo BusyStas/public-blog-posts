@@ -1,0 +1,123 @@
+<p class="lead">Prije nekoliko godina mali obrt koji je želio pravu web stranicu, sa stranicom za rezervacije, prijavom za klijente ili galerijom koja se sama ažurira, imao je dvije mogućnosti. Mogao je platiti agenciji od 5000 do 15 000 dolara ili se boriti s alatom za izradu stranica povlačenjem, koji nikad nije radio baš ono što se željelo.</p>
+
+<p>To se promijenilo. Kod sada piše AI asistent za programiranje, a oblak ga hostira za sitne novce. Evo kako izgleda račun:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Što</th><th>Plaćate</th></tr></thead>
+<tbody>
+<tr><td><a href="https://claude.ai">Claude</a> (vaš AI programer)</td><td>240 $ godišnje</td></tr>
+<tr><td><a href="https://azure.microsoft.com/products/azure-sql/database">Azure SQL Database</a>, plan Basic</td><td>5 $ mjesečno</td></tr>
+<tr><td>Hosting na <a href="https://cloud.google.com">Google Cloudu</a></td><td>10 $ mjesečno</td></tr>
+<tr><td>Vaša vlastita domena na <a href="https://unstoppabledomains.com">Unstoppable Domains</a></td><td>100 $ jednokratno, raspoređeno na 10 godina</td></tr>
+<tr><td><strong>Ukupno</strong></td><td><strong>430 $ godišnje</strong></td></tr>
+</tbody>
+</table></div>
+
+<p>Ovaj vodič je za vlasnike fotografskog studija s 1 do 2 osobe, kućnog čuvanja djece, male škole klizanja ili samostalne instruktore i trenere. Ne morate znati programirati. Morate biti spremni slijediti korake i jednostavnim riječima opisati što želite.</p>
+
+<h2>Što ćete imati na kraju</h2>
+
+<ul>
+  <li>Vlastitu adresu (na primjer <em>vasenaziv.com</em>) umjesto besplatne poddomene alata za izradu stranica</li>
+  <li>Stranicu koja je u potpunosti vaša, bez mjesečne „naknade za platformu“ koja svake godine raste</li>
+  <li>Značajke koje nitko ne prodaje u predlošku: listu čekanja za vaše satove klizanja, portal za roditelje u vašem kućnom vrtiću, stranicu za rezervaciju sati za vaše instrukcije</li>
+  <li>Sve je pohranjeno na vašim vlastitim računima, pa možete otići od bilo kojeg pružatelja usluga</li>
+</ul>
+
+<h2>Koraci</h2>
+
+<h3>1. Registrirajte se na GitHubu</h3>
+
+<p><a href="https://github.com/signup">GitHub</a> je mjesto gdje opisujete svoju web stranicu i čuvate izvorni kod. Besplatan je i zauvijek će biti vaš. Zamislite ga kao sef s cjelovitom poviješću svake promjene, pa uvijek možete poništiti pogrešku. Registrirajte se, a zatim <a href="https://github.com/new">napravite tri prazna repozitorija</a> i za svaki odaberite vidljivost <strong>Private</strong> (privatno). Umjesto YourName upišite naziv svog obrta:</p>
+<ul>
+  <li><code>web-YourName</code> za web stranicu</li>
+  <li><code>api-YourName</code> za kod poslužitelja</li>
+  <li><code>db-YourName</code> za skripte baze podataka</li>
+</ul>
+
+<h3>2. Instalirajte Claude Desktop</h3>
+
+<p>Preuzmite <a href="https://claude.com/download">Claude desktop aplikaciju</a> za svoje računalo, instalirajte je i prijavite se svojim Claude računom. Trebat će vam plaćeni plan, a to je onih 240 $ godišnje iz gornje tablice troškova. Kad imate Claudea, sljedeći koraci su samo pregled: Claude će vas voditi kroz svaki detalj što napraviti i kako.</p>
+
+<h3>3. Registrirajte domenu na Unstoppable Domains</h3>
+
+<p>Idite na <a href="https://unstoppabledomains.com">unstoppabledomains.com</a> i potražite naziv. Kratko pobjeđuje domišljato. Domena može koštati već od 5 $ godišnje, a bolje je unaprijed platiti 10 godina za 50 $. Kupite je na svoj račun i zapišite prijavu na sigurno mjesto. Domena je jedini dio vašeg posla koji uvijek mora biti vaš.</p>
+
+<h3>4. Registrirajte se na Google Cloudu (GCP)</h3>
+
+<p><a href="https://console.cloud.google.com">Google Cloud</a> je mjesto gdje će vaša stranica zapravo raditi. Registrirajte se. Besplatno je, a plaćate samo ono što koristite kad nešto počne raditi. Zatim <a href="https://console.cloud.google.com/projectcreate">napravite projekt</a> i dodajte platnu karticu. Odmah napravite ovo: <a href="https://console.cloud.google.com/billing/budgets">postavite upozorenje o proračunu</a> na 15 $ mjesečno. To je sigurnosna mreža. Dobit ćete e-poruku mnogo prije nego se dogodi nešto iznenađujuće.</p>
+
+<h3>5. Registrirajte se na Microsoft Azureu</h3>
+
+<p>Vaša baza podataka živi kod Microsofta, pa i tamo trebate račun. Registrirajte se na <a href="https://azure.microsoft.com/free">azure.microsoft.com/free</a> i dodajte platnu karticu. Zatim otvorite <a href="https://portal.azure.com">Azure portal</a> i postavite upozorenje o potrošnji: potražite <strong>Cost Management + Billing</strong>, odaberite <strong>Budgets</strong> i napravite mjesečni proračun od 10 $ s upozorenjem e-poštom na 80 %.</p>
+
+<h3>6. Napravite bazu podataka, birajući plan Basic</h3>
+
+<p>U <a href="https://portal.azure.com">Azure portalu</a> potražite <strong>SQL databases</strong>, kliknite <strong>Create</strong> i ispunite obrazac:</p>
+<ol>
+  <li><strong>Subscription:</strong> ostavite zadano.</li>
+  <li><strong>Resource group:</strong> kliknite <em>Create new</em> i nazovite je po svom obrtu (na primjer <code>mystudio-rg</code>).</li>
+  <li><strong>Database name:</strong> nešto kratko, poput <code>mystudio-db</code>.</li>
+  <li><strong>Server:</strong> kliknite <em>Create new</em>. Dajte mu jedinstven naziv jer postaje dio adrese vaše baze. Odaberite <strong>lokaciju</strong> blizu svojih klijenata i zabilježite koju ste odabrali. Za provjeru autentičnosti odaberite <strong>SQL authentication</strong>, zatim postavite administratorsku prijavu i dugu, nasumičnu lozinku (30+ znakova) iz upravitelja lozinki.</li>
+  <li><strong>Want to use SQL elastic pool?</strong> Odaberite <strong>No</strong>.</li>
+  <li><strong>Workload environment:</strong> odaberite <strong>Development</strong>.</li>
+  <li><strong>Compute + storage:</strong> kliknite <em>Configure database</em>. Pod <strong>Service tier</strong> odaberite <strong>Basic</strong>. Provjerite da prikazuje <strong>5 DTUs</strong> i <strong>2 GB</strong>, pa kliknite Apply. Cijena (oko 5 $ mjesečno) prikazuje se u obrascu prije nego se obvežete.</li>
+  <li><strong>Backup storage redundancy:</strong> odaberite <strong>Locally-redundant</strong>, najjeftinije.</li>
+  <li>Na kartici <strong>Networking</strong> postavite <em>Connectivity method</em> na <strong>Public endpoint</strong>. Uključite <strong>Allow Azure services and resources to access this server</strong> i uključite <strong>Add current client IP address</strong> kako biste se mogli spajati sa svog računala.</li>
+  <li>Kliknite <strong>Review + create</strong>, provjerite prikazanu cijenu, zatim kliknite <strong>Create</strong>. Postavlja se za nekoliko minuta.</li>
+</ol>
+
+<p>Nemojte sami pisati SQL. Kad baza postoji, recite Claudeu što vaš obrt prati i pustite ga da napravi tablice.</p>
+
+<h3>7. Uključite Cloud Run</h3>
+
+<p><a href="https://cloud.google.com/run">Cloud Run</a> je usluga Google Clouda koja pokreće vašu web stranicu. Budi se samo kad je netko posjeti, i zato račun za hosting ostaje blizu 10 $. Prvo <a href="https://console.cloud.google.com/apis/library/run.googleapis.com">uključite usluge Cloud Run i Cloud Build</a>. Zatim napravite kontejner povezan s vašim kodom:</p>
+<ol>
+  <li>U <a href="https://console.cloud.google.com/run">Cloud Run konzoli</a> kliknite <strong>Create service</strong> (ili <em>Create container</em>).</li>
+  <li>Odaberite <strong>Connect Repo</strong>, što postavlja vaš kod izravno iz repozitorija.</li>
+  <li>Odaberite <strong>GitHub</strong>, prijavite se i odaberite svoj repozitorij <code>web-YourName</code>.</li>
+  <li>Pod skaliranjem postavite <strong>Maximum instances</strong> na <strong>1</strong>. Tako vaš račun za hosting ne raste.</li>
+  <li>Kliknite <strong>Create</strong>.</li>
+</ol>
+
+<h3>8. Povežite Claudea s GitHubom</h3>
+
+<p>Povežite svoj GitHub račun s Claudeom. U Claudeu idite na <strong>Customize &gt; Connectors</strong>, odaberite <strong>GitHub Integration</strong> i kliknite <strong>Connect</strong>. Zatim u razgovoru kliknite <strong>+</strong> u donjem lijevom kutu okvira za poruke, odaberite <strong>Add from GitHub</strong> i odaberite svoje repozitorije.</p>
+
+<p>Google Cloudu nije potrebna veza s Claudeom jer ste ga u koraku 7 već povezali sa svojim GitHub repozitorijem. Nakon toga, kad god promijenite izvorni kod na GitHubu, nova funkcionalnost pojavit će se uživo za minutu ili dvije. Vi kažete Claudeu što izgraditi, a Claude sprema na GitHub i Google to automatski postavlja. Ne trebate raditi ništa drugo, samo recite Claudeu koje ekrane i funkcionalnosti želite.</p>
+
+<h3>9. Opišite svoju stranicu jednostavnim riječima</h3>
+
+<p>Ovo je pravi posao. Napišite jednu stranicu o svom obrtu: tko su vaši klijenti, što trebaju raditi na vašoj stranici i što želite da vide. Na primjer:</p>
+
+<blockquote><p><em>„Vodim fotografski studio s dvije osobe. Želim početnu stranicu s mojim najboljim radovima, stranicu za svaku vrstu snimanja s cijenama, obrazac za upit o rezervaciji koji mi šalje e-poštu i privatnu stranicu galerije na kojoj klijenti unose kod da vide svoje fotografije.“</em></p></blockquote>
+
+<p>Dobar opis uvijek pobjeđuje tehničko znanje.</p>
+
+<h3>10. Gradite jednu po jednu stranicu</h3>
+
+<p>Nemojte tražiti sve odjednom. Zatražite početnu stranicu, pogledajte je i recite što promijeniti („povećaj fotografije“, „blaže boje“, „stavi moj broj telefona na vrh“). Zatim prijeđite na sljedeću stranicu. Svaka promjena traje minute, a ne tjedne.</p>
+
+<h3>11. Usmjerite domenu na stranicu</h3>
+
+<p>U Cloud Runu <a href="https://cloud.google.com/run/docs/mapping-custom-domains">dodajte svoju domenu</a> i kopirajte zapise koje vam daje u postavke Unstoppable Domains. Za otprilike sat vremena vaša vlastita adresa prikazuje vašu stranicu, s lokotom (HTTPS) u paketu.</p>
+
+<h3>12. Nastavite je poboljšavati</h3>
+
+<p>Budući da je sve vaše, možete dodati značajku kad god se sjetite: stranicu s preporukama, prijavu na newsletter, raspored sati koji prikazuje slobodna mjesta. Opišite je, pregledajte i već je uživo.</p>
+
+<h2>Nekoliko iskrenih upozorenja</h2>
+
+<ul>
+  <li><strong>Upoznajte ograničenja plana Basic.</strong> Cijena je fiksna, pa prometan mjesec neće povećati račun. No 5 DTU-a je mali motor, a 2 GB je gornja granica pohrane. Dovoljno je za rezervacije i kontakt obrasce, a sporo ako svako otvaranje stranice upućuje upit bazi. Zamolite Claudea da pohrani javne stranice (poput cjenika) u predmemoriju kako posjetitelji uopće ne bi opterećivali bazu, a fotografije i videa držite u pohrani u oblaku, a ne u bazi podataka.</li>
+  <li><strong>Zaštitite bazu podataka.</strong> Cloud Run nema fiksnu adresu, pa male stranice obično dopuštaju veze s bilo koje adrese i oslanjaju se na jaku lozinku i šifrirane veze. To radi, ali čini dugu, nasumičnu lozinku ključnom. Nikad je ne koristite nigdje drugdje.</li>
+  <li><strong>Čuvajte svoje prijave.</strong> Koristite upravitelj lozinki. Nikad ne lijepite lozinke ni brojeve kartica u razgovor i nikad nikome ne dopustite da ih stavi u vaš kod.</li>
+  <li><strong>Zaštitite podatke svojih klijenata.</strong> Ako vaša stranica prikuplja imena djece, fotografije ili kontakt podatke, prikupljajte samo ono što doista trebate. Provjerite što zahtijeva vaša država i napišite stranicu o privatnosti jednostavnim jezikom.</li>
+  <li><strong>Vi ste vlasnik, pa provjeravajte rad.</strong> Claude je brz, ali biste trebali čitati što gradi, kliknuti svaki gumb i pitati se „što se događa ako netko ovdje upiše nešto čudno?“</li>
+</ul>
+
+<h2>Zaključak</h2>
+
+<p>Skup dio web stranice bilo je vrijeme programera. Taj je trošak kolabirao. Ostaje poznavati vlastiti posao dovoljno dobro da ga opišete, a to već radite bolje od bilo koje agencije.</p>
+
+<p>Ukupno: oko 430 $ godišnje, odnosno otprilike 36 $ mjesečno.</p>

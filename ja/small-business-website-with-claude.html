@@ -1,0 +1,123 @@
+<p class="lead">数年前、予約ページや顧客ログイン、自動で更新されるギャラリーなど、本格的なウェブサイトがほしい小さな事業者には、選択肢が2つしかありませんでした。代理店に5,000～15,000ドルを払うか、思いどおりに動いてくれないドラッグ＆ドロップ式のビルダーと格闘するかです。</p>
+
+<p>それが変わりました。今ではAIのコーディングアシスタントがコードを書き、クラウドがごくわずかな費用でそれを公開してくれます。請求額はこうなります：</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>項目</th><th>費用</th></tr></thead>
+<tbody>
+<tr><td><a href="https://claude.ai">Claude</a>（あなたのAI開発者）</td><td>年240ドル</td></tr>
+<tr><td><a href="https://azure.microsoft.com/products/azure-sql/database">Azure SQL Database</a>、Basicプラン</td><td>月5ドル</td></tr>
+<tr><td><a href="https://cloud.google.com">Google Cloud</a> のホスティング</td><td>月10ドル</td></tr>
+<tr><td><a href="https://unstoppabledomains.com">Unstoppable Domains</a> で取る自分のドメイン名</td><td>一度だけ100ドル（10年分）</td></tr>
+<tr><td><strong>合計</strong></td><td><strong>年430ドル</strong></td></tr>
+</tbody>
+</table></div>
+
+<p>このガイドは、1～2人の写真スタジオ、家庭保育、小さなスケート教室、個人の家庭教師やコーチの方に向けたものです。コードが書ける必要はありません。手順に従い、ほしいものをふつうの言葉で説明する意欲があれば十分です。</p>
+
+<h2>最終的に手に入るもの</h2>
+
+<ul>
+  <li>ビルダーの無料サブドメインではなく、自分のアドレス（たとえば <em>yourname.com</em>）</li>
+  <li>毎年値上がりする月額の「プラットフォーム料金」がない、完全に自分のものといえるサイト</li>
+  <li>テンプレートでは売っていない機能：スケート教室のキャンセル待ちリスト、家庭保育の保護者ポータル、家庭教師のレッスン予約ページ</li>
+  <li>すべて自分のアカウントに保存されるので、どのベンダーからもいつでも離れられます</li>
+</ul>
+
+<h2>手順</h2>
+
+<h3>1. GitHubに登録する</h3>
+
+<p><a href="https://github.com/signup">GitHub</a> は、サイトの内容を説明し、ソースコードを保管する場所です。無料で、永久にあなたのものです。すべての変更の履歴が残る貸金庫のようなものだと考えてください。間違えてもいつでも元に戻せます。登録したら、<a href="https://github.com/new">空のリポジトリを3つ作成</a>し、それぞれ公開設定を <strong>Private</strong>（非公開）にします。YourName の部分には事業の名前を使ってください：</p>
+<ul>
+  <li><code>web-YourName</code>：ウェブサイト用</li>
+  <li><code>api-YourName</code>：サーバーのコード用</li>
+  <li><code>db-YourName</code>：データベースのスクリプト用</li>
+</ul>
+
+<h3>2. Claude Desktopをインストールする</h3>
+
+<p>お使いのパソコン用の <a href="https://claude.com/download">Claudeデスクトップアプリ</a>をダウンロードしてインストールし、Claudeのアカウントでサインインします。有料プランが必要です。これが上の費用表にある年240ドルです。Claudeを使えるようになれば、以下の手順は概要にすぎません。何をどうすればよいか、細かいところまでClaudeが案内してくれます。</p>
+
+<h3>3. Unstoppable Domainsでドメインを取得する</h3>
+
+<p><a href="https://unstoppabledomains.com">unstoppabledomains.com</a> にアクセスして名前を検索します。気の利いた名前より短い名前のほうが勝ちます。ドメインは年5ドルほどからで、10年分を50ドルで前払いするほうがお得です。自分のアカウントで購入し、ログイン情報は安全な場所に控えておきましょう。ドメインは、事業のなかで常に自分のものでなければならない唯一の部分です。</p>
+
+<h3>4. Google Cloud（GCP）に登録する</h3>
+
+<p><a href="https://console.cloud.google.com">Google Cloud</a> は、あなたのサイトが実際に動く場所です。登録は無料で、料金は何かが動き始めたときに使った分だけかかります。次に<a href="https://console.cloud.google.com/projectcreate">プロジェクトを作成</a>し、支払いカードを登録します。そしてすぐにこれをやってください：月15ドルで<a href="https://console.cloud.google.com/billing/budgets">予算アラートを設定</a>します。これは安全網です。想定外のことが起きるずっと前にメールが届きます。</p>
+
+<h3>5. Microsoft Azureに登録する</h3>
+
+<p>データベースはMicrosoftにあるので、そちらのアカウントも必要です。<a href="https://azure.microsoft.com/free">azure.microsoft.com/free</a> で登録し、支払いカードを登録します。次に <a href="https://portal.azure.com">Azureポータル</a>を開いて支出アラートを設定します。<strong>Cost Management + Billing</strong> を検索し、<strong>Budgets</strong> を選び、月10ドルの予算を作成して、80%の時点でメール通知が来るようにします。</p>
+
+<h3>6. Basicプランを選んでデータベースを作成する</h3>
+
+<p><a href="https://portal.azure.com">Azureポータル</a>で <strong>SQL databases</strong> を検索し、<strong>Create</strong> をクリックしてフォームに入力します：</p>
+<ol>
+  <li><strong>Subscription：</strong>デフォルトのままにします。</li>
+  <li><strong>Resource group：</strong><em>Create new</em> をクリックし、事業の名前をつけます（例：<code>mystudio-rg</code>）。</li>
+  <li><strong>Database name：</strong><code>mystudio-db</code> のような短い名前にします。</li>
+  <li><strong>Server：</strong><em>Create new</em> をクリックします。データベースのアドレスの一部になるので、一意の名前をつけます。お客様に近い<strong>ロケーション</strong>を選び、どれを選んだかメモしておきます。認証は <strong>SQL authentication</strong> を選び、パスワード管理ツールで管理者ログイン名と長いランダムなパスワード（30文字以上）を設定します。</li>
+  <li><strong>Want to use SQL elastic pool?</strong> <strong>No</strong> を選びます。</li>
+  <li><strong>Workload environment：</strong><strong>Development</strong> を選びます。</li>
+  <li><strong>Compute + storage：</strong><em>Configure database</em> をクリックします。<strong>Service tier</strong> で <strong>Basic</strong> を選びます。<strong>5 DTUs</strong> と <strong>2 GB</strong> と表示されていることを確認して Apply をクリックします。確定する前に、フォームに料金（月約5ドル）が表示されます。</li>
+  <li><strong>Backup storage redundancy：</strong>いちばん安い <strong>Locally-redundant</strong> を選びます。</li>
+  <li><strong>Networking</strong> タブで、<em>Connectivity method</em> を <strong>Public endpoint</strong> にします。<strong>Allow Azure services and resources to access this server</strong> をオンにし、自分のパソコンから接続できるように <strong>Add current client IP address</strong> もオンにします。</li>
+  <li><strong>Review + create</strong> をクリックし、表示された料金を確認してから <strong>Create</strong> をクリックします。数分でデプロイされます。</li>
+</ol>
+
+<p>SQLは自分で書かないでください。データベースができたら、事業で何を記録したいかをClaudeに伝え、テーブルを作ってもらいましょう。</p>
+
+<h3>7. Cloud Runを有効にする</h3>
+
+<p><a href="https://cloud.google.com/run">Cloud Run</a> は、あなたのウェブサイトを動かすGoogle Cloudのサービスです。誰かが訪れたときだけ起動するので、ホスティング料金が10ドル前後に収まります。まず<a href="https://console.cloud.google.com/apis/library/run.googleapis.com">Cloud RunとCloud Buildのサービスを有効にします</a>。次に、コードとつながったコンテナを作成します：</p>
+<ol>
+  <li><a href="https://console.cloud.google.com/run">Cloud Runコンソール</a>で <strong>Create service</strong>（または <em>Create container</em>）をクリックします。</li>
+  <li>リポジトリから直接コードをデプロイする <strong>Connect Repo</strong> を選びます。</li>
+  <li><strong>GitHub</strong> を選び、サインインして、<code>web-YourName</code> リポジトリを選択します。</li>
+  <li>スケーリングで <strong>Maximum instances</strong> を <strong>1</strong> にします。これでホスティング料金が膨らむのを防げます。</li>
+  <li><strong>Create</strong> をクリックします。</li>
+</ol>
+
+<h3>8. ClaudeをGitHubに接続する</h3>
+
+<p>あなたのGitHubアカウントをClaudeに接続します。Claudeで <strong>Customize &gt; Connectors</strong> を開き、<strong>GitHub Integration</strong> を選んで <strong>Connect</strong> をクリックします。次に、チャットでメッセージ欄の左下にある <strong>+</strong> をクリックし、<strong>Add from GitHub</strong> を選んで、リポジトリを選びます。</p>
+
+<p>Google CloudをClaudeに接続する必要はありません。手順7ですでにGitHubリポジトリとつなげてあるからです。以降は、GitHubでソースコードを変更するたびに、新しい機能が1～2分で公開されます。何を作るかをClaudeに伝えれば、ClaudeがGitHubに保存し、Googleが自動でデプロイします。ほかにやることはありません。ほしい画面や機能をClaudeに伝えるだけです。</p>
+
+<h3>9. サイトをふつうの言葉で説明する</h3>
+
+<p>ここが本当の仕事です。事業についてA4一枚ほどにまとめます。顧客は誰か、サイトで何をしてほしいか、何を見てほしいか。たとえば：</p>
+
+<blockquote><p><em>「2人で写真スタジオをやっています。いちばんの作品を載せたホームページ、撮影の種類ごとに料金を載せたページ、私にメールが届く予約リクエストフォーム、そしてお客様がコードを入力して自分の写真を見られる非公開のギャラリーページがほしいです。」</em></p></blockquote>
+
+<p>よい説明は、技術力にいつも勝ります。</p>
+
+<h3>10. 1ページずつ作る</h3>
+
+<p>一度にすべてを頼まないでください。まずホームページを頼み、見て、直したいところを伝えます（「写真を大きく」「もっとやわらかい色に」「電話番号を上に」）。それから次のページへ進みます。1回の修正は数週間ではなく数分で終わります。</p>
+
+<h3>11. ドメインをサイトに向ける</h3>
+
+<p>Cloud Runで<a href="https://cloud.google.com/run/docs/mapping-custom-domains">独自ドメインを追加</a>し、表示されたレコードをUnstoppable Domainsの設定にコピーします。1時間ほどで、自分のアドレスにサイトが表示されます。鍵マーク（HTTPS）もついてきます。</p>
+
+<h3>12. 改善を続ける</h3>
+
+<p>すべてが自分のものなので、思いついたときにいつでも機能を足せます。お客様の声のページ、ニュースレター登録、空き状況を表示するクラスのスケジュールなど。説明して、確認すれば、公開されます。</p>
+
+<h2>正直な注意点</h2>
+
+<ul>
+  <li><strong>Basicプランの限界を知っておく。</strong>料金は定額なので、忙しい月でも請求は増えません。ただし5 DTUは小さなエンジンで、2 GBがストレージの上限です。予約や問い合わせフォームには十分ですが、ページを開くたびにデータベースを呼び出すと遅くなります。料金表のような公開ページはキャッシュするようClaudeに頼み、訪問者がデータベースを呼ばないようにしましょう。写真や動画はデータベースではなくクラウドストレージに置きます。</li>
+  <li><strong>データベースを守る。</strong>Cloud Runには固定アドレスがないため、小さなサイトでは、どのアドレスからの接続も許可して、強いパスワードと暗号化接続に頼るのが一般的です。それでも動きますが、長いランダムなパスワードが不可欠になります。ほかの場所では絶対に使い回さないでください。</li>
+  <li><strong>ログイン情報を安全に保つ。</strong>パスワード管理ツールを使いましょう。パスワードやカード番号をチャットに貼り付けたり、誰かにコードへ書き込ませたりしてはいけません。</li>
+  <li><strong>お客様のデータを守る。</strong>サイトで子どもの名前、写真、連絡先を集めるなら、本当に必要なものだけにしましょう。お住まいの州や国の要件を確認し、わかりやすい言葉でプライバシーのページを書きます。</li>
+  <li><strong>オーナーはあなたなので、仕事を確認する。</strong>Claudeは速いですが、作られたものを読み、すべてのボタンをクリックし、「ここで誰かが変なものを入力したらどうなる？」と考えるのはあなたの役目です。</li>
+</ul>
+
+<h2>まとめ</h2>
+
+<p>ウェブサイトで高かったのは、開発者の時間でした。そのコストは崩れ落ちました。残るのは、自分の事業を説明できるほどよく知っていることで、それはすでにどんな代理店よりもあなたのほうが得意です。</p>
+
+<p>合計：年約430ドル、月にすると約36ドル。</p>

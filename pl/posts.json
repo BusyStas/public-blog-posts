@@ -4,6 +4,10 @@
       "title": "Dlaczego AI nie zabije lewego paska nawigacji",
       "summary": "Interfejsy wyłącznie czatowe brzmią nowocześnie, ale menu to mapa serwisu, której potrzebują użytkownicy. Dlaczego AI powinna działać wewnątrz nawigacji, z lekcjami z poleceń głosowych, Notiona i Claude'a."
     },
+    "small-business-website-with-claude": {
+      "title": "Strona internetowa dla małej firmy kosztowała kiedyś tysiące. Dziś kosztuje około 430 dolarów rocznie.",
+      "summary": "Dziś kod pisze sztuczna inteligencja, a chmura hostuje stronę za grosze. Przewodnik krok po kroku dla fotografów, korepetytorów, trenerów i opiekunek dziecięcych w domu: prawdziwa strona za około 430 dolarów rocznie."
+    },
     "can-postgres-replace-sql-server": {
       "title": "Czy Postgres może zastąpić Microsoft SQL Server?",
       "summary": "Wybór bazy danych dla nowego projektu od zera: gdzie wygrywa Postgres, a gdzie SQL Server, dlaczego CI/CD waży więcej niż funkcje i ile naprawdę kosztuje baza 20 GB w Azure."

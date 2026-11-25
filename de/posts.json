@@ -4,6 +4,10 @@
       "title": "Warum KI die linke Navigationsleiste nicht abschaffen wird",
       "summary": "Reine Chat-Oberflächen klingen modern, doch ein Menü ist die Sitemap, die Nutzer brauchen. Warum KI innerhalb der Navigation arbeiten sollte, mit Lehren aus Sprachbefehlen, Notion und Claude."
     },
+    "small-business-website-with-claude": {
+      "title": "Eine Website für Ihr kleines Unternehmen kostete früher Tausende. Heute kostet sie etwa 430 Dollar im Jahr.",
+      "summary": "Heute schreibt eine KI den Code, und die Cloud hostet die Seite für wenig Geld. Eine Schritt-für-Schritt-Anleitung für Fotografen, Nachhilfelehrer, Coaches und Tagesmütter: eine echte Website für etwa 430 Dollar im Jahr."
+    },
     "can-postgres-replace-sql-server": {
       "title": "Kann Postgres Microsoft SQL Server ersetzen?",
       "summary": "Die Datenbankwahl für ein neues Projekt auf der grünen Wiese: wo Postgres und SQL Server jeweils gewinnen, warum CI/CD mehr entscheidet als Funktionen und was eine 20-GB-Datenbank in Azure wirklich kostet."

@@ -4,6 +4,10 @@
       "title": "为什么 AI 不会杀死左侧导航栏",
       "summary": "纯聊天界面听起来很现代,但菜单是用户需要的站点地图。为什么 AI 应该在导航之内工作,以及来自语音命令、Notion 和 Claude 的经验。"
     },
+    "small-business-website-with-claude": {
+      "title": "小企业建网站过去要花上几千美元，现在每年只需约430美元。",
+      "summary": "如今由AI写代码，云服务托管网站只需很少的费用。写给摄影师、家教、教练和家庭托儿所的分步指南：一个真正的网站，每年约430美元。"
+    },
     "can-postgres-replace-sql-server": {
       "title": "Postgres 能取代 Microsoft SQL Server 吗？",
       "summary": "为全新项目从零选择数据库：Postgres 与 SQL Server 各自的优势，为什么 CI/CD 比功能更关键，以及 20 GB 数据库在 Azure 上的真实成本。"

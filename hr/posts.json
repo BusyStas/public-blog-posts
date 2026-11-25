@@ -4,6 +4,10 @@
       "title": "Zašto AI neće ubiti lijevu navigacijsku traku",
       "summary": "Sučelja samo s chatom zvuče moderno, ali izbornik je mapa weba koja je korisnicima potrebna. Zašto AI treba raditi unutar navigacije, uz lekcije iz glasovnih naredbi, Notiona i Claudea."
     },
+    "small-business-website-with-claude": {
+      "title": "Web stranica za mali obrt nekad je koštala tisuće. Sada košta oko 430 dolara godišnje.",
+      "summary": "Sada kod piše umjetna inteligencija, a oblak hostira stranicu za male novce. Vodič korak po korak za fotografe, instruktore, trenere i kućne vrtiće: prava web stranica za oko 430 dolara godišnje."
+    },
     "can-postgres-replace-sql-server": {
       "title": "Može li Postgres zamijeniti Microsoft SQL Server?",
       "summary": "Odabir baze podataka za novi projekt od nule: gdje pobjeđuje Postgres, a gdje SQL Server, zašto CI/CD odlučuje više od značajki i koliko doista košta baza od 20 GB na Azureu."

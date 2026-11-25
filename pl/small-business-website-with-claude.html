@@ -1,0 +1,123 @@
+<p class="lead">Kilka lat temu mała firma, która chciała prawdziwej strony internetowej, ze stroną rezerwacji, logowaniem klientów albo galerią aktualizującą się samoczynnie, miała dwie możliwości. Mogła zapłacić agencji od 5000 do 15 000 dolarów albo zmagać się z kreatorem typu „przeciągnij i upuść”, który nigdy nie robił dokładnie tego, czego chciała.</p>
+
+<p>To się zmieniło. Kod pisze teraz asystent programowania oparty na AI, a chmura hostuje go za grosze. Oto jak wygląda rachunek:</p>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Co</th><th>Płacisz</th></tr></thead>
+<tbody>
+<tr><td><a href="https://claude.ai">Claude</a> (twój programista AI)</td><td>240 $ rocznie</td></tr>
+<tr><td><a href="https://azure.microsoft.com/products/azure-sql/database">Azure SQL Database</a>, plan Basic</td><td>5 $ miesięcznie</td></tr>
+<tr><td>Hosting w <a href="https://cloud.google.com">Google Cloud</a></td><td>10 $ miesięcznie</td></tr>
+<tr><td>Własna domena w <a href="https://unstoppabledomains.com">Unstoppable Domains</a></td><td>100 $ jednorazowo, rozłożone na 10 lat</td></tr>
+<tr><td><strong>Razem</strong></td><td><strong>430 $ rocznie</strong></td></tr>
+</tbody>
+</table></div>
+
+<p>Ten poradnik jest dla właścicieli studia fotograficznego z 1–2 osobami, domowej opieki nad dziećmi, małej szkoły łyżwiarskiej oraz indywidualnych korepetytorów i trenerów. Nie musisz umieć programować. Musisz być gotów wykonywać kolejne kroki i prostymi słowami opisywać, czego chcesz.</p>
+
+<h2>Co będziesz mieć na końcu</h2>
+
+<ul>
+  <li>Własny adres (na przykład <em>twojanazwa.com</em>) zamiast darmowej subdomeny kreatora</li>
+  <li>Stronę, która w całości należy do ciebie, bez miesięcznej „opłaty za platformę”, rosnącej co roku</li>
+  <li>Funkcje, których nie sprzedaje żaden szablon: listę oczekujących na zajęcia łyżwiarskie, portal dla rodziców w twojej opiece nad dziećmi, stronę rezerwacji lekcji dla korepetycji</li>
+  <li>Wszystko przechowywane na twoich własnych kontach, więc możesz odejść od dowolnego dostawcy</li>
+</ul>
+
+<h2>Kroki</h2>
+
+<h3>1. Zarejestruj się w GitHub</h3>
+
+<p><a href="https://github.com/signup">GitHub</a> to miejsce, w którym opisujesz swoją stronę i przechowujesz kod źródłowy. Jest darmowy i będzie twój na zawsze. Pomyśl o nim jak o sejfie z pełną historią każdej zmiany, dzięki czemu zawsze możesz cofnąć błąd. Zarejestruj się, a potem <a href="https://github.com/new">utwórz trzy puste repozytoria</a> i dla każdego wybierz widoczność <strong>Private</strong> (prywatne). Zamiast YourName wpisz nazwę swojej firmy:</p>
+<ul>
+  <li><code>web-YourName</code> dla strony internetowej</li>
+  <li><code>api-YourName</code> dla kodu serwera</li>
+  <li><code>db-YourName</code> dla skryptów bazy danych</li>
+</ul>
+
+<h3>2. Zainstaluj Claude Desktop</h3>
+
+<p>Pobierz <a href="https://claude.com/download">aplikację Claude na komputer</a>, zainstaluj ją i zaloguj się na swoje konto Claude. Potrzebny będzie płatny plan, czyli te 240 $ rocznie z tabeli kosztów powyżej. Kiedy masz już Claude, poniższe kroki są tylko przeglądem: Claude przeprowadzi cię przez każdy szczegół tego, co robić i jak.</p>
+
+<h3>3. Zarejestruj domenę w Unstoppable Domains</h3>
+
+<p>Wejdź na <a href="https://unstoppabledomains.com">unstoppabledomains.com</a> i poszukaj nazwy. Krótka wygrywa z sprytną. Domena może kosztować już od 5 $ rocznie, a lepiej zapłacić z góry za 10 lat 50 $. Kup ją na własne konto i zapisz dane logowania w bezpiecznym miejscu. Domena to jedyny element twojego biznesu, który zawsze musi należeć do ciebie.</p>
+
+<h3>4. Zarejestruj się w Google Cloud (GCP)</h3>
+
+<p><a href="https://console.cloud.google.com">Google Cloud</a> to miejsce, gdzie twoja strona będzie faktycznie działać. Zarejestruj się. To nic nie kosztuje, a płacisz tylko za to, z czego korzystasz, gdy coś zacznie działać. Potem <a href="https://console.cloud.google.com/projectcreate">utwórz projekt</a> i dodaj kartę płatniczą. Zrób od razu jedno: <a href="https://console.cloud.google.com/billing/budgets">ustaw alert budżetowy</a> na 15 $ miesięcznie. To siatka bezpieczeństwa. Dostaniesz e-mail na długo, zanim zdarzy się coś niespodziewanego.</p>
+
+<h3>5. Zarejestruj się w Microsoft Azure</h3>
+
+<p>Twoja baza danych działa u Microsoftu, więc tam też potrzebujesz konta. Zarejestruj się na <a href="https://azure.microsoft.com/free">azure.microsoft.com/free</a> i dodaj kartę płatniczą. Potem otwórz <a href="https://portal.azure.com">portal Azure</a> i ustaw alert wydatków: wyszukaj <strong>Cost Management + Billing</strong>, wybierz <strong>Budgets</strong> i utwórz miesięczny budżet 10 $ z alertem e-mail przy 80%.</p>
+
+<h3>6. Utwórz bazę danych, wybierając plan Basic</h3>
+
+<p>W <a href="https://portal.azure.com">portalu Azure</a> wyszukaj <strong>SQL databases</strong>, kliknij <strong>Create</strong> i wypełnij formularz:</p>
+<ol>
+  <li><strong>Subscription:</strong> zostaw domyślną.</li>
+  <li><strong>Resource group:</strong> kliknij <em>Create new</em> i nazwij ją od swojej firmy (na przykład <code>mystudio-rg</code>).</li>
+  <li><strong>Database name:</strong> coś krótkiego, na przykład <code>mystudio-db</code>.</li>
+  <li><strong>Server:</strong> kliknij <em>Create new</em>. Nadaj unikalną nazwę, bo stanie się częścią adresu twojej bazy. Wybierz <strong>lokalizację</strong> blisko klientów i zapisz, którą wybrałeś. Jako uwierzytelnianie wybierz <strong>SQL authentication</strong>, a potem ustaw login administratora i długie, losowe hasło (ponad 30 znaków) z menedżera haseł.</li>
+  <li><strong>Want to use SQL elastic pool?</strong> Wybierz <strong>No</strong>.</li>
+  <li><strong>Workload environment:</strong> wybierz <strong>Development</strong>.</li>
+  <li><strong>Compute + storage:</strong> kliknij <em>Configure database</em>. W <strong>Service tier</strong> wybierz <strong>Basic</strong>. Upewnij się, że widać <strong>5 DTUs</strong> i <strong>2 GB</strong>, i kliknij Apply. Cena (około 5 $ miesięcznie) pojawia się w formularzu, zanim się zdecydujesz.</li>
+  <li><strong>Backup storage redundancy:</strong> wybierz <strong>Locally-redundant</strong>, najtańszą.</li>
+  <li>Na karcie <strong>Networking</strong> ustaw <em>Connectivity method</em> na <strong>Public endpoint</strong>. Włącz <strong>Allow Azure services and resources to access this server</strong> oraz <strong>Add current client IP address</strong>, żebyś mógł łączyć się z własnego komputera.</li>
+  <li>Kliknij <strong>Review + create</strong>, sprawdź podaną cenę, potem kliknij <strong>Create</strong>. Wdrożenie trwa kilka minut.</li>
+</ol>
+
+<p>Nie pisz SQL samodzielnie. Gdy baza już istnieje, powiedz Claude, co śledzi twoja firma, i pozwól mu utworzyć tabele.</p>
+
+<h3>7. Włącz Cloud Run</h3>
+
+<p><a href="https://cloud.google.com/run">Cloud Run</a> to usługa Google Cloud, która uruchamia twoją stronę. Budzi się tylko wtedy, gdy ktoś ją odwiedza, i dlatego rachunek za hosting utrzymuje się w okolicach 10 $. Najpierw <a href="https://console.cloud.google.com/apis/library/run.googleapis.com">włącz usługi Cloud Run i Cloud Build</a>. Potem utwórz kontener połączony z twoim kodem:</p>
+<ol>
+  <li>W <a href="https://console.cloud.google.com/run">konsoli Cloud Run</a> kliknij <strong>Create service</strong> (lub <em>Create container</em>).</li>
+  <li>Wybierz <strong>Connect Repo</strong>, który wdraża twój kod prosto z repozytorium.</li>
+  <li>Wybierz <strong>GitHub</strong>, zaloguj się i wybierz swoje repozytorium <code>web-YourName</code>.</li>
+  <li>W skalowaniu ustaw <strong>Maximum instances</strong> na <strong>1</strong>. Dzięki temu rachunek za hosting nie rośnie.</li>
+  <li>Kliknij <strong>Create</strong>.</li>
+</ol>
+
+<h3>8. Połącz Claude z GitHub</h3>
+
+<p>Połącz swoje konto GitHub z Claude. W Claude przejdź do <strong>Customize &gt; Connectors</strong>, wybierz <strong>GitHub Integration</strong> i kliknij <strong>Connect</strong>. Potem w czacie kliknij <strong>+</strong> w lewym dolnym rogu pola wiadomości, wybierz <strong>Add from GitHub</strong> i wskaż swoje repozytoria.</p>
+
+<p>Google Cloud nie potrzebuje połączenia z Claude, bo w kroku 7 już połączyłeś go ze swoim repozytorium GitHub. Od tej pory, ilekroć zmienisz kod źródłowy w GitHub, nowa funkcjonalność pojawi się na żywo w minutę lub dwie. Mówisz Claude, co zbudować, a Claude zapisuje w GitHub, zaś Google wdraża to automatycznie. Nie musisz robić nic więcej, tylko powiedzieć Claude, jakich ekranów i funkcji chcesz.</p>
+
+<h3>9. Opisz swoją stronę prostymi słowami</h3>
+
+<p>To jest prawdziwa praca. Napisz jedną stronę o swojej firmie: kim są twoi klienci, co mają robić na stronie i co chcesz, żeby zobaczyli. Na przykład:</p>
+
+<blockquote><p><em>„Prowadzę studio fotograficzne z dwiema osobami. Chcę stronę główną z moimi najlepszymi pracami, osobną stronę dla każdego rodzaju sesji z cenami, formularz zapytania o rezerwację, który wysyła mi e-mail, oraz prywatną stronę galerii, na której klienci wpisują kod, żeby zobaczyć swoje zdjęcia”.</em></p></blockquote>
+
+<p>Dobry opis zawsze wygrywa z umiejętnościami technicznymi.</p>
+
+<h3>10. Buduj po jednej stronie</h3>
+
+<p>Nie proś o wszystko naraz. Poproś o stronę główną, obejrzyj ją i powiedz, co zmienić („powiększ zdjęcia”, „łagodniejsze kolory”, „daj mój numer telefonu na górę”). Potem przejdź do następnej strony. Każda zmiana zajmuje minuty, nie tygodnie.</p>
+
+<h3>11. Skieruj domenę na stronę</h3>
+
+<p>W Cloud Run <a href="https://cloud.google.com/run/docs/mapping-custom-domains">dodaj własną domenę</a> i skopiuj podane rekordy do ustawień Unstoppable Domains. Po mniej więcej godzinie twój własny adres pokazuje twoją stronę, z kłódką (HTTPS) w zestawie.</p>
+
+<h3>12. Stale ją ulepszaj</h3>
+
+<p>Ponieważ wszystko należy do ciebie, możesz dodać funkcję, gdy tylko na nią wpadniesz: stronę z opiniami, zapis do newslettera, plan zajęć pokazujący wolne miejsca. Opisz ją, sprawdź, i działa na żywo.</p>
+
+<h2>Kilka szczerych ostrzeżeń</h2>
+
+<ul>
+  <li><strong>Poznaj ograniczenia planu Basic.</strong> Cena jest stała, więc ruchliwy miesiąc nie podniesie rachunku. Ale 5 DTU to mały silnik, a 2 GB to limit miejsca. To aż nadto na rezerwacje i formularze kontaktowe, ale będzie wolno, jeśli każde wyświetlenie strony odpytuje bazę. Poproś Claude, by buforował strony publiczne (jak cennik), żeby odwiedzający w ogóle nie odpytywali bazy, a zdjęcia i filmy trzymaj w magazynie w chmurze, nie w bazie danych.</li>
+  <li><strong>Zabezpiecz bazę danych.</strong> Cloud Run nie ma stałego adresu, więc małe strony zwykle dopuszczają połączenia z dowolnego adresu i polegają na silnym haśle oraz szyfrowanych połączeniach. To działa, ale sprawia, że długie, losowe hasło jest niezbędne. Nigdy nie używaj go nigdzie indziej.</li>
+  <li><strong>Chroń swoje loginy.</strong> Używaj menedżera haseł. Nigdy nie wklejaj haseł ani numerów kart do czatu i nigdy nie pozwalaj nikomu umieszczać ich w twoim kodzie.</li>
+  <li><strong>Chroń dane swoich klientów.</strong> Jeśli twoja strona zbiera imiona dzieci, zdjęcia lub dane kontaktowe, zbieraj tylko to, czego naprawdę potrzebujesz. Sprawdź, czego wymaga twój stan lub kraj, i napisz zrozumiałą stronę o prywatności.</li>
+  <li><strong>To ty jesteś właścicielem, więc sprawdzaj pracę.</strong> Claude jest szybki, ale powinieneś czytać to, co buduje, klikać każdy przycisk i pytać: „co się stanie, jeśli ktoś wpisze tu coś dziwnego?”</li>
+</ul>
+
+<h2>Podsumowanie</h2>
+
+<p>Drogą częścią strony internetowej był czas programisty. Ten koszt gwałtownie spadł. Zostaje znajomość własnej firmy na tyle dobra, by ją opisać, a to już robisz lepiej niż jakakolwiek agencja.</p>
+
+<p>Razem: około 430 $ rocznie, czyli mniej więcej 36 $ miesięcznie.</p>
